@@ -6,9 +6,13 @@ committed alongside the photos. Re-run this any time photos are added or removed
 
     python3 tools/build-gallery.py
 
-Captions come from the filename: "wadi-disah-morning.jpg" -> "Wadi Disah Morning".
-Rename files to caption them, or edit the `alt` values in the generated file by
-hand — but a re-run will overwrite hand edits, so prefer renaming.
+Captions come from gallery-captions.json, keyed by filename:
+
+    { "img_5062.jpg": "A wooden footbridge leading into dense green forest" }
+
+Anything missing from that file falls back to a tidied-up filename
+("wadi-disah-morning.jpg" -> "Wadi Disah Morning"). Edit the captions file, not
+the generated manifest — a re-run overwrites the manifest.
 """
 
 import json
@@ -19,6 +23,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 GALLERY = ROOT / "img" / "gallery"
 MANIFEST = ROOT / "gallery-manifest.js"
+CAPTIONS = ROOT / "gallery-captions.json"
 EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".avif", ".gif"}
 
 
@@ -43,7 +48,16 @@ def main() -> int:
         key=natural_key,
     )
 
-    entries = [{"src": f"img/gallery/{p.name}", "alt": caption(p)} for p in photos]
+    written = {}
+    if CAPTIONS.is_file():
+        written = json.loads(CAPTIONS.read_text(encoding="utf-8"))
+
+    entries = [
+        {"src": f"img/gallery/{p.name}", "alt": written.get(p.name) or caption(p)}
+        for p in photos
+    ]
+
+    missing = [p.name for p in photos if not written.get(p.name)]
 
     body = json.dumps(entries, indent=2, ensure_ascii=False)
     MANIFEST.write_text(
@@ -56,6 +70,10 @@ def main() -> int:
     print(f"Wrote {MANIFEST.relative_to(ROOT)} — {len(entries)} photo(s).")
     if not entries:
         print(f"  (nothing in {GALLERY.relative_to(ROOT)}/ yet)")
+    if missing:
+        print(f"  {len(missing)} without a caption in {CAPTIONS.name}, using the filename:")
+        for name in missing:
+            print(f"    {name}")
     return 0
 
 

@@ -3,130 +3,130 @@
 window.GALLERY = [
   {
     "src": "img/gallery/img_4939.jpg",
-    "alt": "Img 4939"
+    "alt": "A pale yellow building with a wrought-iron balcony, scooters parked along the kerb"
   },
   {
     "src": "img/gallery/img_5062.jpg",
-    "alt": "Img 5062"
+    "alt": "A wooden suspension footbridge leading into dense green forest"
   },
   {
     "src": "img/gallery/img_5096.jpg",
-    "alt": "Img 5096"
+    "alt": "Low cloud over a still lake, forested hills mirrored in the water"
   },
   {
     "src": "img/gallery/img_5134.jpg",
-    "alt": "Img 5134"
+    "alt": "A narrow shopping street crowded with overhead signage and passers-by"
   },
   {
     "src": "img/gallery/img_5261.jpg",
-    "alt": "Img 5261"
+    "alt": "A night street under lanterns and stacked vertical neon signs"
   },
   {
     "src": "img/gallery/img_5266.jpg",
-    "alt": "Img 5266"
+    "alt": "Neon storefronts glowing over a busy corner after dark"
   },
   {
     "src": "img/gallery/img_5478.jpg",
-    "alt": "Img 5478"
+    "alt": "A quiet backstreet running alongside a burnt-orange building"
   },
   {
     "src": "img/gallery/img_5493.jpg",
-    "alt": "Img 5493"
+    "alt": "A red panda asleep along a branch beneath a greenhouse roof"
   },
   {
     "src": "img/gallery/img_5671.jpg",
-    "alt": "Img 5671"
+    "alt": "A bird of prey circling high against a bright, clouded sky"
   },
   {
     "src": "img/gallery/img_5733.jpg",
-    "alt": "Img 5733"
+    "alt": "The sea framed through a natural arch worn into a rock cave"
   },
   {
     "src": "img/gallery/img_5778.jpg",
-    "alt": "Img 5778"
+    "alt": "A figure working behind the counter of a small, warmly lit cafe"
   },
   {
     "src": "img/gallery/img_5792.jpg",
-    "alt": "Img 5792"
+    "alt": "A man pausing beside utility panels in a narrow service alley"
   },
   {
     "src": "img/gallery/img_5805.jpg",
-    "alt": "Img 5805"
+    "alt": "Commuters crossing a bright, glass-roofed station concourse"
   },
   {
     "src": "img/gallery/img_6899.jpg",
-    "alt": "Img 6899"
+    "alt": "A pale desert plateau flattening out under a hazy sky"
   },
   {
     "src": "img/gallery/img_7537.jpg",
-    "alt": "Img 7537"
+    "alt": "A lone figure beside an enormous boulder split cleanly in two"
   },
   {
     "src": "img/gallery/img_7601.jpg",
-    "alt": "Img 7601"
+    "alt": "A man in a thobe and shemagh reaching up into a fruit tree"
   },
   {
     "src": "img/gallery/img_8052.jpg",
-    "alt": "Img 8052"
+    "alt": "A figure walking across rippled sand at sunset among rock forms"
   },
   {
     "src": "img/gallery/img_8058.jpg",
-    "alt": "Img 8058"
+    "alt": "Sandstone pinnacles scattered across a desert plain at dusk"
   },
   {
     "src": "img/gallery/img_8149.jpg",
-    "alt": "Img 8149"
+    "alt": "Red rock outcrops and desert scrub under an open blue sky"
   },
   {
     "src": "img/gallery/img_8185.jpg",
-    "alt": "Img 8185"
+    "alt": "A silhouette walking into the mouth of a narrow canyon"
   },
   {
     "src": "img/gallery/img_8187.jpg",
-    "alt": "Img 8187"
+    "alt": "Fresh snow dusting a dark, rocky slope"
   },
   {
     "src": "img/gallery/img_8224.jpg",
-    "alt": "Img 8224"
+    "alt": "A shaded shelter standing alone on flat, empty desert ground"
   },
   {
     "src": "img/gallery/img_8226.jpg",
-    "alt": "Img 8226"
+    "alt": "A marina boardwalk seen through the diamonds of a chain-link fence"
   },
   {
     "src": "img/gallery/img_8304.jpg",
-    "alt": "Img 8304"
+    "alt": "Weathered sandstone, close enough to read the grain of the rock"
   },
   {
     "src": "img/gallery/img_8318.jpg",
-    "alt": "Img 8318"
+    "alt": "A tall mirrored sculpture standing between canyon walls"
   },
   {
     "src": "img/gallery/img_8330.jpg",
-    "alt": "Img 8330"
+    "alt": "Ancient inscriptions carved into a sandstone face"
   },
   {
     "src": "img/gallery/img_9174.jpg",
-    "alt": "Img 9174"
+    "alt": "A stone path climbing a green mountainside into low cloud"
   },
   {
     "src": "img/gallery/img_9180.jpg",
-    "alt": "Img 9180"
+    "alt": "Boggy green upland scattered with rock under a grey sky"
   },
   {
     "src": "img/gallery/img_9182.jpg",
-    "alt": "Img 9182"
+    "alt": "Dark mountain ridges holding the last patches of snow"
   },
   {
     "src": "img/gallery/img_9228.jpg",
-    "alt": "Img 9228"
+    "alt": "A wide glacial valley walled in by steep scree slopes"
   },
   {
     "src": "img/gallery/img_9236.jpg",
-    "alt": "Img 9236"
+    "alt": "Sheep grazing a hillside above a broad, open valley"
   },
   {
     "src": "img/gallery/img_9239.jpg",
-    "alt": "Img 9239"
+    "alt": "Mossy stone steps climbing through green woodland"
   }
 ];
