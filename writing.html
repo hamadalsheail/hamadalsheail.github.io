@@ -11,6 +11,11 @@ description: Writing by Hamad Alsheail — essays and reflections, most of them 
   <p class="writing-intro">Reflections on what the camera saw. Each piece appears in the language it was written in.</p>
 
   {% if posts.size > 0 %}
+  <div class="post-search">
+    <label for="post-search" class="visually-hidden">Search writing</label>
+    <input id="post-search" type="search" placeholder="Search · ابحث" autocomplete="off" dir="auto">
+    <span id="search-status" class="post-search-status" aria-live="polite"></span>
+  </div>
   <ol class="post-list">
     {% for post in posts %}
     {%- assign is_ar = false -%}{%- if post.lang == "ar" -%}{%- assign is_ar = true -%}{%- endif -%}
@@ -32,3 +37,5 @@ description: Writing by Hamad Alsheail — essays and reflections, most of them 
   <p class="writing-empty">No posts yet.</p>
   {% endif %}
 </section>
+
+<script src="/writing-search.js" defer></script>
