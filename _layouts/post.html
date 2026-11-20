@@ -1,0 +1,50 @@
+---
+layout: base
+nav: writing
+---
+{%- assign is_ar = false -%}{%- if page.lang == "ar" -%}{%- assign is_ar = true -%}{%- endif -%}
+{%- comment -%} Post Studio writes empty strings for unused fields; Liquid treats "" as true, so test with != "". {%- endcomment -%}
+<article class="post" lang="{{ page.lang | default: 'en' }}" dir="{% if is_ar %}rtl{% else %}ltr{% endif %}">
+  <header class="post-head">
+    <p class="post-meta" dir="ltr">
+      <a class="post-back" href="/writing/">Writing</a>
+      <span class="sep">|</span>
+      <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: '%-d %b %Y' }}</time>
+      <span class="lang-tag">{% if is_ar %}AR{% else %}EN{% endif %}</span>
+      {% if page.draft %}<span class="lang-tag">Draft</span>{% endif %}
+      <span class="text-size" role="group" aria-label="Text size">
+        <button class="ts-down" type="button" aria-label="Smaller text">A&minus;</button>
+        <button class="ts-up" type="button" aria-label="Larger text">A+</button>
+      </span>
+    </p>
+    <h1 class="post-title">{{ page.title }}</h1>
+  </header>
+
+  {% if page.cover and page.cover != "" %}
+  <figure class="post-cover">
+    <img src="{{ page.cover }}" alt="{{ page.cover_alt | default: page.title }}" width="1400" height="875">
+  </figure>
+  {% endif %}
+
+  <div class="post-body">
+    {{ content }}
+  </div>
+
+  {% if page.instagram and page.instagram != "" %}
+  <div class="post-embed" dir="ltr">
+    {% include instagram.html url=page.instagram %}
+  </div>
+  {% endif %}
+
+  {% if page.tags.size > 0 %}
+  <ul class="post-tags" aria-label="Tags">
+    {% for tag in page.tags %}<li>{{ tag }}</li>{% endfor %}
+  </ul>
+  {% endif %}
+</article>
+
+<script src="/text-size.js"></script>
+
+<nav class="post-nav" aria-label="More writing">
+  <a href="/writing/">All writing<span class="arrow" aria-hidden="true"></span></a>
+</nav>

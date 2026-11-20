@@ -1,0 +1,15 @@
+<header class="topbar">
+  <a class="mark" href="/">Diwan Alshams</a>
+  <nav>
+    <a href="/photography.html#about">About</a>
+    <a href="/photography.html#waatha">Wa'atha'</a>
+    <a href="/photography.html#wilderness">Wilderness</a>
+    <a href="/photography.html#animals">Animals</a>
+    <a href="/photography.html#streets">Streets</a>
+    <a href="/photography.html#humans">Humans</a>
+    <a href="/gallery.html">Gallery</a>
+    <a{% if include.current == "writing" %} class="is-current" aria-current="page"{% endif %} href="/writing/">Writing</a>
+    <a href="/photography.html#contact">Contact</a>
+    {% include theme-toggle.html %}
+  </nav>
+</header>
