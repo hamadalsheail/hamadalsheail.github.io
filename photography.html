@@ -1,3 +1,7 @@
+---
+# Processed by Jekyll only to pull in the theme toggle.
+permalink: /photography.html
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +12,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Noto+Kufi+Arabic:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="/styles.css">
+<script>{% include theme-init.js %}</script>
 </head>
 <body>
 
@@ -24,6 +29,7 @@
     <a href="/gallery.html">Gallery</a>
     <a href="/writing/">Writing</a>
     <a href="#contact">Contact</a>
+    {% include theme-toggle.html %}
   </nav>
 </header>
 
@@ -162,6 +168,7 @@
   </figure>
 </div>
 
-<script src="script.js"></script>
+<script src="/script.js"></script>
+<script src="/theme.js"></script>
 </body>
 </html>

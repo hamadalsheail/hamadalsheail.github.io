@@ -15,40 +15,49 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Noto+Kufi+Arabic:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/styles.css">
+<script>{% include theme-init.js %}</script>
 <link rel="preload" as="image" href="/img/hero-canyon.jpg">
 </head>
 <body class="landing-page">
 
 <header class="landing-head">
   <h1>Hamad Alsheail <span class="sep">|</span> Diwan Alshams</h1>
-  <span class="ar">ديوان الشمس</span>
+  <div class="landing-head-end">
+    <span class="ar">ديوان الشمس</span>
+    {% include theme-toggle.html %}
+  </div>
 </header>
 
 <main class="landing">
   <a class="landing-half landing-photo" href="/photography.html">
     <img src="/img/hero-canyon.jpg" alt="" width="1400" height="1400">
-    <span class="landing-label">
-      <span class="landing-title">Photography</span>
-      <span class="landing-sub">Wilderness, Animals, Streets, Humans</span>
-      <span class="landing-go">Enter<span class="arrow" aria-hidden="true"></span></span>
+    <span class="landing-title">Photography</span>
+    <span class="landing-details">
+      <span class="landing-sub">4 series</span>
+      <span class="landing-latest">
+        <span class="landing-post">Wilderness</span>
+        <span class="landing-post">Animals</span>
+        <span class="landing-post">Streets</span>
+        <span class="landing-post">Humans</span>
+      </span>
     </span>
   </a>
 
   <a class="landing-half landing-writing" href="/writing/">
-    <span class="landing-label">
-      <span class="landing-title">Writing</span>
-      <span class="landing-sub">{% if posts.size > 0 %}{{ posts.size }} {% if posts.size == 1 %}piece{% else %}pieces{% endif %}, mostly in Arabic{% else %}Essays and reflections{% endif %}</span>
+    <span class="landing-title">Writing</span>
+    <span class="landing-details">
+      <span class="landing-sub">{% if posts.size > 0 %}{{ posts.size }} {% if posts.size == 1 %}piece{% else %}pieces{% endif %}{% else %}Essays and reflections{% endif %}</span>
       {% if posts.size > 0 %}
       <span class="landing-latest">
-        {% for post in posts limit: 3 %}
-        <span class="landing-post" lang="{{ post.lang | default: 'en' }}" dir="{% if post.lang == 'ar' %}rtl{% else %}ltr{% endif %}">{{ post.title }}</span>
+        {% for post in posts limit: 4 %}
+        <span class="landing-post"><span lang="{{ post.lang | default: 'en' }}" dir="{% if post.lang == 'ar' %}rtl{% else %}ltr{% endif %}">{{ post.title }}</span></span>
         {% endfor %}
       </span>
       {% endif %}
-      <span class="landing-go">Enter<span class="arrow" aria-hidden="true"></span></span>
     </span>
   </a>
 </main>
 
+<script src="/theme.js"></script>
 </body>
 </html>
