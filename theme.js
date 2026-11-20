@@ -27,3 +27,32 @@
   media.addEventListener && media.addEventListener('change', label);
   label();
 })();
+
+// Phones and tablets: hide the top bar while scrolling down, bring it back on
+// any scroll up (or near the top). Desktop keeps it fixed in place.
+(function () {
+  const bar = document.querySelector('.topbar');
+  if (!bar) return;
+  const small = window.matchMedia('(max-width: 900px)');
+  let lastY = window.scrollY;
+  let ticking = false;
+
+  function update() {
+    const y = window.scrollY;
+    const delta = y - lastY;
+    if (!small.matches || y < bar.offsetHeight) {
+      bar.classList.remove('topbar-hidden');
+    } else if (delta > 6) {
+      bar.classList.add('topbar-hidden');
+    } else if (delta < -6) {
+      bar.classList.remove('topbar-hidden');
+    }
+    if (Math.abs(delta) > 6) lastY = y;
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  }, { passive: true });
+  bar.addEventListener('focusin', () => bar.classList.remove('topbar-hidden'));
+})();
