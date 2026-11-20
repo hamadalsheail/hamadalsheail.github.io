@@ -18,10 +18,10 @@ description: Writing by Hamad Alsheail — essays and reflections, most of them 
   <ol class="post-list">
     {% for post in posts %}
     {%- assign is_ar = false -%}{%- if post.lang == "ar" -%}{%- assign is_ar = true -%}{%- endif -%}
-    <li>
+    <li lang="{{ post.lang | default: 'en' }}" dir="{% if is_ar %}rtl{% else %}ltr{% endif %}">
       <a href="{{ post.url }}">
         <span class="post-list-meta">
-          <time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: '%-d %b %Y' }}</time>
+          <time dir="ltr" datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: '%-d %b %Y' }}</time>
         </span>
         {%- assign thumb = nil -%}
         {%- assign thumb_path = "/img/posts/" | append: post.slug | append: "/thumb.jpg" -%}
