@@ -10,7 +10,6 @@ nav: writing
       <a class="post-back" href="/writing/">Writing</a>
       <span class="sep">|</span>
       <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: '%-d %b %Y' }}</time>
-      <span class="lang-tag">{% if is_ar %}AR{% else %}EN{% endif %}</span>
       {% if page.draft %}<span class="lang-tag">Draft</span>{% endif %}
       <span class="text-size" role="group" aria-label="Text size">
         <button class="ts-down" type="button" aria-label="Smaller text">A&minus;</button>
