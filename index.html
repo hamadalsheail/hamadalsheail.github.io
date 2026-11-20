@@ -50,7 +50,7 @@
       {% if posts.size > 0 %}
       <span class="landing-latest">
         {% for post in posts limit: 4 %}
-        <span class="landing-post"><span lang="{{ post.lang | default: 'en' }}" dir="{% if post.lang == 'ar' %}rtl{% else %}ltr{% endif %}">{{ post.title }}</span></span>
+        <span class="landing-post" lang="{{ post.lang | default: 'en' }}" dir="{% if post.lang == 'ar' %}rtl{% else %}ltr{% endif %}">{{ post.title }}</span>
         {% endfor %}
       </span>
       {% endif %}
