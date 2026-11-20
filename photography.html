@@ -22,7 +22,7 @@ permalink: /photography.html
   <nav>
     <a href="#about">About</a>
     <a href="/writing/">Writings</a>
-    <a href="#waatha">Wa'atha'</a>
+    <a href="#art-projects">Art Projects</a>
     <a href="#wilderness">Wilderness</a>
     <a href="#animals">Animals</a>
     <a href="#streets">Streets</a>
@@ -69,17 +69,32 @@ permalink: /photography.html
     </div>
   </section>
 
-  <!-- Showcase -->
-  <section id="waatha" class="showcase">
-    <h2 class="section-title">Showcase</h2>
-    <p class="work-title">Wa'atha' 1447 H <span class="sep">|</span> <span class="ar">وعثاء ١٤٤٧ هـ</span></p>
-    <figure class="showcase-image">
-      <img src="img/waatha-collage.jpg" alt="A printed grid collage of daily self-portraits in black and white, interrupted by a column of colour landscape frames" loading="lazy" width="1400" height="1368">
-    </figure>
-    <div class="showcase-copy">
-      <p>Representation of the cumulative hardship of adventuring in nature. Escaping the urban fast-paced life to disconnect in the slow-paced nature.</p>
-      <p>A printed collage capturing daily portraits from left to right, showing the physical toll of the journey undertaken day after day in search of mental clarity — even if there is a physical tax — and highlighting the major stops along the trip in Saudi Arabia.</p>
-    </div>
+  <!-- Art Projects -->
+  <section id="art-projects" class="showcase projects">
+    <h2 class="section-title">Art Projects</h2>
+
+    <article class="project project-reel" lang="ar" dir="rtl">
+      <p class="work-title">في ربوع بلادي - الجزء الثالث 1448 هـ</p>
+      <div class="project-body">
+        <div class="project-embed" dir="ltr">
+          {% include instagram.html url="https://www.instagram.com/reel/Df91k72o89W/" %}
+        </div>
+        <div class="project-copy">
+          <p>رحلة سنوية أجول بها ربوع بلادي المملكة العربية السعودية، ما بين الصحاري والجبال والوديان الخضراء والبحار والشواطئ ورمالها البيضاء. حب الطبيعة فطرة بشرية ولا ينبغي أن ننسى هذه السمة أو نتناساها لأنها جزء من هويتنا، حياتنا المعاصرة قد تنسينا بعض الشيء لذة التوغل في الطبيعة والتأمل في جمال خلق الله وبديع صنعه. من منظوري الشخصي والفلسفي أن مغامرة كهذه رغم الجهد المبذول والمخاطر الغير متوقعة إلّا أنها تذكرة تعيد لنا لذّة أبسط النعم والأمور الدنيوية التي قد نعتاد عليها مع وتيرة الحياة.</p>
+        </div>
+      </div>
+    </article>
+
+    <article id="waatha" class="project">
+      <p class="work-title">Wa'atha' 1447 H <span class="sep">|</span> <span class="ar">وعثاء ١٤٤٧ هـ</span></p>
+      <figure class="showcase-image">
+        <img src="img/waatha-collage.jpg" alt="A printed grid collage of daily self-portraits in black and white, interrupted by a column of colour landscape frames" loading="lazy" width="1400" height="1368">
+      </figure>
+      <div class="showcase-copy">
+        <p>Representation of the cumulative hardship of adventuring in nature. Escaping the urban fast-paced life to disconnect in the slow-paced nature.</p>
+        <p>A printed collage capturing daily portraits from left to right, showing the physical toll of the journey undertaken day after day in search of mental clarity — even if there is a physical tax — and highlighting the major stops along the trip in Saudi Arabia.</p>
+      </div>
+    </article>
   </section>
 
   <!-- Series -->
@@ -170,5 +185,6 @@ permalink: /photography.html
 
 <script src="/script.js"></script>
 <script src="/theme.js"></script>
+<script async src="https://www.instagram.com/embed.js"></script>
 </body>
 </html>
