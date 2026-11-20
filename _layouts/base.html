@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% if page.title %}{{ page.title | strip_html }} — {% endif %}Hamad Alsheail</title>
+<meta name="description" content="{{ page.excerpt | default: page.description | default: site.description | strip_html | strip_newlines | truncate: 160 }}">
+<link rel="canonical" href="{{ page.url | absolute_url }}">
+<meta property="og:title" content="{{ page.title | default: site.title | strip_html }}">
+<meta property="og:url" content="{{ page.url | absolute_url }}">
+{% if page.cover and page.cover != "" %}<meta property="og:image" content="{{ page.cover | absolute_url }}">{% endif %}
+{% if page.draft %}<meta name="robots" content="noindex">{% endif %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Noto+Kufi+Arabic:wght@400;600&family=Noto+Naskh+Arabic:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+{% include topbar.html current=page.nav %}
+
+<main>
+{{ content }}
+</main>
+
+<footer>
+  <span>Hamad Alsheail <span class="sep">|</span> Diwan Alshams</span>
+  <span class="ar">ديوان الشمس</span>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" tabindex="-1" hidden>
+  <button class="lb-close" type="button" aria-label="Close">&times;</button>
+  <button class="lb-prev" type="button" aria-label="Previous image">&#8249;</button>
+  <button class="lb-next" type="button" aria-label="Next image">&#8250;</button>
+  <figure class="lb-stage">
+    <img id="lb-img" src="" alt="">
+    <figcaption id="lb-cap"></figcaption>
+  </figure>
+</div>
+
+<script src="/script.js"></script>
+{% if page.instagram != nil and page.instagram != "" %}{% assign need_ig = true %}{% endif %}{% if need_ig or content contains "instagram-media" %}<script async src="https://www.instagram.com/embed.js"></script>{% endif %}
+</body>
+</html>

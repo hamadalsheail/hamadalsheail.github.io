@@ -1,0 +1,31 @@
+# Jekyll config — GitHub Pages builds the site with Jekyll on every push.
+# Only the blog uses it; index.html and gallery.html are served as written.
+
+title: Hamad Alsheail — Diwan Alshams
+description: Creative portfolio of Hamad Alsheail, an artist based in Riyadh working between words and photographs.
+url: https://hamadalsheail.sa
+lang: en
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+
+# A post lives at /writing/<slug>/. `slug` in front matter wins over the filename.
+permalink: /writing/:slug/
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      lang: en
+
+exclude:
+  - README.md
+  - tools/
+  - .DS_Store
+  - Gemfile
+  - Gemfile.lock
+  - vendor/

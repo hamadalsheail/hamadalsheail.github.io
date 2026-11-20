@@ -2,7 +2,7 @@
 // Exposed as window.initLightbox() so the gallery can re-run it after rendering.
 (function () {
   const SELECTOR =
-    '.hero-strip figure, .grid figure, .about figure, .showcase-image, .gallery-grid figure';
+    '.hero-strip figure, .grid figure, .about figure, .showcase-image, .gallery-grid figure, .post-cover, .post-body figure, .post-body p > img';
 
   const box = document.getElementById('lightbox');
   if (!box) return;
@@ -50,12 +50,13 @@
   // Re-scannable: picks up figures added to the DOM after load.
   function collect() {
     const figures = Array.from(document.querySelectorAll(SELECTOR));
-    images = figures.map((f) => f.querySelector('img')).filter(Boolean);
+    const imgOf = (f) => (f.tagName === 'IMG' ? f : f.querySelector('img'));
+    images = figures.map(imgOf).filter(Boolean);
 
     figures.forEach((trigger) => {
       if (trigger.dataset.lbBound) return;
       trigger.dataset.lbBound = 'true';
-      const el = trigger.querySelector('img');
+      const el = imgOf(trigger);
       if (!el) return;
       trigger.setAttribute('tabindex', '0');
       trigger.setAttribute('role', 'button');

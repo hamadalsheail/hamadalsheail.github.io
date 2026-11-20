@@ -1,0 +1,34 @@
+---
+layout: base
+title: Writing
+nav: writing
+permalink: /writing/
+description: Writing by Hamad Alsheail — essays and reflections, most of them in Arabic.
+---
+{%- assign posts = site.posts | where_exp: "p", "p.draft != true" -%}
+<section class="writing">
+  <h1 class="section-title">Writing</h1>
+  <p class="writing-intro">Reflections on what the camera saw. Each piece appears in the language it was written in.</p>
+
+  {% if posts.size > 0 %}
+  <ol class="post-list">
+    {% for post in posts %}
+    {%- assign is_ar = false -%}{%- if post.lang == "ar" -%}{%- assign is_ar = true -%}{%- endif -%}
+    <li>
+      <a href="{{ post.url }}">
+        <span class="post-list-meta">
+          <time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: '%-d %b %Y' }}</time>
+          <span class="lang-tag">{% if is_ar %}AR{% else %}EN{% endif %}</span>
+        </span>
+        <span class="post-list-text" lang="{{ post.lang | default: 'en' }}" dir="{% if is_ar %}rtl{% else %}ltr{% endif %}">
+          <span class="post-list-title">{{ post.title }}</span>
+          <span class="post-list-excerpt">{{ post.excerpt | strip_html | strip_newlines | truncate: 180 }}</span>
+        </span>
+      </a>
+    </li>
+    {% endfor %}
+  </ol>
+  {% else %}
+  <p class="writing-empty">No posts yet.</p>
+  {% endif %}
+</section>

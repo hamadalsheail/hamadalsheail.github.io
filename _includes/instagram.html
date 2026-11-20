@@ -1,0 +1,8 @@
+{%- comment -%}
+  Instagram's official embed. Pass the reel or post URL:
+  {% include instagram.html url="https://www.instagram.com/reel/XXXX/" %}
+  embed.js (loaded in the base layout) turns this blockquote into the player.
+{%- endcomment -%}
+<blockquote class="instagram-media" data-instgrm-permalink="{{ include.url }}" data-instgrm-version="14">
+  <a href="{{ include.url }}" target="_blank" rel="noopener">View this on Instagram</a>
+</blockquote>
