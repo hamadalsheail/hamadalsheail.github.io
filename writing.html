@@ -25,10 +25,18 @@ description: Writing by Hamad Alsheail — essays and reflections, most of them 
           <time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: '%-d %b %Y' }}</time>
           <span class="lang-tag">{% if is_ar %}AR{% else %}EN{% endif %}</span>
         </span>
+        {%- assign thumb = nil -%}
+        {%- assign thumb_path = "/img/posts/" | append: post.slug | append: "/thumb.jpg" -%}
+        {%- assign has_thumb = site.static_files | where: "path", thumb_path | first -%}
+        {%- if has_thumb -%}{%- assign thumb = thumb_path -%}
+        {%- elsif post.cover and post.cover != "" -%}{%- assign thumb = post.cover -%}
+        {%- elsif post.content contains '<img' -%}{%- assign thumb = post.content | split: '<img src="' | slice: 1 | first | split: '"' | first -%}
+        {%- endif %}
         <span class="post-list-text" lang="{{ post.lang | default: 'en' }}" dir="{% if is_ar %}rtl{% else %}ltr{% endif %}">
           <span class="post-list-title">{{ post.title }}</span>
           <span class="post-list-excerpt">{{ post.excerpt | strip_html | strip_newlines | truncate: 180 }}</span>
         </span>
+        {% if thumb %}<img class="post-list-thumb" src="{{ thumb }}" alt="" loading="lazy" decoding="async" width="200" height="200">{% endif %}
       </a>
     </li>
     {% endfor %}

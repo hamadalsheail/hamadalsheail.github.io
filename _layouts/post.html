@@ -12,6 +12,10 @@ nav: writing
       <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: '%-d %b %Y' }}</time>
       <span class="lang-tag">{% if is_ar %}AR{% else %}EN{% endif %}</span>
       {% if page.draft %}<span class="lang-tag">Draft</span>{% endif %}
+      <span class="text-size" role="group" aria-label="Text size">
+        <button class="ts-down" type="button" aria-label="Smaller text">A&minus;</button>
+        <button class="ts-up" type="button" aria-label="Larger text">A+</button>
+      </span>
     </p>
     <h1 class="post-title">{{ page.title }}</h1>
   </header>
@@ -38,6 +42,8 @@ nav: writing
   </ul>
   {% endif %}
 </article>
+
+<script src="/text-size.js"></script>
 
 <nav class="post-nav" aria-label="More writing">
   <a href="/writing/">All writing<span class="arrow" aria-hidden="true"></span></a>
