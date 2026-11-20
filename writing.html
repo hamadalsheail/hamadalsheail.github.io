@@ -7,8 +7,7 @@ description: Writing by Hamad Alsheail — essays and reflections, most of them 
 ---
 {%- assign posts = site.posts | where_exp: "p", "p.draft != true" -%}
 <section class="writing">
-  <h1 class="section-title">Writing</h1>
-  <p class="writing-intro">Reflections on what the camera saw. Each piece appears in the language it was written in.</p>
+  <h1 class="section-title">Writings</h1>
 
   {% if posts.size > 0 %}
   <div class="post-search">
@@ -23,7 +22,6 @@ description: Writing by Hamad Alsheail — essays and reflections, most of them 
       <a href="{{ post.url }}">
         <span class="post-list-meta">
           <time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: '%-d %b %Y' }}</time>
-          <span class="lang-tag">{% if is_ar %}AR{% else %}EN{% endif %}</span>
         </span>
         {%- assign thumb = nil -%}
         {%- assign thumb_path = "/img/posts/" | append: post.slug | append: "/thumb.jpg" -%}
