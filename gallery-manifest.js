@@ -128,5 +128,41 @@ window.GALLERY = [
   {
     "src": "img/gallery/img_9239.jpg",
     "alt": "Mossy stone steps climbing through green woodland"
+  },
+  {
+    "src": "img/gallery/shms_3266.jpg",
+    "alt": "Orange berries on a thorny desert shrub among bright green leaves"
+  },
+  {
+    "src": "img/gallery/shms_3281.jpg",
+    "alt": "A still pool in a rocky canyon mirroring the cliffs and a pale sky"
+  },
+  {
+    "src": "img/gallery/shms_3290.jpg",
+    "alt": "A huge rounded granite boulder behind a thorny shrub, a mushroom-shaped rock beyond"
+  },
+  {
+    "src": "img/gallery/shms_3312.jpg",
+    "alt": "A small hollow in red granite holding a pitted, honeycomb-like nest"
+  },
+  {
+    "src": "img/gallery/shms_3350.jpg",
+    "alt": "A brightly coloured playground standing alone on churned desert sand"
+  },
+  {
+    "src": "img/gallery/shms_3375.jpg",
+    "alt": "A thin crescent moon beside a weathered sandstone tower at dusk"
+  },
+  {
+    "src": "img/gallery/shms_3410.jpg",
+    "alt": "A rock spire lit warm red against a star-filled night sky"
+  },
+  {
+    "src": "img/gallery/shms_3455.jpg",
+    "alt": "A lone bare tree beside an old railway embankment on a hazy desert plain"
+  },
+  {
+    "src": "img/gallery/shms_3547.jpg",
+    "alt": "A small yellow and green striped mosque with a crescent finial beneath bare mountains"
   }
 ];
