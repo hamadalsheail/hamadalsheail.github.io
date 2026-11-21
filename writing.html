@@ -1,18 +1,19 @@
 ---
 layout: base
-title: Writing
+title: Writings
+title_ar: مدونة كتاباتي
 nav: writing
 permalink: /writing/
-description: Writing by Hamad Alsheail — essays and reflections, most of them in Arabic.
+description: "Writing by Hamad Alsheail: essays and reflections, most of them in Arabic."
 ---
 {%- assign posts = site.posts | where_exp: "p", "p.draft != true" -%}
 <section class="writing">
-  <h1 class="section-title">Writings</h1>
+  <h1 class="section-title"><span data-lang="en">Writings</span><span data-lang="ar">مدونة كتاباتي</span></h1>
 
   {% if posts.size > 0 %}
   <div class="post-search">
-    <label for="post-search" class="visually-hidden">Search writing</label>
-    <input id="post-search" type="search" placeholder="Search · ابحث" autocomplete="off" dir="auto">
+    <label for="post-search" class="visually-hidden"><span data-lang="en">Search writing</span><span data-lang="ar">ابحث في الكتابات</span></label>
+    <input id="post-search" type="search" placeholder="ابحث" data-placeholder-ar="ابحث" data-placeholder-en="Search" autocomplete="off" dir="auto">
     <span id="search-status" class="post-search-status" aria-live="polite"></span>
   </div>
   <ol class="post-list">
@@ -21,7 +22,7 @@ description: Writing by Hamad Alsheail — essays and reflections, most of them 
     <li lang="{{ post.lang | default: 'en' }}" dir="{% if is_ar %}rtl{% else %}ltr{% endif %}">
       <a href="{{ post.url }}">
         <span class="post-list-meta">
-          <time dir="ltr" datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: '%-d %b %Y' }}</time>
+          <time datetime="{{ post.date | date: '%Y-%m-%d' }}"><span data-lang="en" dir="ltr">{{ post.date | date: '%-d %b %Y' }}</span><span data-lang="ar" dir="rtl">{% include ar-date.html date=post.date %}</span></time>
         </span>
         {%- assign thumb = nil -%}
         {%- assign thumb_path = "/img/posts/" | append: post.slug | append: "/thumb.jpg" -%}
@@ -40,7 +41,7 @@ description: Writing by Hamad Alsheail — essays and reflections, most of them 
     {% endfor %}
   </ol>
   {% else %}
-  <p class="writing-empty">No posts yet.</p>
+  <p class="writing-empty"><span data-lang="en">No posts yet.</span><span data-lang="ar">لا توجد كتابات بعد.</span></p>
   {% endif %}
 </section>
 

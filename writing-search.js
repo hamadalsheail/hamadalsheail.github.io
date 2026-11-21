@@ -50,12 +50,18 @@
       li.hidden = !match;
       if (match) shown++;
     });
-    status.textContent = terms.length
-      ? (shown ? shown + (shown === 1 ? ' piece' : ' pieces') : 'Nothing found')
-      : '';
+    const ar = typeof window.siteLang === 'function' && window.siteLang() === 'ar';
+    status.textContent = !terms.length ? ''
+      : ar ? (shown ? toArabicDigits(shown) + (shown === 1 ? ' نص' : ' نصوص') : 'لا توجد نتائج')
+      : (shown ? shown + (shown === 1 ? ' piece' : ' pieces') : 'Nothing found');
+  }
+
+  function toArabicDigits(n) {
+    return String(n).replace(/[0-9]/g, (d) => String.fromCharCode(0x0660 + Number(d)));
   }
 
   input.addEventListener('focus', load, { once: true });
+  document.addEventListener('langchange', () => { if (input.value) run(); });
   input.addEventListener('input', () => load().then(run));
 
   // Support /writing/?q=word links.

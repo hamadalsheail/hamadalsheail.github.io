@@ -6,10 +6,10 @@ nav: writing
 {%- comment -%} Post Studio writes empty strings for unused fields; Liquid treats "" as true, so test with != "". {%- endcomment -%}
 <article class="post" lang="{{ page.lang | default: 'en' }}" dir="{% if is_ar %}rtl{% else %}ltr{% endif %}">
   <header class="post-head">
-    <p class="post-meta" dir="ltr">
-      <a class="post-back" href="/writing/">Writings</a>
+    <p class="post-meta">
+      <a class="post-back" href="/writing/"><span data-lang="en">Writings</span><span data-lang="ar">مدونة كتاباتي</span></a>
       <span class="sep">|</span>
-      <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: '%-d %b %Y' }}</time>
+      <time datetime="{{ page.date | date: '%Y-%m-%d' }}"><span data-lang="en" dir="ltr">{{ page.date | date: '%-d %b %Y' }}</span><span data-lang="ar" dir="rtl">{% include ar-date.html date=page.date %}</span></time>
       {% if page.draft %}<span class="lang-tag">Draft</span>{% endif %}
       <span class="text-size" role="group" aria-label="Text size">
         <button class="ts-down" type="button" aria-label="Smaller text">A&minus;</button>
@@ -45,5 +45,5 @@ nav: writing
 <script src="/text-size.js"></script>
 
 <nav class="post-nav" aria-label="More writing">
-  <a href="/writing/">All writing<span class="arrow" aria-hidden="true"></span></a>
+  <a href="/writing/"><span data-lang="en">All writing</span><span data-lang="ar">فهرس الكتابات</span><span class="arrow" aria-hidden="true"></span></a>
 </nav>

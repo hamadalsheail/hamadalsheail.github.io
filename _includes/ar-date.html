@@ -1,0 +1,4 @@
+{%- assign ar_months = "يناير,فبراير,مارس,أبريل,مايو,يونيو,يوليو,أغسطس,سبتمبر,أكتوبر,نوفمبر,ديسمبر" | split: "," -%}
+{%- assign m = include.date | date: "%-m" | minus: 1 -%}
+{%- capture d -%}{{ include.date | date: "%-d" }} {{ ar_months[m] }} {{ include.date | date: "%Y" }}{%- endcapture -%}
+{{- d | replace: "0","٠" | replace: "1","١" | replace: "2","٢" | replace: "3","٣" | replace: "4","٤" | replace: "5","٥" | replace: "6","٦" | replace: "7","٧" | replace: "8","٨" | replace: "9","٩" -}}

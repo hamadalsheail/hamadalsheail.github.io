@@ -662,7 +662,6 @@ section { scroll-margin-top: 4.5rem; }
 .post-back { text-decoration: none; }
 .post-back:hover { color: var(--ink); }
 
-.post[dir="rtl"] .post-meta { justify-content: flex-end; }
 
 .post-title {
   margin: 0;
