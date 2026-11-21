@@ -3,43 +3,29 @@
 permalink: /photography.html
 ---
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl" data-title-en="Photography | Hamad Alsheail" data-title-ar="ألبوم الصور | حمد الشعيل">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Photography — Hamad Alsheail</title>
-<meta name="description" content="Creative portfolio of Hamad Alsheail, an artist based in Riyadh working between words and photographs. Diwan Alshams.">
+<title>ألبوم الصور | حمد الشعيل</title>
+<meta name="description" content="Portfolio of Hamad Alsheail, an artist based in Riyadh working between words and photographs. Diwan Alshams.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Noto+Kufi+Arabic:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Noto+Kufi+Arabic:wght@400;600&family=Noto+Naskh+Arabic:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/styles.css?v={{ site.time | date: '%s' }}">
-<script>{% include theme-init.js %}</script>
+<script>{% include theme-init.js %}{% include lang-init.js %}</script>
 </head>
 <body>
 
-<header class="topbar">
-  <a class="mark" href="/">Diwan Alshams</a>
-  <nav>
-    <a href="#about">About</a>
-    <a href="/writing/">Writings</a>
-    <a href="#art-projects">Art Projects</a>
-    <a href="#wilderness">Wilderness</a>
-    <a href="#animals">Animals</a>
-    <a href="#streets">Streets</a>
-    <a href="#humans">Humans</a>
-    <a href="/gallery.html">Gallery</a>
-    <a href="#contact">Contact</a>
-    {% include theme-toggle.html %}
-  </nav>
-</header>
+{% include topbar.html current="" %}
 
 <main id="top">
 
   <!-- Hero -->
   <section class="hero">
     <div class="hero-head">
-      <h1>Hamad Alsheail <span class="sep">|</span> Diwan Alshams</h1>
-      <p class="hero-sub">Creative Portfolio <span class="ar">ديوان الشمس</span></p>
+      <h1><span data-lang="en">Hamad Alsheail <span class="sep">|</span> Diwan Alshams</span><span data-lang="ar">حمد الشعيل <span class="sep">|</span> ديوان الشمس</span></h1>
+      <p class="hero-sub"><span class="ar" data-lang="en">ديوان الشمس</span><span data-lang="ar" lang="en" dir="ltr">Diwan Alshams</span></p>
     </div>
     <div class="hero-strip">
       <figure><img src="img/hero-canyon.jpg" alt="A lone figure in a thobe walking a dry riverbed beneath red sandstone cliffs" width="1400" height="1400"></figure>
@@ -50,17 +36,25 @@ permalink: /photography.html
 
   <!-- About -->
   <section id="about" class="about">
-    <h2 class="section-title">About Me</h2>
+    <h2 class="section-title"><span data-lang="en">About Me</span><span data-lang="ar">نبذة عني</span></h2>
     <div class="about-grid">
       <figure class="about-portrait">
         <img src="img/portrait.jpg" alt="Hamad Alsheail standing among desert rock formations at sunset, camera in hand" loading="lazy" width="1110" height="1664">
       </figure>
-      <div class="about-copy">
+      <div class="about-copy" data-lang="ar">
+        <p class="lede">حمد الشعيل</p>
+        <p>فنان تشكيلي أهيم بين الكلمة والصورة لأرى ما لا يُرى؛ كراعٍ يعبر واديًا مع قطيعه في الظهيرة أو عابر سبيلٍ بان عليه أثر الترحال أو أن أتأمل نتوءات الجبال وتباين ألوانها.</p>
+        <p>الكتابة هي فرشاتي التي أرسم بها حروفًا لتكوين مشهدٍ ما لفكرة فلسفيّة من الحياة والشارع والطبيعة.</p>
+        <blockquote>
+          أصب هذه التجارب الإبداعية والفنّية في هويّة «<strong>ديوان الشمس</strong>» لتصبح مساحة للتعبير بمختلف وسائط الفنون.
+        </blockquote>
+      </div>
+      <div class="about-copy" data-lang="en">
         <p class="lede">I'm Hamad Alsheail, an artist based in Riyadh, working between words and photos.</p>
         <p>Photography taught me to notice common things from different angles: a shepherd crossing a canyon at midday, a stranger walking through an empty tunnel or just observing the structure of a mountain.</p>
-        <p>Writing taught me to sit with what I observed a little longer — to process it and draw my personal reflection upon it. Chasing moments between landscaping adventures, to portraying life in the streets.</p>
+        <p>Writing taught me to sit with what I observed a little longer, to process it and draw my personal reflection upon it. Chasing moments between landscaping adventures, to portraying life in the streets.</p>
         <blockquote>
-          These days, that curiosity lives in <strong>Diwan Alshams</strong> <span class="ar">ديوان الشمس</span> — my space for practicing and experimenting across different art forms and medias.
+          These days, that curiosity lives in <strong>Diwan Alshams</strong> <span class="ar">ديوان الشمس</span>, my space for practicing and experimenting across different art forms and medias.
         </blockquote>
       </div>
       <figure class="about-second">
@@ -69,30 +63,36 @@ permalink: /photography.html
     </div>
   </section>
 
-  <!-- Art Projects -->
-  <section id="art-projects" class="showcase projects">
-    <h2 class="section-title">Art Projects</h2>
+  <!-- Projects -->
+  <section id="projects" class="showcase projects">
+    <h2 class="section-title"><span data-lang="en">Projects</span><span data-lang="ar">المشاريع</span></h2>
 
-    <article class="project project-reel" lang="ar" dir="rtl">
-      <p class="work-title">في ربوع بلادي - الجزء الثالث ١٤٤٨ هـ</p>
+    <article class="project project-reel">
+      <p class="work-title"><span data-lang="en">Across My Homeland, Part III, 1448 H</span><span data-lang="ar">في ربوع بلادي، الجزء الثالث ١٤٤٨ هـ</span></p>
       <div class="project-body">
         <div class="project-embed" dir="ltr">
           {% include instagram.html url="https://www.instagram.com/reel/Df91k72o89W/" %}
         </div>
         <div class="project-copy">
-          <p>رحلة سنوية أجول بها ربوع بلادي المملكة العربية السعودية، ما بين الصحاري والجبال والوديان الخضراء والبحار والشواطئ ورمالها البيضاء. حب الطبيعة فطرة بشرية ولا ينبغي أن ننسى هذه السمة أو نتناساها لأنها جزء من هويتنا، حياتنا المعاصرة قد تنسينا بعض الشيء لذة التوغل في الطبيعة والتأمل في جمال خلق الله وبديع صنعه. من منظوري الشخصي والفلسفي أن مغامرة كهذه رغم الجهد المبذول والمخاطر الغير متوقعة إلّا أنها تذكرة تعيد لنا لذّة أبسط النعم والأمور الدنيوية التي قد نعتاد عليها مع وتيرة الحياة.</p>
+          <p data-lang="en">An annual journey through my country, Saudi Arabia: deserts and mountains, green valleys, seas, and white-sand shores. Love of nature is human instinct, and we shouldn't forget it, because it is part of who we are. Modern life can dull the joy of venturing deep into nature and contemplating the beauty of God's creation. From my personal and philosophical view, an adventure like this, despite the effort and unexpected risks, is a reminder that restores the joy of the simplest blessings we grow used to at life's pace.</p>
+          <p data-lang="ar">رحلة سنوية أجول بها ربوع بلادي المملكة العربية السعودية، ما بين الصحاري والجبال والوديان الخضراء والبحار والشواطئ ورمالها البيضاء. حب الطبيعة فطرة بشرية ولا ينبغي أن ننسى هذه السمة أو نتناساها لأنها جزء من هويتنا، حياتنا المعاصرة قد تنسينا بعض الشيء لذة التوغل في الطبيعة والتأمل في جمال خلق الله وبديع صنعه. من منظوري الشخصي والفلسفي أن مغامرة كهذه رغم الجهد المبذول والمخاطر الغير متوقعة إلّا أنها تذكرة تعيد لنا لذّة أبسط النعم والأمور الدنيوية التي قد نعتاد عليها مع وتيرة الحياة.</p>
         </div>
       </div>
     </article>
 
     <article id="waatha" class="project">
-      <p class="work-title">Wa'atha' 1447 H <span class="sep">|</span> <span class="ar">وعثاء ١٤٤٧ هـ</span></p>
+      <p class="work-title"><span data-lang="en">Wa'atha' 1447 H <span class="sep">|</span> <span class="ar">وعثاء ١٤٤٧ هـ</span></span><span data-lang="ar">وعثاء ١٤٤٧ هـ</span></p>
       <figure class="showcase-image">
         <img src="img/waatha-collage.jpg" alt="A printed grid collage of daily self-portraits in black and white, interrupted by a column of colour landscape frames" loading="lazy" width="1400" height="1368">
       </figure>
-      <div class="showcase-copy">
+      <div class="showcase-copy" data-lang="ar">
+        <p>ألبوم يصوّر أثر سفر المغامرة مع ما يقابله من مردودٍ تأملي في أحضان الطبيعة.</p>
+        <p>فالسفر للمجهول من أجل المغامرة ليس كغيره من الرحلات المترفة والمخدومة بل العكس تمامًا، كما لو أنها مقايضة للتريث بين التعب والشقاء في ظروف لا يُتنبأ بها؛ مقابل المناظر الخلّابة والحياة الفطرية والتضاريس الطبيعية التي أخذتنا منها ثورات الحياة الصناعية المتسارعة.</p>
+        <p>وعثاء ١٤٤٧هـ هو أوّل أعمالي المطبوعة آملًا بأن يعقبه الكثير من المعارض والنسخ.</p>
+      </div>
+      <div class="showcase-copy" data-lang="en">
         <p>Representation of the cumulative hardship of adventuring in nature. Escaping the urban fast-paced life to disconnect in the slow-paced nature.</p>
-        <p>A printed collage capturing daily portraits from left to right, showing the physical toll of the journey undertaken day after day in search of mental clarity — even if there is a physical tax — and highlighting the major stops along the trip in Saudi Arabia.</p>
+        <p>A printed collage capturing daily portraits from left to right, showing the physical toll of the journey undertaken day after day in search of mental clarity, even if there is a physical tax, and highlighting the major stops along the trip in Saudi Arabia.</p>
       </div>
     </article>
   </section>
@@ -100,8 +100,9 @@ permalink: /photography.html
   <!-- Series -->
   <section id="wilderness" class="series">
     <div class="series-head">
-      <h2>Wilderness</h2>
-      <p>Open land, far from anything built.<br>What was here before us, and will remain after.</p>
+      <h2><span data-lang="en">Wilderness</span><span data-lang="ar">البراري</span></h2>
+      <p data-lang="en">Open land, far from anything built.<br>What was here before us, and will remain after.</p>
+      <p data-lang="ar">أراضٍ شاسعة وبعيدة عن كل ما بُني؛ كانت هنا قبلنا، وستبقى بعدنا.</p>
     </div>
     <div class="grid grid-4">
       <figure><img src="img/wilderness-1.jpg" alt="Desert rock spires silhouetted against a sky streaked orange and violet at sunset" loading="lazy" width="1400" height="1400"></figure>
@@ -113,8 +114,9 @@ permalink: /photography.html
 
   <section id="animals" class="series">
     <div class="series-head">
-      <h2>Animals</h2>
-      <p>Existence, without the need to explain itself.<br>They live outside our idea of meaning.</p>
+      <h2><span data-lang="en">Animals</span><span data-lang="ar">الحيوانات</span></h2>
+      <p data-lang="en">Existence, without the need to explain itself.<br>They live outside our idea of meaning.</p>
+      <p data-lang="ar">مخلوقات تعيش بفطرتها لا بتجسيدنا لمعاني الحياة ومعارفنا.</p>
     </div>
     <div class="grid grid-3">
       <figure><img src="img/animals-1.jpg" alt="A shoebill standing on a reed platform in dense tropical greenery" loading="lazy" width="1400" height="1400"></figure>
@@ -125,8 +127,9 @@ permalink: /photography.html
 
   <section id="streets" class="series">
     <div class="series-head">
-      <h2>Streets</h2>
-      <p>Every corner holds a hundred unfinished stories.<br>Motion is the only constant worth capturing.</p>
+      <h2><span data-lang="en">Streets</span><span data-lang="ar">حياة الشارع</span></h2>
+      <p data-lang="en">Every corner holds a hundred unfinished stories.<br>Motion is the only constant worth capturing.</p>
+      <p data-lang="ar">حكاياتٌ كثيرة وحركة سريعة وألوانٌ في غير طبيعتها.</p>
     </div>
     <div class="grid grid-4">
       <figure><img src="img/streets-1.jpg" alt="A lit shopfront window at night on a quiet street, figures visible inside" loading="lazy" width="1400" height="1400"></figure>
@@ -138,8 +141,9 @@ permalink: /photography.html
 
   <section id="humans" class="series">
     <div class="series-head">
-      <h2>Humans</h2>
-      <p>We move through places, and places move through us.<br>A trace is all anyone leaves behind.</p>
+      <h2><span data-lang="en">Humans</span><span data-lang="ar">الناس</span></h2>
+      <p data-lang="en">We move through places, and places move through us.<br>A trace is all anyone leaves behind.</p>
+      <p data-lang="ar">تترسب آثارنا ومشاعرنا في الأماكن التي نعبرها لتبقى كتذكار لنا.</p>
     </div>
     <div class="grid grid-4">
       <figure><img src="img/humans-1.jpg" alt="A single figure walking a covered sidewalk framed by scaffolding poles receding into the distance" loading="lazy" width="1400" height="1400"></figure>
@@ -151,26 +155,23 @@ permalink: /photography.html
 
   <!-- Contact -->
   <section id="contact" class="contact">
-    <h2 class="section-title">Contact</h2>
+    <h2 class="section-title"><span data-lang="en">Contact</span><span data-lang="ar">تواصل</span></h2>
     <dl class="contact-list">
       <div>
-        <dt>Email Address</dt>
-        <dd><a href="mailto:Hamad.alsheail@gmail.com">Hamad.alsheail@gmail.com<span class="arrow" aria-hidden="true"></span></a></dd>
+        <dt><span data-lang="en">Email Address</span><span data-lang="ar">البريد الإلكتروني</span></dt>
+        <dd><a href="mailto:Hamad.alsheail@gmail.com"><bdi>Hamad.alsheail@gmail.com</bdi><span class="arrow" aria-hidden="true"></span></a></dd>
       </div>
       <div>
-        <dt>Social Media</dt>
-        <dd><a href="https://instagram.com/DiwanAlshams" target="_blank" rel="noopener">Instagram: @DiwanAlshams<span class="arrow" aria-hidden="true"></span></a></dd>
-        <dd><a href="https://diwanalshams.kitabh.com/" target="_blank" rel="noopener">Kitabh: @DiwanAlshams<span class="arrow" aria-hidden="true"></span></a></dd>
+        <dt><span data-lang="en">Social Media</span><span data-lang="ar">وسائل التواصل</span></dt>
+        <dd><a href="https://instagram.com/DiwanAlshams" target="_blank" rel="noopener"><span data-lang="en">Instagram: @DiwanAlshams</span><span data-lang="ar">إنستغرام: <bdi>@DiwanAlshams</bdi></span><span class="arrow" aria-hidden="true"></span></a></dd>
+        <dd><a href="https://diwanalshams.kitabh.com/" target="_blank" rel="noopener"><span data-lang="en">Kitabh: @DiwanAlshams</span><span data-lang="ar">كتابة: <bdi>@DiwanAlshams</bdi></span><span class="arrow" aria-hidden="true"></span></a></dd>
       </div>
     </dl>
   </section>
 
 </main>
 
-<footer>
-  <span>Hamad Alsheail <span class="sep">|</span> Diwan Alshams</span>
-  <span class="ar">ديوان الشمس</span>
-</footer>
+{% include footer.html %}
 
 <!-- Lightbox -->
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" tabindex="-1" hidden>
@@ -184,6 +185,7 @@ permalink: /photography.html
 </div>
 
 <script src="/script.js"></script>
+<script src="/lang.js"></script>
 <script src="/theme.js"></script>
 <script async src="https://www.instagram.com/embed.js"></script>
 </body>

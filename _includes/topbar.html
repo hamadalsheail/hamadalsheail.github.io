@@ -1,15 +1,18 @@
 <header class="topbar">
-  <a class="mark" href="/">Diwan Alshams</a>
+  <a class="mark" href="/"><span data-lang="en">Diwan Alshams</span><span data-lang="ar">ديوان الشمس</span></a>
   <nav>
-    <a href="/photography.html#about">About</a>
-    <a{% if include.current == "writing" %} class="is-current" aria-current="page"{% endif %} href="/writing/">Writings</a>
-    <a href="/photography.html#art-projects">Art Projects</a>
-    <a href="/photography.html#wilderness">Wilderness</a>
-    <a href="/photography.html#animals">Animals</a>
-    <a href="/photography.html#streets">Streets</a>
-    <a href="/photography.html#humans">Humans</a>
-    <a href="/gallery.html">Gallery</a>
-    <a href="/photography.html#contact">Contact</a>
-    {% include theme-toggle.html %}
+    <a href="/photography.html#about"><span data-lang="en">About</span><span data-lang="ar">نبذة</span></a>
+    <a{% if include.current == "writing" %} class="is-current" aria-current="page"{% endif %} href="/writing/"><span data-lang="en">Writings</span><span data-lang="ar">مدونة كتاباتي</span></a>
+    <a href="/photography.html#projects"><span data-lang="en">Projects</span><span data-lang="ar">المشاريع</span></a>
+    <a href="/photography.html#wilderness"><span data-lang="en">Wilderness</span><span data-lang="ar">البراري</span></a>
+    <a href="/photography.html#animals"><span data-lang="en">Animals</span><span data-lang="ar">الحيوانات</span></a>
+    <a href="/photography.html#streets"><span data-lang="en">Streets</span><span data-lang="ar">حياة الشارع</span></a>
+    <a href="/photography.html#humans"><span data-lang="en">Humans</span><span data-lang="ar">الناس</span></a>
+    <a{% if include.current == "gallery" %} class="is-current" aria-current="page"{% endif %} href="/gallery.html"><span data-lang="en">Gallery</span><span data-lang="ar">ألبوم المنوّعات</span></a>
+    <a href="/photography.html#contact"><span data-lang="en">Contact</span><span data-lang="ar">تواصل</span></a>
   </nav>
+  <div class="topbar-tools">
+    {% include lang-toggle.html %}
+    {% include theme-toggle.html %}
+  </div>
 </header>

@@ -1,0 +1,1 @@
+(function(){var l='ar';try{if(localStorage.getItem('lang')==='en')l='en'}catch(e){}var d=document.documentElement;d.lang=l;d.dir=l==='ar'?'rtl':'ltr';var t=d.getAttribute('data-title-'+l);if(t)document.title=t})();

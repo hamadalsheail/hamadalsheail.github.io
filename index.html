@@ -4,26 +4,28 @@
 ---
 {%- assign posts = site.posts | where_exp: "p", "p.draft != true" -%}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl" data-title-en="Hamad Alsheail | Diwan Alshams" data-title-ar="حمد الشعيل | ديوان الشمس">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hamad Alsheail — Diwan Alshams</title>
-<meta name="description" content="Creative portfolio of Hamad Alsheail, an artist based in Riyadh working between words and photographs. Diwan Alshams.">
+<title>حمد الشعيل | ديوان الشمس</title>
+<meta name="description" content="Portfolio of Hamad Alsheail, an artist based in Riyadh working between words and photographs. Diwan Alshams.">
 <link rel="canonical" href="{{ site.url }}/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Noto+Kufi+Arabic:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Noto+Kufi+Arabic:wght@400;600&family=Noto+Naskh+Arabic:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/styles.css?v={{ site.time | date: '%s' }}">
-<script>{% include theme-init.js %}</script>
+<script>{% include theme-init.js %}{% include lang-init.js %}</script>
 <link rel="preload" as="image" href="/img/hero-canyon.jpg">
 </head>
 <body class="landing-page">
 
 <header class="landing-head">
-  <h1>Hamad Alsheail <span class="sep">|</span> Diwan Alshams</h1>
+  <h1><span data-lang="en">Hamad Alsheail <span class="sep">|</span> Diwan Alshams</span><span data-lang="ar">حمد الشعيل <span class="sep">|</span> ديوان الشمس</span></h1>
   <div class="landing-head-end">
-    <span class="ar">ديوان الشمس</span>
+    <span class="ar landing-alt" data-lang="en">ديوان الشمس</span>
+    <span class="landing-alt" data-lang="ar" lang="en" dir="ltr">Diwan Alshams</span>
+    {% include lang-toggle.html %}
     {% include theme-toggle.html %}
   </div>
 </header>
@@ -31,22 +33,22 @@
 <main class="landing">
   <a class="landing-half landing-photo" href="/photography.html">
     <img src="/img/hero-canyon.jpg" alt="" width="1400" height="1400">
-    <span class="landing-title">Photography</span>
+    <span class="landing-title"><span data-lang="en">Photography</span><span data-lang="ar">ألبوم الصور</span></span>
     <span class="landing-details">
-      <span class="landing-sub">4 series</span>
+      <span class="landing-sub"><span data-lang="en">4 series</span><span data-lang="ar">الزوايا الأربعة</span></span>
       <span class="landing-latest">
-        <span class="landing-post">Wilderness</span>
-        <span class="landing-post">Animals</span>
-        <span class="landing-post">Streets</span>
-        <span class="landing-post">Humans</span>
+        <span class="landing-post"><span data-lang="en">Wilderness</span><span data-lang="ar">البراري</span></span>
+        <span class="landing-post"><span data-lang="en">Animals</span><span data-lang="ar">الحيوانات</span></span>
+        <span class="landing-post"><span data-lang="en">Streets</span><span data-lang="ar">حياة الشارع</span></span>
+        <span class="landing-post"><span data-lang="en">Humans</span><span data-lang="ar">الناس</span></span>
       </span>
     </span>
   </a>
 
   <a class="landing-half landing-writing" href="/writing/">
-    <span class="landing-title">Writing</span>
+    <span class="landing-title"><span data-lang="en">Writings</span><span data-lang="ar">مدونة كتاباتي</span></span>
     <span class="landing-details">
-      <span class="landing-sub">{% if posts.size > 0 %}{{ posts.size }} {% if posts.size == 1 %}piece{% else %}pieces{% endif %}{% else %}Essays and reflections{% endif %}</span>
+      <span class="landing-sub"><span data-lang="en">Recent posts</span><span data-lang="ar">ما نُشرَ حديثًا</span></span>
       {% if posts.size > 0 %}
       <span class="landing-latest">
         {% for post in posts limit: 4 %}
@@ -58,6 +60,7 @@
   </a>
 </main>
 
+<script src="/lang.js"></script>
 <script src="/theme.js"></script>
 </body>
 </html>

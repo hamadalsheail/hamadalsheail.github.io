@@ -50,12 +50,26 @@
       li.hidden = !match;
       if (match) shown++;
     });
-    status.textContent = terms.length
-      ? (shown ? shown + (shown === 1 ? ' piece' : ' pieces') : 'Nothing found')
-      : '';
+    const ar = typeof window.siteLang === 'function' && window.siteLang() === 'ar';
+    status.textContent = !terms.length ? ''
+      : ar ? arabicCount(shown)
+      : (shown ? shown + (shown === 1 ? ' piece' : ' pieces') : 'Nothing found');
+  }
+
+  // Arabic number agreement: 1 نص واحد, 2 نصّان, 3–10 نصوص, 11+ نصًّا.
+  function arabicCount(n) {
+    if (!n) return 'لا توجد نتائج';
+    if (n === 1) return 'نص واحد';
+    if (n === 2) return 'نصّان';
+    return toArabicDigits(n) + (n % 100 >= 3 && n % 100 <= 10 ? ' نصوص' : ' نصًّا');
+  }
+
+  function toArabicDigits(n) {
+    return String(n).replace(/[0-9]/g, (d) => String.fromCharCode(0x0660 + Number(d)));
   }
 
   input.addEventListener('focus', load, { once: true });
+  document.addEventListener('langchange', () => { if (input.value) run(); });
   input.addEventListener('input', () => load().then(run));
 
   // Support /writing/?q=word links.
