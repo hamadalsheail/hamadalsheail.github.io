@@ -1032,3 +1032,12 @@ html[lang="ar"] .show-more { font-family: var(--arabic); }
 @media (max-width: 760px) {
   .side-by-side { grid-template-columns: 1fr; }
 }
+
+/* Projects on phones and small tablets: description above the media. */
+@media (max-width: 760px) {
+  .project-body .project-copy,
+  .side-by-side .showcase-copy { order: -1; }
+  #gharamel { display: flex; flex-direction: column; }
+  #gharamel .work-title { order: -2; }
+  #gharamel .showcase-copy { order: -1; margin: 0 0 clamp(1.25rem, 3vw, 2rem); }
+}
