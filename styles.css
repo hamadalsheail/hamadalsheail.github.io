@@ -971,7 +971,7 @@ footer {
   * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }
 
-/* Art Projects: several works stacked in the showcase band */
+/* Projects: several works stacked in the showcase band */
 .projects .project + .project {
   margin-top: clamp(3rem, 7vw, 5.5rem);
   padding-top: clamp(2.5rem, 5vw, 4rem);
