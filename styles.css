@@ -995,3 +995,21 @@ footer {
 .topbar { transition: transform 0.28s ease; will-change: transform; }
 .topbar.topbar-hidden { transform: translateY(-100%); }
 @media (prefers-reduced-motion: reduce) { .topbar { transition: none; } }
+
+/* Series "Show more": first row only until opened (show-more.js) */
+.grid > figure[hidden] { display: none; }
+.show-more {
+  display: block;
+  margin: clamp(1.25rem, 3vw, 2rem) auto 0;
+  padding: 0.7rem 1.6rem;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  background: none;
+  color: var(--ink);
+  font: 600 0.9rem/1 var(--display);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+html[lang="ar"] .show-more { font-family: var(--arabic); }
+.show-more:hover, .show-more:focus-visible { background: var(--ink); color: var(--paper); }
+.show-more[hidden] { display: none; }
