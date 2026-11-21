@@ -1013,3 +1013,15 @@ footer {
 html[lang="ar"] .show-more { font-family: var(--arabic); }
 .show-more:hover, .show-more:focus-visible { background: var(--ink); color: var(--paper); }
 .show-more[hidden] { display: none; }
+
+/* Wa'atha': text beside the image. RTL puts the text on the left, LTR on the right. */
+.side-by-side {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+}
+.side-by-side .showcase-copy { grid-template-columns: 1fr; margin-top: 0; }
+@media (max-width: 760px) {
+  .side-by-side { grid-template-columns: 1fr; }
+}
