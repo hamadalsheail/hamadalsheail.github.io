@@ -187,6 +187,8 @@ html[lang="ar"] .landing-title { white-space: nowrap; font-size: clamp(2.4rem, 5
 
 /* A− / A+ keep their Latin order in RTL. */
 .text-size { direction: ltr; }
+/* direction:ltr flips its own inline-start; keep it pushed to the far end of RTL rows. */
+.post[dir="rtl"] .text-size { margin-left: 0; margin-right: auto; }
 
 /* ---------- Hero ---------- */
 

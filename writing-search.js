@@ -52,8 +52,16 @@
     });
     const ar = typeof window.siteLang === 'function' && window.siteLang() === 'ar';
     status.textContent = !terms.length ? ''
-      : ar ? (shown ? toArabicDigits(shown) + (shown === 1 ? ' نص' : ' نصوص') : 'لا توجد نتائج')
+      : ar ? arabicCount(shown)
       : (shown ? shown + (shown === 1 ? ' piece' : ' pieces') : 'Nothing found');
+  }
+
+  // Arabic number agreement: 1 نص واحد, 2 نصّان, 3–10 نصوص, 11+ نصًّا.
+  function arabicCount(n) {
+    if (!n) return 'لا توجد نتائج';
+    if (n === 1) return 'نص واحد';
+    if (n === 2) return 'نصّان';
+    return toArabicDigits(n) + (n % 100 >= 3 && n % 100 <= 10 ? ' نصوص' : ' نصًّا');
   }
 
   function toArabicDigits(n) {
