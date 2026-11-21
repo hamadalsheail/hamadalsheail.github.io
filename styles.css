@@ -704,6 +704,12 @@ section { scroll-margin-top: 4.5rem; }
   letter-spacing: 0;
 }
 
+/* Explicit alignment: don't rely on text-align:start resolving from dir (iOS Safari left-aligned RTL text). */
+.post-list-text[dir="rtl"],
+.post[dir="rtl"] .post-title,
+.post[dir="rtl"] .post-body { text-align: right; }
+.post-list-text[dir="ltr"] { text-align: left; }
+
 .post[lang="ar"] .post-body {
   font-size: calc(1.18em * var(--post-scale, 1));
   line-height: 1.9;
