@@ -458,6 +458,7 @@ section { scroll-margin-top: 4.5rem; }
   inset: 0;
   height: 100%;
   object-fit: cover;
+  object-position: 35% 45%; /* English: text sits left, keep the photographer right */
   transition: transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
@@ -485,6 +486,7 @@ section { scroll-margin-top: 4.5rem; }
 }
 
 .landing-photo .landing-title { color: var(--accent); }
+html[dir="rtl"] .landing-photo img { object-position: 90% 45%; } /* Arabic: text right, photographer left */
 .landing-writing .landing-title { color: var(--accent-text); }
 
 .landing-details {
