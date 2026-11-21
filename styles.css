@@ -105,6 +105,9 @@ a { color: inherit; }
   letter-spacing: 0.02em;
 }
 
+.topbar-tools { display: flex; align-items: center; gap: 0.9rem; align-self: center; }
+.topbar nav { margin-inline-start: auto; }
+
 .topbar nav a {
   text-decoration: none;
   color: var(--ink-soft);
@@ -173,10 +176,17 @@ html[lang="en"] [data-lang="ar"] { display: none !important; }
 html[lang="ar"] body * { letter-spacing: 0; text-transform: none; }
 
 /* Arabic reading text in Naskh; Latin falls back to Bricolage. */
-html[lang="ar"] :is(.about-copy p, .about-copy blockquote, .series-head p, .showcase-copy p, .project-copy p, .gallery-intro) {
+html[lang="ar"] :is(.about-copy p:not(.lede), .about-copy blockquote, .series-head p, .showcase-copy p, .project-copy p, .gallery-intro) {
   font-family: "Bricolage Grotesque", var(--arabic-text);
+  font-size: 1.08em;
   line-height: 1.85;
 }
+
+/* Kufi runs wider than Bricolage: keep the landing titles on one line. */
+html[lang="ar"] .landing-title { white-space: nowrap; font-size: clamp(2.4rem, 5.4vw, 4.75rem); }
+
+/* A− / A+ keep their Latin order in RTL. */
+.text-size { direction: ltr; }
 
 /* ---------- Hero ---------- */
 
@@ -932,7 +942,9 @@ footer {
   .about-grid { grid-template-columns: 1fr; }
   .about-portrait { grid-row: auto; max-width: 22rem; }
   .series-head { grid-template-columns: 1fr; align-items: start; }
-  .topbar { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+  .topbar { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 0.6rem 1rem; }
+  .topbar nav { grid-column: 1 / -1; grid-row: 2; margin: 0; }
+  .topbar-tools { grid-column: 2; grid-row: 1; }
 }
 
 @media (max-width: 620px) {
