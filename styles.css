@@ -518,6 +518,46 @@ section { scroll-margin-top: 4.5rem; }
 .landing-half:hover img { transform: scale(1.03); }
 .landing-half:focus-visible { outline: 2px solid var(--accent); outline-offset: -6px; }
 
+/* Scroll reveal (html.reveal is set by index.html only when motion is OK).
+   Each block: the photo wipes in from the side, then the text follows.
+   Odd blocks enter from the left, even from the right. Desktop shows all four
+   at once, so they cascade by column instead. */
+.reveal .landing-half img {
+  clip-path: inset(0 100% 0 0);
+  transform: translateX(-6%) scale(1.04);
+  transition: clip-path 1s cubic-bezier(0.65, 0, 0.35, 1), transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.reveal .landing-half:nth-child(even) img { clip-path: inset(0 0 0 100%); transform: translateX(6%) scale(1.04); }
+.reveal .landing-half::after { opacity: 0; transition: opacity 0.8s 0.3s; }
+.reveal .landing-title,
+.reveal .landing-details {
+  opacity: 0;
+  transform: translateX(-2rem);
+  transition: opacity 0.7s ease, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.reveal .landing-half:nth-child(even) .landing-title,
+.reveal .landing-half:nth-child(even) .landing-details { transform: translateX(2rem); }
+.reveal .landing-title { transition-delay: 0.55s; }
+.reveal .landing-details { transition-delay: 0.7s; }
+.reveal .landing-half.is-in img,
+.reveal .landing-half.is-in:nth-child(even) img { clip-path: inset(0); transform: none; }
+.reveal .landing-half.is-in::after { opacity: 1; }
+.reveal .landing-half.is-in .landing-title,
+.reveal .landing-half.is-in .landing-details { opacity: 1; transform: none; }
+.reveal .landing-half.is-in:hover img { transform: scale(1.03); }
+@media (min-width: 901px) {
+  .reveal .landing-half:nth-child(2) img, .reveal .landing-half:nth-child(2)::after { transition-delay: 0.15s; }
+  .reveal .landing-half:nth-child(3) img, .reveal .landing-half:nth-child(3)::after { transition-delay: 0.3s; }
+  .reveal .landing-half:nth-child(4) img, .reveal .landing-half:nth-child(4)::after { transition-delay: 0.45s; }
+  .reveal .landing-half:nth-child(2) .landing-title { transition-delay: 0.7s; }
+  .reveal .landing-half:nth-child(2) .landing-details { transition-delay: 0.85s; }
+  .reveal .landing-half:nth-child(3) .landing-title { transition-delay: 0.85s; }
+  .reveal .landing-half:nth-child(3) .landing-details { transition-delay: 1s; }
+  .reveal .landing-half:nth-child(4) .landing-title { transition-delay: 1s; }
+  .reveal .landing-half:nth-child(4) .landing-details { transition-delay: 1.15s; }
+  .reveal .landing-half.is-in:hover img { transition-delay: 0s; }
+}
+
 /* ---------- Writing ---------- */
 
 .writing { padding: clamp(3rem, 7vw, 6rem) var(--gutter); }

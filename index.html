@@ -16,6 +16,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Noto+Kufi+Arabic:wght@400;600&family=Noto+Naskh+Arabic:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/styles.css?v={{ site.time | date: '%s' }}">
 <script>{% include theme-init.js %}{% include lang-init.js %}</script>
+<script>
+/* Scroll reveal: only armed when JS runs and motion is welcome, so the
+   blocks are never hidden for no-JS or reduced-motion visitors. */
+if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('reveal');
+</script>
 <link rel="preload" as="image" href="/img/portrait.jpg">
 </head>
 <body class="landing-page">
@@ -93,5 +98,16 @@
 
 <script src="/lang.js"></script>
 <script src="/theme.js"></script>
+<script>
+(function () {
+  if (!document.documentElement.classList.contains('reveal')) return;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.2 });
+  document.querySelectorAll('.landing-half').forEach(function (el) { io.observe(el); });
+})();
+</script>
 </body>
 </html>
