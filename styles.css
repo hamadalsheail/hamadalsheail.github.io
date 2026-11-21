@@ -209,6 +209,7 @@ html[lang="ar"] :is(.about-copy p, .about-copy blockquote, .series-head p, .show
   color: var(--accent-text);
 }
 
+.hero-sub { justify-content: flex-end; }
 .hero-sub .ar { text-transform: none; letter-spacing: 0; font-size: 1.05rem; }
 
 .hero-strip {
@@ -845,6 +846,9 @@ section { scroll-margin-top: 4.5rem; }
 }
 
 .contact-list a:hover .arrow { transform: translate(2px, -2px); }
+html[dir="rtl"] .arrow { transform: scaleX(-1); }
+html[dir="rtl"] .contact-list a:hover .arrow,
+html[dir="rtl"] .post-nav a:hover .arrow { transform: translate(-2px, -2px) scaleX(-1); }
 
 /* ---------- Footer ---------- */
 
