@@ -26,6 +26,7 @@ exclude:
   - README.md
   - tools/
   - docs/
+  - .superpowers/
   - .DS_Store
   - Gemfile
   - Gemfile.lock

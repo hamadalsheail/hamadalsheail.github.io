@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+{%- capture t_en -%}{% if page.title %}{{ page.title | strip_html }} | {% endif %}Hamad Alsheail{%- endcapture -%}
+{%- capture t_ar -%}{% if page.title_ar or page.title %}{{ page.title_ar | default: page.title | strip_html }} | {% endif %}حمد الشعيل{%- endcapture -%}
+<html lang="ar" dir="rtl" data-title-en="{{ t_en | escape }}" data-title-ar="{{ t_ar | escape }}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{% if page.title %}{{ page.title | strip_html }} — {% endif %}Hamad Alsheail</title>
+<title>{{ t_ar }}</title>
 <meta name="description" content="{{ page.excerpt | default: page.description | default: site.description | strip_html | strip_newlines | truncate: 160 }}">
 <link rel="canonical" href="{{ page.url | absolute_url }}">
 <meta property="og:title" content="{{ page.title | default: site.title | strip_html }}">
@@ -14,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Noto+Kufi+Arabic:wght@400;600&family=Noto+Naskh+Arabic:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/styles.css?v={{ site.time | date: '%s' }}">
-<script>{% include theme-init.js %}</script>
+<script>{% include theme-init.js %}{% include lang-init.js %}</script>
 </head>
 <body>
 
@@ -24,10 +26,7 @@
 {{ content }}
 </main>
 
-<footer>
-  <span>Hamad Alsheail <span class="sep">|</span> Diwan Alshams</span>
-  <span class="ar">ديوان الشمس</span>
-</footer>
+{% include footer.html %}
 
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" tabindex="-1" hidden>
   <button class="lb-close" type="button" aria-label="Close">&times;</button>
@@ -40,6 +39,7 @@
 </div>
 
 <script src="/script.js"></script>
+<script src="/lang.js"></script>
 <script src="/theme.js"></script>
 {% if page.instagram != nil and page.instagram != "" %}{% assign need_ig = true %}{% endif %}{% if need_ig or content contains "instagram-media" %}<script async src="https://www.instagram.com/embed.js"></script>{% endif %}
 </body>

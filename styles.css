@@ -13,7 +13,7 @@
   --hover-deep: #DDD6D1;
   --light: #EDE8E5;                    /* fixed light text over photos / lightbox */
   color-scheme: light;
-  --display: "Bricolage Grotesque", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --display: "Bricolage Grotesque", "Noto Kufi Arabic", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --arabic: "Noto Kufi Arabic", "Geeza Pro", serif;       /* Arabic titles, labels */
   --arabic-text: "Noto Naskh Arabic", "Geeza Pro", serif; /* Arabic reading text */
   --gutter: clamp(1.25rem, 4vw, 4.5rem);
@@ -141,6 +141,41 @@ a { color: inherit; }
 :root[data-theme="dark"] .theme-icon { transform: rotate(180deg); }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .theme-icon { transform: rotate(180deg); }
+}
+
+/* Language toggle: shows the other language's name */
+.lang-toggle {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.75rem;
+  height: 1.75rem;
+  padding: 0 0.2rem;
+  margin: -0.3rem 0;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  background: none;
+  color: var(--ink-soft);
+  font: 600 0.7rem/1 var(--display);
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  align-self: center;
+}
+.lang-toggle [lang="ar"] { font-family: var(--arabic); font-size: 0.85rem; line-height: 1; }
+.lang-toggle:hover, .lang-toggle:focus-visible { color: var(--ink); }
+
+/* ---------- Language ----------
+   Every translatable string exists twice: data-lang="en" and data-lang="ar".
+   <html lang> (set before paint by lang-init.js) decides which one shows. */
+html[lang="ar"] [data-lang="en"],
+html[lang="en"] [data-lang="ar"] { display: none !important; }
+
+/* Arabic never takes tracking or uppercase. */
+html[lang="ar"] body * { letter-spacing: 0; text-transform: none; }
+
+/* Arabic reading text in Naskh; Latin falls back to Bricolage. */
+html[lang="ar"] :is(.about-copy p, .about-copy blockquote, .series-head p, .showcase-copy p, .project-copy p, .gallery-intro) {
+  font-family: "Bricolage Grotesque", var(--arabic-text);
+  line-height: 1.85;
 }
 
 /* ---------- Hero ---------- */
@@ -383,7 +418,7 @@ section { scroll-margin-top: 4.5rem; }
 }
 
 .landing-head-end { display: flex; align-items: center; gap: 1rem; }
-.landing-head .ar { color: var(--ink-soft); }
+.landing-head .landing-alt { color: var(--ink-soft); }
 
 .landing {
   flex: 1;
@@ -422,7 +457,7 @@ section { scroll-margin-top: 4.5rem; }
 
 .landing-writing {
   background: var(--paper-deep);
-  border-left: 1px solid var(--ink);
+  border-inline-start: 1px solid var(--ink);
 }
 
 .landing-title,
@@ -889,7 +924,7 @@ footer {
 @media (max-width: 900px) {
   .landing { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
   .landing-half { min-height: 0; --details: 10.5rem; }
-  .landing-writing { border-left: 0; border-top: 1px solid var(--ink); }
+  .landing-writing { border-inline-start: 0; border-top: 1px solid var(--ink); }
   .grid-4 { grid-template-columns: repeat(2, 1fr); }
   .about-grid { grid-template-columns: 1fr; }
   .about-portrait { grid-row: auto; max-width: 22rem; }
@@ -908,7 +943,7 @@ footer {
   .post-list-thumb { grid-column: 2; grid-row: 2; width: 4.5rem; }
   .post-list a:not(:has(.post-list-thumb)) .post-list-text { grid-column: 1 / -1; }
   .lb-prev, .lb-next { font-size: 2.4rem; }
-  .landing-head .ar { display: none; }
+  .landing-head .landing-alt { display: none; }
   .landing-half { --details: 10rem; padding-block: 1rem; }
   .landing-post { font-size: 0.95rem; line-height: 1.45; }
   .landing-title { font-size: 2.6rem; }

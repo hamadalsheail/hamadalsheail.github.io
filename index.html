@@ -4,26 +4,28 @@
 ---
 {%- assign posts = site.posts | where_exp: "p", "p.draft != true" -%}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl" data-title-en="Hamad Alsheail | Diwan Alshams" data-title-ar="حمد الشعيل | ديوان الشمس">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hamad Alsheail — Diwan Alshams</title>
+<title>حمد الشعيل | ديوان الشمس</title>
 <meta name="description" content="Creative portfolio of Hamad Alsheail, an artist based in Riyadh working between words and photographs. Diwan Alshams.">
 <link rel="canonical" href="{{ site.url }}/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Noto+Kufi+Arabic:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Noto+Kufi+Arabic:wght@400;600&family=Noto+Naskh+Arabic:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/styles.css?v={{ site.time | date: '%s' }}">
-<script>{% include theme-init.js %}</script>
+<script>{% include theme-init.js %}{% include lang-init.js %}</script>
 <link rel="preload" as="image" href="/img/hero-canyon.jpg">
 </head>
 <body class="landing-page">
 
 <header class="landing-head">
-  <h1>Hamad Alsheail <span class="sep">|</span> Diwan Alshams</h1>
+  <h1><span data-lang="en">Hamad Alsheail <span class="sep">|</span> Diwan Alshams</span><span data-lang="ar">حمد الشعيل <span class="sep">|</span> ديوان الشمس</span></h1>
   <div class="landing-head-end">
-    <span class="ar">ديوان الشمس</span>
+    <span class="ar landing-alt" data-lang="en">ديوان الشمس</span>
+    <span class="landing-alt" data-lang="ar" lang="en" dir="ltr">Diwan Alshams</span>
+    {% include lang-toggle.html %}
     {% include theme-toggle.html %}
   </div>
 </header>
@@ -58,6 +60,7 @@
   </a>
 </main>
 
+<script src="/lang.js"></script>
 <script src="/theme.js"></script>
 </body>
 </html>

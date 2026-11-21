@@ -3,35 +3,21 @@
 permalink: /photography.html
 ---
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl" data-title-en="Photography | Hamad Alsheail" data-title-ar="ألبوم الصور | حمد الشعيل">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Photography — Hamad Alsheail</title>
+<title>ألبوم الصور | حمد الشعيل</title>
 <meta name="description" content="Creative portfolio of Hamad Alsheail, an artist based in Riyadh working between words and photographs. Diwan Alshams.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Noto+Kufi+Arabic:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Noto+Kufi+Arabic:wght@400;600&family=Noto+Naskh+Arabic:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/styles.css?v={{ site.time | date: '%s' }}">
-<script>{% include theme-init.js %}</script>
+<script>{% include theme-init.js %}{% include lang-init.js %}</script>
 </head>
 <body>
 
-<header class="topbar">
-  <a class="mark" href="/">Diwan Alshams</a>
-  <nav>
-    <a href="#about">About</a>
-    <a href="/writing/">Writings</a>
-    <a href="#art-projects">Art Projects</a>
-    <a href="#wilderness">Wilderness</a>
-    <a href="#animals">Animals</a>
-    <a href="#streets">Streets</a>
-    <a href="#humans">Humans</a>
-    <a href="/gallery.html">Gallery</a>
-    <a href="#contact">Contact</a>
-    {% include theme-toggle.html %}
-  </nav>
-</header>
+{% include topbar.html current="" %}
 
 <main id="top">
 
@@ -167,10 +153,7 @@ permalink: /photography.html
 
 </main>
 
-<footer>
-  <span>Hamad Alsheail <span class="sep">|</span> Diwan Alshams</span>
-  <span class="ar">ديوان الشمس</span>
-</footer>
+{% include footer.html %}
 
 <!-- Lightbox -->
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" tabindex="-1" hidden>
@@ -184,6 +167,7 @@ permalink: /photography.html
 </div>
 
 <script src="/script.js"></script>
+<script src="/lang.js"></script>
 <script src="/theme.js"></script>
 <script async src="https://www.instagram.com/embed.js"></script>
 </body>
