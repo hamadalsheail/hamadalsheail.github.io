@@ -18,6 +18,8 @@
   --arabic-text: "Noto Naskh Arabic", "Geeza Pro", serif; /* Arabic reading text */
   --gutter: clamp(1.25rem, 4vw, 4.5rem);
   --measure: 34rem;
+  --post-col: 44rem;   /* post page column: title, cover, body */
+  --list-col: 72rem;   /* Writings list */
 }
 
 /* Dark theme: same palette inverted. Follows the system setting unless the
@@ -600,6 +602,7 @@ html[lang="ar"] .landing-foot { font-family: var(--arabic); }
 /* ---------- Writing ---------- */
 
 .writing { padding: clamp(3rem, 7vw, 6rem) var(--gutter); }
+.writing { padding-inline: max(var(--gutter), (100% - var(--list-col)) / 2); }
 .writing .section-title { margin-bottom: 0.6rem; }
 
 .writing-intro,
@@ -725,8 +728,11 @@ html[lang="ar"] .landing-foot { font-family: var(--arabic); }
 
 .post { padding: clamp(3rem, 7vw, 6rem) var(--gutter) clamp(2rem, 4vw, 3rem); }
 
+/* Center the reading column on wide screens: side padding grows to whatever
+   is left over, so phones keep the normal gutter. */
+.post { padding-inline: max(var(--gutter), (100% - var(--post-col)) / 2); }
+
 .post-head {
-  max-width: 64rem;
   border-bottom: 1px solid var(--ink);
   padding-bottom: 1.1rem;
   margin-bottom: clamp(2rem, 4vw, 3rem);
@@ -755,10 +761,10 @@ html[lang="ar"] .landing-foot { font-family: var(--arabic); }
   color: var(--accent-text);
 }
 
-.post-cover { max-width: 64rem; margin-bottom: clamp(2rem, 4vw, 3rem); cursor: zoom-in; }
+.post-cover { margin-bottom: clamp(2rem, 4vw, 3rem); cursor: zoom-in; }
 .post-cover img { aspect-ratio: 16 / 10; object-fit: cover; }
 
-.post-body { max-width: var(--measure); font-size: calc(1em * var(--post-scale, 1)); }
+.post-body { font-size: calc(1em * var(--post-scale, 1)); }
 .post-body > :first-child { margin-top: 0; }
 .post-body p, .post-body ul, .post-body ol { margin: 0 0 1.25em; }
 .post-body h2, .post-body h3 {
@@ -831,7 +837,6 @@ html[lang="ar"] .landing-foot { font-family: var(--arabic); }
 .post[lang="ar"] .post-body {
   font-size: calc(1.18em * var(--post-scale, 1));
   line-height: 1.9;
-  max-width: 32rem;
 }
 
 /* Instagram embed — the script swaps the blockquote for an iframe */
@@ -860,7 +865,7 @@ html[lang="ar"] .landing-foot { font-family: var(--arabic); }
 .post-tags li { border: 1px solid var(--rule); padding: 0.1em 0.6em; }
 
 .post-nav {
-  padding: 0 var(--gutter) clamp(3rem, 7vw, 5rem);
+  padding: 0 max(var(--gutter), (100% - var(--post-col)) / 2) clamp(3rem, 7vw, 5rem);
 }
 
 .post-nav a {
