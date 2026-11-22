@@ -558,6 +558,44 @@ section { scroll-margin-top: 4.5rem; }
   .reveal .landing-half.is-in:hover img { transition-delay: 0s; }
 }
 
+/* Landing footer: one quiet line under the four blocks, ruled like the head. */
+.landing-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem 2rem;
+  flex-wrap: wrap;
+  padding: 1rem var(--gutter);
+  border-top: 1px solid var(--ink);
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+.landing-foot-copy { margin: 0; }
+.landing-foot-copy .sep { opacity: 0.5; }
+.landing-foot-links { display: flex; flex-wrap: wrap; gap: 0.35rem 1.25rem; }
+.landing-foot-social { margin-inline-start: auto; }
+.landing-foot-social::before {
+  content: "";
+  align-self: center;
+  width: 1px;
+  height: 0.9em;
+  margin-inline-end: 0.1rem;
+  background: var(--rule);
+}
+.landing-foot a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+.landing-foot a:hover,
+.landing-foot a:focus-visible { color: var(--accent-text); border-bottom-color: currentColor; }
+html[lang="ar"] .landing-foot { font-family: var(--arabic); }
+
+/* Theme switch: theme.js wraps it in a view transition; a soft cross-fade. */
+::view-transition-old(root),
+::view-transition-new(root) { animation-duration: 0.4s; animation-timing-function: ease; }
+
 /* ---------- Writing ---------- */
 
 .writing { padding: clamp(3rem, 7vw, 6rem) var(--gutter); }
@@ -1000,6 +1038,10 @@ footer {
   .landing-head .landing-alt { display: none; }
   .landing-half { --details: 11rem; padding-block: 1.25rem; }
   .landing-post { font-size: 0.95rem; line-height: 1.45; }
+  .landing-foot { flex-direction: column; align-items: flex-start; padding-block: 1.25rem 1.5rem; }
+  .landing-foot-social { margin-inline-start: 0; }
+  .landing-foot-social::before { display: none; }
+  .landing-foot-copy { order: 3; }
 }
 
 @media (prefers-reduced-motion: reduce) {
