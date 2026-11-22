@@ -18,9 +18,18 @@
   document.querySelectorAll('.theme-toggle').forEach((btn) => {
     btn.addEventListener('click', () => {
       const next = current() === 'dark' ? 'light' : 'dark';
-      root.setAttribute('data-theme', next);
-      try { localStorage.setItem('theme', next); } catch (e) {}
-      label();
+      const apply = () => {
+        root.setAttribute('data-theme', next);
+        try { localStorage.setItem('theme', next); } catch (e) {}
+        label();
+      };
+      // Cross-fade the whole page where the browser supports it and the
+      // visitor hasn't asked for less motion; otherwise switch instantly.
+      if (document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.startViewTransition(apply);
+      } else {
+        apply();
+      }
     });
   });
 
