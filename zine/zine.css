@@ -502,8 +502,8 @@
   padding: 0.9rem 1rem 1rem;
 }
 .zm-fold svg { display: block; width: 100%; height: auto; overflow: visible; }
-.zm-fold p { margin: 0.6rem 0 0; font-size: 0.88rem; line-height: 1.5; }
-.zm-fold p b { color: var(--accent-text); margin-inline-end: 0.35rem; }
+.zm-fold p { margin: 0.4rem 0 0; font-size: 1rem; line-height: 1.5; text-align: center; }
+.zm-fold p b { color: var(--accent-text); }
 
 /* Sketch-style folding drawings: wobbly ink lines, hatching, no hard fills. */
 .sk-paper { fill: var(--paper); }
@@ -551,3 +551,4 @@ html[dir="rtl"] .zp-icon { transform: scaleX(-1); }
 }
 
 .zm-latin { font-family: var(--display); font-size: 0.5em; font-weight: 600; color: var(--ink-soft); vertical-align: middle; }
+html[dir="rtl"] .zm-mirror-rtl .sk-label { transform: scaleX(-1); transform-box: fill-box; transform-origin: center; }
