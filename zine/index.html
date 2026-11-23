@@ -4,11 +4,11 @@ permalink: /zine/
 sitemap: false
 ---
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl" data-title-en="Zine Maker | Hamad Alsheail" data-title-ar="الكتيّب المصوّر (Zine) | حمد الشعيل">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Zine Maker | Hamad Alsheail</title>
+<title>الكتيّب المصوّر (Zine) | حمد الشعيل</title>
 <meta name="robots" content="noindex, nofollow">
 <meta name="description" content="Make an eight-page, one-sheet zine in the browser.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,35 +16,36 @@ sitemap: false
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Noto+Kufi+Arabic:wght@400;600&family=Noto+Naskh+Arabic:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/styles.css?v={{ site.time | date: '%s' }}">
 <link rel="stylesheet" href="/zine/zine.css?v={{ site.time | date: '%s' }}">
-<script>{% include theme-init.js %}</script>
+<script>{% include theme-init.js %}{% include lang-init.js %}</script>
 </head>
 <body class="zine-page">
 
 <header class="topbar">
-  <a class="mark" href="/">Diwan Alshams</a>
+  <a class="mark" href="/"><span data-lang="en">Diwan Alshams</span><span data-lang="ar">ديوان الشمس</span></a>
   <div class="topbar-tools">
+    {% include lang-toggle.html %}
     {% include theme-toggle.html %}
   </div>
 </header>
 
 <main class="zm">
   <section class="zm-intro">
-    <h1>Zine Maker</h1>
-    <p>Eight pages, one sheet, one cut. Add a photo or a line of text to each page, then print and fold.</p>
+    <h1><span data-lang="en">Zine Maker</span><span data-lang="ar">الكتيّب المصوّر <span class="zm-latin" lang="en">(Zine)</span></span></h1>
+    <p><span data-lang="en">Eight pages, one sheet, one cut. Add a photo or a line of text to each page, then print and fold.</span><span data-lang="ar">ورقةٌ واحدة، وقصّةُ مقصٍّ واحدة، وثماني صفحاتٍ تحمل ما تشاء. ضع في كل صفحةٍ صورةً أو سطرًا، ثم اطبعها واطوِها بين يديك.</span></p>
   </section>
 
-  <section class="zm-bar" aria-label="Zine settings">
+  <section class="zm-bar" data-i18n-aria="settings" aria-label="Zine settings">
     <div class="zm-settings">
+      <div class="zm-field">
+        <span id="zm-size-label"><span data-lang="en">Paper</span><span data-lang="ar">الورق</span></span>
+        <div class="zm-seg" id="zm-size" role="radiogroup" aria-labelledby="zm-size-label">
+          <button type="button" role="radio" data-size="a4">A4<i class="zm-dot" aria-hidden="true"></i></button>
+          <button type="button" role="radio" data-size="letter"><span data-lang="en">Letter</span><span data-lang="ar">ليتر</span><i class="zm-dot" aria-hidden="true"></i></button>
+          <button type="button" role="radio" data-size="a3">A3<i class="zm-dot" aria-hidden="true"></i></button>
+        </div>
+      </div>
       <label class="zm-field">
-        <span>Paper</span>
-        <select id="zm-size">
-          <option value="a4">A4</option>
-          <option value="letter">US Letter</option>
-          <option value="a3">A3</option>
-        </select>
-      </label>
-      <label class="zm-field">
-        <span>Reads</span>
+        <span><span data-lang="en">Reads</span><span data-lang="ar">اتجاه القراءة</span></span>
         <select id="zm-dir">
           <option value="ltr">Left to right</option>
           <option value="rtl">Right to left (Arabic)</option>
@@ -52,23 +53,87 @@ sitemap: false
       </label>
       <label class="zm-check">
         <input type="checkbox" id="zm-border">
-        <span>White border</span>
+        <span><span data-lang="en">White border</span><span data-lang="ar">حاشية بيضاء</span></span>
       </label>
     </div>
     <div class="zm-actions">
-      <button type="button" class="zm-btn" id="zm-bulk">Add photos</button>
-      <button type="button" class="zm-btn" id="zm-preview">Preview</button>
-      <button type="button" class="zm-btn zm-btn-main" id="zm-download">Download zine</button>
+      <button type="button" class="zm-btn" id="zm-bulk"><span data-lang="en">Add photos</span><span data-lang="ar">أضف صورك</span></button>
+      <button type="button" class="zm-btn" id="zm-preview"><span data-lang="en">Preview</span><span data-lang="ar">معاينة</span></button>
+      <button type="button" class="zm-btn zm-btn-main" id="zm-download"><span data-lang="en">Download zine</span><span data-lang="ar">حمّل الكتيّب</span></button>
     </div>
     <input type="file" id="zm-bulk-input" accept="image/*" multiple hidden>
   </section>
 
-  <ol class="zm-grid" id="zm-grid" aria-label="Zine pages"></ol>
+  <ol class="zm-grid" id="zm-grid" data-i18n-aria="pages" aria-label="Zine pages"></ol>
+
+  <section class="zm-advisor" aria-labelledby="zm-adv-title">
+    <h2 id="zm-adv-title"><span data-lang="en">Print advisor</span><span data-lang="ar">مستشار الطباعة</span></h2>
+    <div id="zm-advisor"></div>
+    <ul class="zm-legend">
+      <li><i class="zm-dot is-ok"></i><span data-lang="en">Sharp: 300 PPI or more</span><span data-lang="ar">صافية: ٣٠٠ PPI فأكثر</span></li>
+      <li><i class="zm-dot is-warn"></i><span data-lang="en">Acceptable: 225–299 PPI, slight softness</span><span data-lang="ar">مقبولة: ٢٢٥–٢٩٩ PPI، يشوبها لينٌ خفيف</span></li>
+      <li><i class="zm-dot is-bad"></i><span data-lang="en">Soft: under 225 PPI</span><span data-lang="ar">باهتة: دون ٢٢٥ PPI</span></li>
+    </ul>
+    <p class="zm-adv-note"><span data-lang="en">Effective PPI = photo pixels ÷ printed width of the photo on the page. Zooming in crops the photo, so it lowers PPI. Photos are never upscaled.</span><span data-lang="ar">الدقة الفعلية (PPI) هي عدد بكسلات الصورة مقسومًا على عرضها حين تُطبع. وكلما قرّبت الصورة اقتطعتَ منها فقلّت دقتها، ولا نُكبّر صورةً بما ليس فيها.</span></p>
+  </section>
+
+
+  <section class="zm-guide" id="guide" aria-labelledby="zm-guide-title">
+    <h2 id="zm-guide-title"><span data-lang="en">How to make a zine</span><span data-lang="ar">كيف تصنع كتيّبك المصوّر</span></h2>
+    <ol class="zm-plan">
+      <li><span data-lang="en"><strong>Plan eight pages.</strong> A front cover, six inside pages and a back cover. One idea per page reads best.</span><span data-lang="ar"><strong>ثماني صفحات.</strong> غلافٌ يستقبل القارئ، وستُّ صفحاتٍ في الداخل، وغلافٌ أخير يودّعه. وتكفي كلَّ صفحةٍ فكرةٌ واحدة.</span></li>
+      <li><span data-lang="en"><strong>Fill the pages.</strong> Add a photo, a line of text, or both. Drag or use the arrows to change the order.</span><span data-lang="ar"><strong>املأها.</strong> صورةٌ أو سطرٌ أو كلاهما، واسحب الصفحات أو حرّكها بالأسهم حتى يستقيم ترتيبها.</span></li>
+      <li><span data-lang="en"><strong>Check the dots.</strong> Green prints sharp. Yellow or red: use a bigger photo, zoom out, or pick a smaller paper.</span><span data-lang="ar"><strong>انظر إلى النقاط.</strong> الأخضر يُطبع صافيًا، أمّا الأصفر والأحمر فبدّل الصورة بأكبر منها، أو خفّف التكبير، أو اختر ورقًا أصغر.</span></li>
+      <li><span data-lang="en"><strong>Print and fold.</strong> Download, print single-sided at 100%, then follow the steps below.</span><span data-lang="ar"><strong>اطبع واطوِ.</strong> حمّل الملف واطبعه على وجهٍ واحد بحجمه الكامل ١٠٠٪، ثم اتبع الخطوات أدناه.</span></li>
+    </ol>
+
+    <h3 class="zm-fold-title"><span data-lang="en">How to fold</span><span data-lang="ar">طريقة الطي</span></h3>
+    <svg width="0" height="0" class="zm-defs" aria-hidden="true" focusable="false">
+      <defs>
+        <marker id="zm-arrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M1 1 L8 5 L1 9" fill="none" stroke="context-stroke" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+        <filter id="zm-sketch" x="-5%" y="-5%" width="110%" height="110%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="4" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"/>
+        </filter>
+        <pattern id="zm-hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(40)">
+          <line x1="0" y1="0" x2="0" y2="5" class="sk-hatch-line"/>
+        </pattern>
+      </defs>
+    </svg>
+    <ol class="zm-fold">
+      <li>
+        <svg viewBox="0 0 200 140" role="img" aria-label="A landscape sheet divided into eight panels" data-aria-ar="ورقة بالعرض مقسّمة إلى ثماني خانات"><g filter="url(#zm-sketch)"><polygon class="sk-paper" points="24,22 176,22 176,118 24,118"/><path class="sk-ink" d="M23.0 21.5Q99.9 20.6 176.8 21.8M175.9 20.0Q174.9 69.2 175.5 118.5M176.9 118.5Q100.0 117.1 23.1 117.9M23.7 118.2Q24.4 68.9 23.5 19.6"/><path class="sk-ink sk-ghost" d="M23.3 21.8Q100.5 20.6 177.7 21.5M175.9 20.9Q176.5 70.3 176.1 119.8M177.8 118.1Q100.0 117.7 22.1 118.5M23.5 119.0Q23.9 69.0 24.3 19.1"/><path class="sk-crease" d="M62.3 25.6Q62.1 69.9 62.5 114.3"/><path class="sk-crease" d="M99.9 25.9Q100.0 70.2 100.5 114.5"/><path class="sk-crease" d="M138.2 26.1Q138.4 70.2 138.4 114.2"/><path class="sk-crease" d="M27.5 69.6Q99.7 69.9 172.0 69.5"/><text class="sk-label" x="100" y="136" data-lang="en">100%</text><text class="sk-label" x="100" y="136" data-lang="ar">١٠٠٪</text></g></svg>
+        <p><b><span data-lang="en">1</span><span data-lang="ar">١</span></b></p>
+      </li>
+      <li>
+        <svg viewBox="0 0 200 140" role="img" aria-label="The top half folding down onto the bottom half" data-aria-ar="النصف العلوي يُطوى على النصف السفلي"><g filter="url(#zm-sketch)"><polygon class="sk-paper" points="24,70 176,70 176,118 24,118"/><path class="sk-ink" d="M23.1 70.4Q99.8 70.3 176.5 69.9M176.4 67.5Q175.2 93.7 175.9 120.0M178.0 117.7Q100.5 117.6 22.9 118.0M23.9 118.9Q24.4 94.5 24.1 70.0"/><path class="sk-ink sk-ghost" d="M22.7 69.5Q100.4 70.8 178.2 70.3M175.9 67.4Q177.1 93.1 176.2 118.8M176.7 117.5Q99.7 118.5 22.6 117.6M24.4 119.4Q23.6 94.3 23.6 69.2"/><polygon class="sk-hatch" points="24,70 176,70 164,34 36,34"/><path class="sk-ink" d="M23.2 70.6Q99.9 69.3 176.7 70.0M175.9 71.1Q170.6 51.3 163.2 32.3M165.6 33.4Q100.4 33.1 35.2 34.6M36.4 31.8Q29.6 51.2 24.0 71.0"/><path class="sk-ink sk-ghost" d="M23.2 70.6Q100.3 71.2 177.4 70.4M176.6 71.7Q169.4 52.3 163.1 32.5M165.6 33.9Q100.1 33.2 34.6 34.6M36.1 32.5Q28.8 51.5 23.3 71.0"/><path class="sk-arrow" d="M184 40 Q198 72 184 104"/><path class="sk-arrow sk-ghost" d="M184.8 40.0 Q198.4 72.7 183.0 104.4"/><text class="sk-label sk-small" x="100" y="132" data-lang="en">Horizontal fold</text><text class="sk-label sk-small" x="100" y="132" data-lang="ar">طيّة أفقية</text></g></svg>
+        <p><b><span data-lang="en">2</span><span data-lang="ar">٢</span></b></p>
+      </li>
+      <li>
+        <svg class="zm-mirror-rtl" viewBox="0 0 200 140" role="img" aria-label="The sheet folded in half the short way, then in half again" data-aria-ar="الورقة تُطوى نصفين بالعرض، ثم نصفين مرة أخرى"><g filter="url(#zm-sketch)"><polygon class="sk-paper" points="6,46 86,46 86,96 6,96"/><polygon class="sk-hatch" points="46.0,46 86,46 86,96 46.0,96"/><path class="sk-ink" d="M5.1 46.0Q46.4 45.3 87.6 46.1M86.4 44.0Q85.3 70.6 85.8 97.3M88.5 96.6Q47.0 97.2 5.6 96.1M5.5 96.2Q5.5 70.0 5.7 43.9"/><path class="sk-ink sk-ghost" d="M4.6 46.2Q46.4 46.1 88.2 46.2M86.6 45.4Q87.1 71.8 86.2 98.3M87.4 95.9Q46.6 94.8 5.8 95.9M5.7 98.7Q5.6 72.4 6.0 46.1"/><path class="sk-crease" d="M46.3 47.2Q45.4 70.8 45.5 94.3"/><path class="sk-crease" d="M7.2 70.5Q45.6 70.6 84.0 71.4"/><path class="sk-arrow" d="M78 41 Q46.0 20 18 41"/><path class="sk-arrow sk-ghost" d="M78.1 40.9 Q45.3 20.6 17.1 41.3"/><path class="sk-arrow" d="M92 71 H104"/><path class="sk-arrow sk-ghost" d="M91.1 70.8 H103.3"/><polygon class="sk-paper" points="111.5,48.5 151.5,48.5 151.5,98.5 111.5,98.5"/><path class="sk-ink sk-thin" d="M111.2 48.3Q132.1 48.0 152.9 48.2M151.0 48.2Q150.4 73.6 151.2 99.0M151.7 98.0Q131.3 97.9 111.0 98.2M112.1 99.2Q111.1 73.7 111.6 48.2"/><polygon class="sk-paper" points="110,46 150,46 150,96 110,96"/><path class="sk-ink" d="M109.6 45.7Q130.8 47.1 151.9 46.3M150.5 45.2Q151.3 71.6 149.9 97.9M152.7 95.7Q131.0 96.4 109.4 96.1M109.5 96.5Q110.1 70.5 110.1 44.5"/><path class="sk-ink sk-ghost" d="M108.6 45.4Q130.3 44.6 152.1 45.9M150.1 44.7Q148.8 71.2 149.8 97.7M151.9 95.6Q129.7 94.5 107.6 95.4M109.4 98.1Q109.3 71.0 110.0 43.9"/><path class="sk-fold sk-closed" d="M150.1 44.5Q149.8 71.1 150.5 97.8"/><path class="sk-crease" d="M129.8 47.7Q130.3 71.3 130.5 94.9"/><path class="sk-arrow" d="M145 41 Q132.0 26 117 41"/><path class="sk-arrow sk-ghost" d="M145.7 41.9 Q132.2 26.3 116.7 41.2"/><path class="sk-arrow" d="M156 71 H166"/><path class="sk-arrow sk-ghost" d="M156.3 70.0 H166.3"/><polygon class="sk-paper" points="174.64,50.4 194.64,50.4 194.64,100.4 174.64,100.4"/><path class="sk-ink sk-thin" d="M173.9 50.3Q184.9 50.2 195.9 50.5M194.9 48.9Q195.5 74.9 194.8 100.9M195.6 100.9Q184.6 100.8 173.6 99.8M174.2 101.7Q175.5 75.7 174.8 49.7"/><polygon class="sk-paper" points="173.32,48.2 193.32,48.2 193.32,98.2 173.32,98.2"/><path class="sk-ink sk-thin" d="M172.3 48.1Q183.4 49.3 194.5 48.7M193.1 47.1Q192.4 73.2 193.3 99.4M193.9 97.8Q183.1 98.6 172.3 97.9M173.3 98.7Q173.4 73.3 173.7 48.0"/><polygon class="sk-paper" points="172,46 192,46 192,96 172,96"/><path class="sk-ink" d="M171.8 45.4Q182.3 45.3 192.8 46.1M191.6 43.9Q192.1 70.4 191.4 96.9M192.9 95.9Q182.2 95.3 171.6 96.2M171.6 98.4Q171.6 71.0 171.6 43.5"/><path class="sk-ink sk-ghost" d="M169.8 45.8Q181.4 46.2 193.1 46.0M192.4 44.5Q191.4 71.1 191.5 97.8M192.9 96.5Q181.7 95.4 170.4 96.1M172.0 98.3Q172.6 71.1 171.6 43.9"/><path class="sk-fold sk-closed" d="M191.7 44.8Q192.0 71.5 192.6 98.3"/><text class="sk-label sk-small" x="100" y="124" data-lang="en">Vertical fold</text><text class="sk-label sk-small" x="100" y="124" data-lang="ar">طيّة عمودية</text><path class="sk-arrow" d="M156 15 Q160 30 152.5 42"/><path class="sk-arrow sk-ghost" d="M156.7 14.6 Q161.0 30.9 152.1 41.0"/><path class="sk-arrow" d="M184 16 Q197 24 193.5 41"/><path class="sk-arrow sk-ghost" d="M183.9 16.1 Q197.6 24.0 192.4 41.7"/><text class="sk-label sk-note" x="170" y="9" data-lang="en">closed fold</text><text class="sk-label sk-note" x="170" y="9" data-lang="ar">الجهة المقفولة</text></g></svg>
+        <p><b><span data-lang="en">3</span><span data-lang="ar">٣</span></b></p>
+      </li>
+      <li>
+        <svg viewBox="0 0 200 140" role="img" aria-label="Folded in half, a cut from the folded edge along the middle crease, one panel deep" data-aria-ar="الورقة مطوية نصفين، وقصّ من حافة الطية على خط المنتصف بعمق خانة واحدة"><g filter="url(#zm-sketch)"><polygon class="sk-paper" points="74,22 150,22 150,118 74,118"/><path class="sk-ink" d="M72.3 21.9Q111.7 21.2 151.2 22.0M149.7 20.0Q150.9 69.0 149.9 118.0M151.2 118.0Q112.3 117.6 73.3 118.2M73.8 120.8Q74.0 70.9 73.6 21.0"/><path class="sk-ink sk-ghost" d="M73.9 22.2Q113.2 21.4 152.5 22.4M150.4 20.8Q149.5 70.2 150.4 119.6M151.5 117.4Q111.6 118.6 71.7 117.8M74.2 120.3Q73.0 70.3 74.2 20.4"/><path class="sk-crease" d="M112.0 25.5Q111.8 69.8 112.2 114.0"/><path class="sk-crease" d="M77.2 70.3Q111.7 70.9 146.1 70.3"/><path class="sk-fold sk-closed" d="M74.0 19.5Q73.8 70.2 74.3 120.8"/><path class="sk-cut" d="M73.2 70.3Q92.7 69.4 112.3 70.1"/><path class="sk-cut sk-ghost" d="M73.7 70.2Q93.2 70.0 112.7 69.7"/><g class="sk-scissors" transform="translate(122 70) rotate(-4)"><circle cx="6" cy="-5" r="3.4"/><circle cx="6" cy="5" r="3.4"/><path d="M3 -3L-8 4M3 3L-8 -4"/></g><path class="sk-arrow" d="M30 20 Q36 38 68 40"/><path class="sk-arrow sk-ghost" d="M29.9 19.9 Q35.1 38.9 67.3 41.1"/><text class="sk-label sk-note" x="34" y="10" data-lang="en">closed fold</text><text class="sk-label sk-note" x="34" y="10" data-lang="ar">الجهة المقفولة</text><text class="sk-label sk-small" x="174" y="70" data-lang="en">open</text><text class="sk-label sk-small" x="174" y="70" data-lang="ar">مفتوحة</text><text class="sk-label sk-small" x="40" y="104" data-lang="en">cut from here</text><text class="sk-label sk-small" x="40" y="104" data-lang="ar">قُصّ من هنا</text><text class="sk-label sk-small sk-cut-label" x="102" y="81" data-lang="en">to the middle</text><text class="sk-label sk-small sk-cut-label" x="102" y="81" data-lang="ar">حتى المنتصف</text><path class="sk-arrow" d="M44 96 Q56 82 70 74"/><path class="sk-arrow sk-ghost" d="M45.0 94.8 Q55.9 82.8 71.1 73.9"/></g></svg>
+        <p><b><span data-lang="en">4</span><span data-lang="ar">٤</span></b></p>
+      </li>
+      <li>
+        <svg viewBox="0 0 200 140" role="img" aria-label="Bring the ends together to form a plus" data-aria-ar="اجمع الطرفين لتكوين شكل علامة زائد"><g filter="url(#zm-sketch)"><polygon class="sk-paper" points="40,18 70,18 100,8 130,18 160,18 160,44 40,44"/><polygon class="sk-hatch" points="70,18 100,8 130,18 100,28"/><path class="sk-ink" d="M39.3 18.0Q55.4 18.9 71.5 18.4M68.2 17.9Q84.4 11.8 101.3 7.6M97.7 6.8Q114.3 13.5 131.5 18.6M128.1 18.0Q144.1 18.0 160.1 18.5M159.5 17.7Q160.1 32.0 159.9 46.2M160.9 44.4Q99.9 45.1 38.8 44.3M40.3 46.8Q39.3 31.4 40.1 16.0"/><path class="sk-ink sk-ghost" d="M38.2 18.5Q55.4 17.9 72.6 17.9M69.3 18.3Q85.1 13.2 100.6 7.1M97.6 7.3Q114.6 13.0 131.7 18.1M128.0 17.6Q144.8 17.7 161.6 18.5M159.5 15.8Q160.3 30.6 160.4 45.4M162.3 44.5Q100.2 43.5 38.0 44.6M40.0 45.5Q39.0 30.9 39.7 16.2"/><path class="sk-ink sk-thin" d="M69.8 17.8Q85.7 22.2 101.3 27.7M99.0 27.7Q115.1 24.1 130.5 18.3"/><path class="sk-crease" d="M69.7 20.1Q70.4 31.4 70.0 42.8"/><path class="sk-crease" d="M130.4 20.0Q130.1 31.2 130.1 42.4"/><path class="sk-crease" d="M100.0 29.2Q100.0 35.6 100.3 41.9"/><path class="sk-arrow" d="M14 31 H34"/><path class="sk-arrow sk-ghost" d="M15.1 29.9 H34.2"/><path class="sk-arrow" d="M186 31 H166"/><path class="sk-arrow sk-ghost" d="M186.3 31.8 H166.2"/><polygon class="sk-paper" points="96,82 104,82 104,102 124,102 124,110 104,110 104,130 96,130 96,110 76,110 76,102 96,102"/><path class="sk-ink" d="M95.9 82.5Q100.1 81.0 104.3 81.5M103.6 81.9Q103.8 92.1 104.2 102.3M103.0 101.6Q113.7 102.2 124.4 101.9M124.3 101.7Q125.5 106.3 124.3 110.9M125.0 109.6Q114.4 109.2 103.7 109.7M103.9 109.1Q104.2 119.7 104.5 130.3M104.3 130.1Q99.7 129.1 95.0 130.3M96.0 130.7Q96.9 120.1 95.5 109.5M97.3 109.5Q86.1 108.8 74.8 109.5M76.1 110.3Q76.2 105.8 76.2 101.2M75.0 101.5Q85.8 102.1 96.6 101.7M95.9 102.6Q96.2 91.9 95.9 81.1"/><path class="sk-ink sk-ghost" d="M95.0 82.0Q99.9 82.9 104.8 82.5M104.2 81.6Q104.8 92.4 104.2 103.1M103.2 102.4Q114.2 101.3 125.2 102.6M123.9 100.9Q124.4 105.5 124.1 110.2M124.9 109.5Q114.3 110.6 103.7 110.2M104.2 109.0Q105.0 119.8 104.5 130.6M105.1 129.6Q100.3 130.0 95.5 129.7M95.9 131.1Q95.6 120.0 95.7 108.9M97.2 109.4Q86.5 109.5 75.8 110.5M75.4 110.6Q74.7 105.8 76.2 100.9M75.0 101.9Q86.0 101.0 97.0 101.8M96.0 102.4Q96.0 91.7 95.6 81.0"/><text class="sk-label sk-small" x="100" y="56" data-lang="en">Bring the ends together</text><text class="sk-label sk-small" x="100" y="56" data-lang="ar">اجمع الطرفين</text><text class="sk-label sk-small" x="100" y="70" data-lang="en">to form this +</text><text class="sk-label sk-small" x="100" y="70" data-lang="ar">لتكوين هذا الشكل +</text></g></svg>
+        <p><b><span data-lang="en">5</span><span data-lang="ar">٥</span></b></p>
+      </li>
+      <li>
+        <svg viewBox="0 0 200 140" role="img" aria-label="The finished eight-page booklet with the cover on top" data-aria-ar="الكتيّب الجاهز بثماني صفحات والغلاف في الأعلى"><g filter="url(#zm-sketch)"><polygon class="sk-paper" points="80,28 136,28 136,116 80,116"/><path class="sk-ink sk-thin" d="M77.0 27.5Q106.8 28.9 136.7 28.5M136.5 25.8Q135.5 72.4 135.6 119.0M136.4 115.8Q107.2 116.9 78.0 115.6M80.5 116.6Q80.2 71.5 80.6 26.4"/><polygon class="sk-paper" points="76,25 132,25 132,113 76,113"/><path class="sk-ink sk-thin" d="M73.8 24.5Q103.9 25.7 134.1 24.8M132.5 23.6Q131.5 69.1 131.9 114.6M132.1 113.5Q103.6 112.4 75.1 113.3M76.5 114.3Q75.7 69.3 75.7 24.2"/><polygon class="sk-paper" points="72,22 128,22 128,110 72,110"/><path class="sk-ink" d="M71.3 22.5Q100.0 21.4 128.7 22.5M128.5 21.6Q128.4 66.4 127.9 111.2M129.1 110.4Q99.5 109.7 69.9 110.4M71.8 111.5Q71.3 65.9 72.3 20.3"/><path class="sk-ink sk-ghost" d="M69.5 21.4Q99.3 22.8 129.1 21.8M127.7 19.2Q127.1 65.9 127.5 112.5M129.3 110.1Q100.3 109.4 71.2 110.3M72.4 111.6Q72.8 66.3 72.1 21.1"/><path class="sk-fold" d="M71.7 19.0Q72.5 65.9 72.5 112.7"/><text class="sk-label" x="100" y="66" data-lang="en">Cover</text><text class="sk-label" x="100" y="66" data-lang="ar">الغلاف</text><path class="sk-arrow" d="M152 96 Q172 70 152 44"/><path class="sk-arrow sk-ghost" d="M151.8 97.2 Q172.0 69.4 152.7 44.4"/></g></svg>
+        <p><b><span data-lang="en">6</span><span data-lang="ar">٦</span></b></p>
+      </li>
+    </ol>
+  </section>
 
   <section class="zm-foot">
-    <button type="button" class="zm-link" id="zm-fold">How to fold</button>
-    <button type="button" class="zm-link" id="zm-reset">Start over</button>
-    <p class="zm-note">Everything stays in this browser. Nothing is uploaded.</p>
+    <a class="zm-link" href="#guide"><span data-lang="en">How to fold</span><span data-lang="ar">طريقة الطي</span></a>
+    <button type="button" class="zm-link" id="zm-reset"><span data-lang="en">Start over</span><span data-lang="ar">ابدأ من جديد</span></button>
+    <p class="zm-note"><span data-lang="en">Everything stays in this browser. Nothing is uploaded.</span><span data-lang="ar">كل شيء يبقى في متصفحك هذا، ولا يغادره شيء.</span></p>
   </section>
 </main>
 
@@ -77,87 +142,88 @@ sitemap: false
     <div class="zp-head">
       <span class="zp-label"></span>
       <span class="zp-move">
-        <button type="button" class="zp-icon zp-prev" aria-label="Move earlier">&#8592;</button>
-        <button type="button" class="zp-icon zp-next" aria-label="Move later">&#8594;</button>
-        <span class="zp-grip" title="Drag to reorder" aria-hidden="true">&#8942;&#8942;</span>
+        <button type="button" class="zp-icon zp-prev" data-i18n-aria="moveEarlier" aria-label="Move earlier">&#8592;</button>
+        <button type="button" class="zp-icon zp-next" data-i18n-aria="moveLater" aria-label="Move later">&#8594;</button>
+        <span class="zp-grip" data-i18n-title="drag" title="Drag to reorder" aria-hidden="true">&#8942;&#8942;</span>
       </span>
     </div>
     <div class="zp-stage">
       <canvas class="zp-canvas" aria-hidden="true"></canvas>
-      <button type="button" class="zp-add"><span class="zp-plus" aria-hidden="true">+</span><span>Add photo</span></button>
-      <div class="zp-drop" aria-hidden="true">Drop image</div>
+      <span class="zp-ppi" hidden><i class="zm-dot"></i><span></span></span>
+      <button type="button" class="zp-add"><span class="zp-plus" aria-hidden="true">+</span><span><span data-lang="en">Add photo</span><span data-lang="ar">أضف صورة</span></span></button>
+      <div class="zp-drop" aria-hidden="true"><span data-lang="en">Drop image</span><span data-lang="ar">أفلِتها هنا</span></div>
     </div>
     <div class="zp-tools">
-      <div class="zp-fit" role="group" aria-label="Photo fit">
-        <button type="button" data-fit="cover" aria-pressed="true">Fill</button>
-        <button type="button" data-fit="contain" aria-pressed="false">Fit</button>
+      <div class="zp-fit" role="group" data-i18n-aria="fit" aria-label="Photo fit">
+        <button type="button" data-fit="cover" aria-pressed="true"><span data-lang="en">Fill</span><span data-lang="ar">تعبئة</span></button>
+        <button type="button" data-fit="contain" aria-pressed="false"><span data-lang="en">Fit</span><span data-lang="ar">كاملة</span></button>
       </div>
-      <button type="button" class="zp-text zp-replace">Replace</button>
-      <button type="button" class="zp-text zp-remove">Remove</button>
+      <button type="button" class="zp-text zp-zoom" aria-expanded="false"><span data-lang="en">Zoom</span><span data-lang="ar">تكبير</span></button>
+      <button type="button" class="zp-text zp-replace"><span data-lang="en">Replace</span><span data-lang="ar">استبدال</span></button>
+      <button type="button" class="zp-text zp-remove"><span data-lang="en">Remove</span><span data-lang="ar">إزالة</span></button>
     </div>
-    <textarea class="zp-caption" rows="2" dir="auto" placeholder="Text on this page"></textarea>
+    <div class="zp-adjust" hidden>
+      <input type="range" class="zp-zoom-range" min="100" max="400" step="1" value="100" data-i18n-aria="zoom" aria-label="Zoom">
+      <span class="zp-zoom-val">100%</span>
+      <button type="button" class="zp-text zp-zoom-reset"><span data-lang="en">Reset</span><span data-lang="ar">إعادة</span></button>
+      <button type="button" class="zp-text zp-zoom-done"><span data-lang="en">Done</span><span data-lang="ar">تم</span></button>
+      <p class="zp-adjust-tip"><span data-lang="en">Drag the photo to move it. Pinch or scroll to zoom.</span><span data-lang="ar">اسحب الصورة لتحرّكها، وقرّبها بإصبعين أو بعجلة الفأرة.</span></p>
+    </div>
+    <textarea class="zp-caption" rows="2" dir="auto" data-placeholder-en="Text on this page" data-placeholder-ar="اكتب سطرًا لهذه الصفحة" placeholder="Text on this page"></textarea>
     <input type="file" class="zp-file" accept="image/*" hidden>
   </li>
 </template>
 
 <dialog class="zm-dialog zm-preview" id="zm-preview-dlg" aria-labelledby="zm-preview-title">
   <div class="zm-dlg-head">
-    <h2 id="zm-preview-title">Preview</h2>
+    <h2 id="zm-preview-title"><span data-lang="en">Preview</span><span data-lang="ar">معاينة</span></h2>
     <div class="zm-tabs" role="tablist">
-      <button type="button" role="tab" data-view="book" aria-selected="true">Booklet</button>
-      <button type="button" role="tab" data-view="sheet" aria-selected="false">Print sheet</button>
+      <button type="button" role="tab" data-view="book" aria-selected="true"><span data-lang="en">Booklet</span><span data-lang="ar">الكتيّب</span></button>
+      <button type="button" role="tab" data-view="sheet" aria-selected="false"><span data-lang="en">Print sheet</span><span data-lang="ar">ورقة الطباعة</span></button>
     </div>
-    <button type="button" class="zm-close" data-close aria-label="Close">&times;</button>
+    <button type="button" class="zm-close" data-close data-i18n-aria="close" aria-label="Close">&times;</button>
   </div>
   <div class="zm-pv-stage"><canvas id="zm-pv-canvas"></canvas></div>
   <div class="zm-pv-nav" id="zm-pv-nav">
-    <button type="button" class="zm-btn" id="zm-pv-prev" aria-label="Previous spread">&#8592;</button>
+    <button type="button" class="zm-btn" id="zm-pv-prev" data-i18n-aria="prevSpread" aria-label="Previous spread">&#8592;</button>
     <span id="zm-pv-count" aria-live="polite"></span>
-    <button type="button" class="zm-btn" id="zm-pv-next" aria-label="Next spread">&#8594;</button>
+    <button type="button" class="zm-btn" id="zm-pv-next" data-i18n-aria="nextSpread" aria-label="Next spread">&#8594;</button>
   </div>
-  <p class="zm-pv-hint" id="zm-pv-hint" hidden>Top row prints upside down. That is correct: it turns the right way up when folded.</p>
+  <p class="zm-pv-hint" id="zm-pv-hint" hidden><span data-lang="en">Top row prints upside down. That is correct: it turns the right way up when folded.</span><span data-lang="ar">الصف العلوي يُطبع مقلوبًا، ولا بأس؛ فهو يعتدل حين تطويه.</span></p>
 </dialog>
 
 <dialog class="zm-dialog" id="zm-download-dlg" aria-labelledby="zm-dl-title">
   <div class="zm-dlg-head">
-    <h2 id="zm-dl-title">Download</h2>
-    <button type="button" class="zm-close" data-close aria-label="Close">&times;</button>
+    <h2 id="zm-dl-title"><span data-lang="en">Download</span><span data-lang="ar">تحميل</span></h2>
+    <button type="button" class="zm-close" data-close data-i18n-aria="close" aria-label="Close">&times;</button>
   </div>
   <p class="zm-dl-size" id="zm-dl-size"></p>
   <div class="zm-choices">
     <button type="button" class="zm-choice" data-format="pdf">
       <strong>PDF</strong>
-      <span>Print-ready sheet plus a folding guide page.</span>
+      <span><span data-lang="en">Print-ready sheet plus a folding guide page.</span><span data-lang="ar">ورقةٌ جاهزة للطباعة، ومعها صفحةٌ لطريقة الطي.</span></span>
     </button>
     <button type="button" class="zm-choice" data-format="jpg">
       <strong>JPG</strong>
-      <span>One high-resolution image of the sheet, 300 DPI.</span>
+      <span><span data-lang="en">One high-resolution image of the sheet, 300 DPI.</span><span data-lang="ar">صورةٌ واحدة للورقة بدقةٍ عالية، ٣٠٠ DPI.</span></span>
     </button>
   </div>
-  <p class="zm-dl-tip">Print single-sided, landscape, at 100% / actual size.</p>
-  <p class="zm-busy" id="zm-busy" hidden>Preparing your file…</p>
-</dialog>
-
-<dialog class="zm-dialog" id="zm-fold-dlg" aria-labelledby="zm-fold-title">
-  <div class="zm-dlg-head">
-    <h2 id="zm-fold-title">How to fold</h2>
-    <button type="button" class="zm-close" data-close aria-label="Close">&times;</button>
-  </div>
-  <canvas class="zm-fold-canvas" id="zm-fold-canvas" aria-label="Sheet layout: dashed lines are folds, the solid line in the middle is the cut"></canvas>
-  <ol class="zm-steps" id="zm-steps"></ol>
+  <p class="zm-dl-tip"><span data-lang="en">Print single-sided, landscape, at 100% / actual size.</span><span data-lang="ar">اطبع على وجهٍ واحد، بالعرض، وبالحجم الفعلي ١٠٠٪.</span></p>
+  <p class="zm-busy" id="zm-busy" hidden><span data-lang="en">Preparing your file…</span><span data-lang="ar">يُجهَّز ملفك…</span></p>
 </dialog>
 
 <dialog class="zm-dialog zm-small" id="zm-reset-dlg" aria-labelledby="zm-reset-title">
   <div class="zm-dlg-head">
-    <h2 id="zm-reset-title">Start over?</h2>
+    <h2 id="zm-reset-title"><span data-lang="en">Start over?</span><span data-lang="ar">أتبدأ من جديد؟</span></h2>
   </div>
-  <p>This clears every page: photos, text and settings.</p>
+  <p><span data-lang="en">This clears every page: photos, text and settings.</span><span data-lang="ar">سيُمحى كل شيء: الصور والسطور والإعدادات.</span></p>
   <div class="zm-confirm">
-    <button type="button" class="zm-btn" data-close>Cancel</button>
-    <button type="button" class="zm-btn zm-btn-main" id="zm-reset-yes">Clear zine</button>
+    <button type="button" class="zm-btn" data-close><span data-lang="en">Cancel</span><span data-lang="ar">تراجع</span></button>
+    <button type="button" class="zm-btn zm-btn-main" id="zm-reset-yes"><span data-lang="en">Clear zine</span><span data-lang="ar">امحُ الكتيّب</span></button>
   </div>
 </dialog>
 
+<script src="/lang.js"></script>
 <script src="/theme.js"></script>
 <script src="/zine/zine.js?v={{ site.time | date: '%s' }}"></script>
 </body>
