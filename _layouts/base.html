@@ -8,9 +8,7 @@
 <title>{{ t_ar }}</title>
 <meta name="description" content="{{ page.excerpt | default: page.description | default: site.description | strip_html | strip_newlines | truncate: 160 }}">
 <link rel="canonical" href="{{ page.url | absolute_url }}">
-<meta property="og:title" content="{{ page.title | default: site.title | strip_html }}">
-<meta property="og:url" content="{{ page.url | absolute_url }}">
-{% if page.cover and page.cover != "" %}<meta property="og:image" content="{{ page.cover | absolute_url }}">{% endif %}
+{% include share-meta.html %}
 {% if page.draft %}<meta name="robots" content="noindex">{% endif %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,6 +39,7 @@
 <script src="/script.js"></script>
 <script src="/lang.js"></script>
 <script src="/theme.js"></script>
+{% if page.share %}<script src="/share.js"></script>{% endif %}
 {% if page.instagram != nil and page.instagram != "" %}{% assign need_ig = true %}{% endif %}{% if need_ig or content contains "instagram-media" %}<script async src="https://www.instagram.com/embed.js"></script>{% endif %}
 </body>
 </html>

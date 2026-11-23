@@ -3,6 +3,7 @@
 
 title: Hamad Alsheail | Diwan Alshams
 description: Portfolio of Hamad Alsheail, an artist based in Riyadh working between words and photographs.
+description_ar: "ديوان الشمس: أعمال حمد الشعيل، فنان من الرياض بين الكلمة والصورة."
 url: https://hamadalsheail.sa
 lang: en
 
@@ -21,6 +22,11 @@ defaults:
     values:
       layout: post
       lang: en
+      share: true
+  - scope:
+      path: "projects"
+    values:
+      share: true
 
 exclude:
   - README.md

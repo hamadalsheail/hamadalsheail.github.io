@@ -1,0 +1,43 @@
+{%- comment -%}
+  Link preview tags (WhatsApp, X, iMessage, Telegram...).
+  Posts: own title and excerpt, in the post's language.
+  Other pages: Arabic first (the site's default), from title_ar / description_ar.
+  Image: img/posts/<slug>/share.jpg or img/share/<cover name>.jpg (made by
+  tools/build-share-images.py), else the post thumb, else the cover, else the default.
+{%- endcomment -%}
+{%- assign sm_post = false -%}{%- if page.collection == "posts" -%}{%- assign sm_post = true -%}{%- endif -%}
+{%- if sm_post -%}
+  {%- assign sm_title = page.title -%}
+  {%- assign sm_desc = page.excerpt | default: site.description_ar -%}
+  {%- if page.lang == "ar" -%}{%- assign sm_locale = "ar_SA" -%}{%- else -%}{%- assign sm_locale = "en_US" -%}{%- endif -%}
+  {%- assign sm_img = nil -%}
+  {%- assign sm_try = "/img/posts/" | append: page.slug | append: "/share.jpg" -%}
+  {%- assign sm_hit = site.static_files | where: "path", sm_try | first -%}
+  {%- if sm_hit -%}{%- assign sm_img = sm_try -%}{%- else -%}
+    {%- assign sm_try = "/img/posts/" | append: page.slug | append: "/thumb.jpg" -%}
+    {%- assign sm_hit = site.static_files | where: "path", sm_try | first -%}
+    {%- if sm_hit -%}{%- assign sm_img = sm_try -%}{%- elsif page.cover and page.cover != "" -%}{%- assign sm_img = page.cover -%}{%- endif -%}
+  {%- endif -%}
+{%- else -%}
+  {%- assign sm_title = page.share_title | default: page.title_ar | default: page.title | default: site.title -%}
+  {%- assign sm_desc = page.description_ar | default: page.description | default: site.description_ar -%}
+  {%- assign sm_locale = "ar_SA" -%}
+  {%- assign sm_img = nil -%}
+  {%- if page.cover and page.cover != "" -%}
+    {%- assign sm_key = page.cover | split: "/" | last | split: "." | first -%}
+    {%- assign sm_try = "/img/share/" | append: sm_key | append: ".jpg" -%}
+    {%- assign sm_hit = site.static_files | where: "path", sm_try | first -%}
+    {%- if sm_hit -%}{%- assign sm_img = sm_try -%}{%- else -%}{%- assign sm_img = page.cover -%}{%- endif -%}
+  {%- endif -%}
+{%- endif -%}
+{%- assign sm_img = sm_img | default: "/img/share/default.jpg" -%}
+{%- assign sm_desc = sm_desc | strip_html | strip_newlines | strip | truncate: 200 -%}
+<meta property="og:site_name" content="ديوان الشمس | Diwan Alshams">
+<meta property="og:type" content="{% if sm_post %}article{% else %}website{% endif %}">
+<meta property="og:locale" content="{{ sm_locale }}">
+<meta property="og:title" content="{{ sm_title | strip_html | escape }}">
+<meta property="og:description" content="{{ sm_desc | escape }}">
+<meta property="og:url" content="{{ page.url | absolute_url }}">
+<meta property="og:image" content="{{ sm_img | absolute_url }}">
+<meta property="og:image:alt" content="{{ sm_title | strip_html | escape }}">
+<meta name="twitter:card" content="summary_large_image">

@@ -1,0 +1,9 @@
+{%- comment -%}
+  Share button. Phones open the native share sheet; elsewhere it copies the link.
+  Optional: url= (defaults to this page's canonical URL).
+{%- endcomment -%}
+<button class="share-btn" type="button" data-share-url="{{ include.url | default: page.url | absolute_url }}" aria-live="polite">
+  <svg class="share-icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M5 12v8h14v-8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <span class="share-label"><span data-lang="en">Share</span><span data-lang="ar">مشاركة</span></span>
+  <span class="share-done"><span data-lang="en">Link copied</span><span data-lang="ar">نُسخ الرابط</span></span>
+</button>

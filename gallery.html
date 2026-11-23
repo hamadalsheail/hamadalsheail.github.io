@@ -1,6 +1,9 @@
 ---
 # Processed by Jekyll only to pull in the theme toggle.
 permalink: /gallery.html
+title: Gallery
+title_ar: ألبوم المنوّعات
+description_ar: "مجموعة منوّعة من صور حمد الشعيل، خارج السلاسل المختارة."
 ---
 <!DOCTYPE html>
 <html lang="ar" dir="rtl" data-title-en="Gallery | Hamad Alsheail" data-title-ar="ألبوم المنوّعات | حمد الشعيل">
@@ -9,6 +12,8 @@ permalink: /gallery.html
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ألبوم المنوّعات | حمد الشعيل</title>
 <meta name="description" content="A wider archive of photographs by Hamad Alsheail, work beyond the selected series.">
+<link rel="canonical" href="{{ page.url | absolute_url }}">
+{% include share-meta.html %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
@@ -21,7 +26,10 @@ permalink: /gallery.html
 
 <main>
   <section class="gallery">
-    <h1 class="section-title"><span data-lang="en">Gallery</span><span data-lang="ar">ألبوم المنوّعات</span></h1>
+    <div class="title-row">
+      <h1 class="section-title"><span data-lang="en">Gallery</span><span data-lang="ar">ألبوم المنوّعات</span></h1>
+      {% include share.html %}
+    </div>
     <p class="gallery-intro"><span data-lang="en">Everything else: frames that never made it into a series.</span><span data-lang="ar">مجموعة منوّعة من الصور</span></p>
     <div class="gallery-grid" id="gallery-grid"></div>
     <p class="gallery-empty" id="gallery-empty" hidden>
@@ -48,5 +56,6 @@ permalink: /gallery.html
 <script src="/lang.js"></script>
 <script src="/theme.js"></script>
 <script src="/gallery.js"></script>
+<script src="/share.js"></script>
 </body>
 </html>
