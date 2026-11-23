@@ -6,7 +6,6 @@
   // Sheet sizes in inches, landscape.
   const SIZES = {
     a4: { label: 'A4', w: 297 / 25.4, h: 210 / 25.4 },
-    letter: { label: 'US Letter', w: 11, h: 8.5 },
     a3: { label: 'A3', w: 420 / 25.4, h: 297 / 25.4 },
   };
   /* ---------- Language (follows the site's EN / ع toggle) ---------- */
@@ -24,7 +23,7 @@
       verdict: { ok: 'Sharp', warn: 'Acceptable, slight softness', bad: 'Will look soft' },
       at: ' at ', ppi: ' PPI',
       bestAll: 'Best paper, all sharp', largestOk: 'Largest acceptable', now: 'Now: ', none: 'None',
-      thPage: 'Page', thPhoto: 'Photo', thBest: 'Best size', belowAll: 'Below Letter',
+      thPage: 'Page', thPhoto: 'Photo', thBest: 'Best size', belowAll: 'Below A4',
       unit: 'Numbers are effective PPI.',
       badFile: 'That file could not be read as an image.',
       onlyFit: (k) => 'Only ' + k + ' photo' + (k === 1 ? '' : 's') + ' fit: every page already has one.',
@@ -45,7 +44,7 @@
       verdict: { ok: 'صافية', warn: 'مقبولة، بلينٍ خفيف', bad: 'ستبدو باهتة' },
       at: ' على ', ppi: ' PPI',
       bestAll: 'أفضل ورقٍ تصفو فيه الصور كلها', largestOk: 'أكبر مقاسٍ مقبول', now: 'الآن: ', none: 'لا شيء',
-      thPage: 'الصفحة', thPhoto: 'الصورة', thBest: 'أفضل مقاس', belowAll: 'دون مقاس ليتر',
+      thPage: 'الصفحة', thPhoto: 'الصورة', thBest: 'أفضل مقاس', belowAll: 'دون مقاس A4',
       unit: 'الأرقام دقةٌ فعلية بوحدة PPI.',
       badFile: 'تعذّرت قراءة هذا الملف كصورة.',
       onlyFit: (k) => 'اتسعت الصفحات لـ' + num(k) + ' صور فقط؛ فلم تبقَ صفحةٌ بلا صورة.',
@@ -60,7 +59,7 @@
   const t = (k) => STR[lang()][k];
   // Arabic-Indic digits in Arabic.
   const num = (n) => (lang() === 'ar' ? String(n).replace(/\d/g, (d) => '٠١٢٣٤٥٦٧٨٩'[d]) : String(n));
-  const sizeLabel = (k) => (k === 'letter' ? (lang() === 'ar' ? 'ليتر' : 'US Letter') : SIZES[k].label);
+  const sizeLabel = (k) => SIZES[k].label;
   const AR = /[؀-ۿݐ-ݿࢠ-ࣿﭐ-﷿ﹰ-﻿]/;
   const INK = '#242424';
   const WHITE = '#ffffff';
@@ -69,7 +68,7 @@
   // Print advisor: zine pages are held in the hand, so 300 PPI is the
   // target at every sheet size; 75% of it still prints acceptably.
   const TARGET_PPI = 300;
-  const ORDER = ['a4', 'letter', 'a3'];
+  const ORDER = ['a4', 'a3'];
   const ZOOM_MAX = 4;
 
   // Where each page sits on the sheet (left-to-right zine): [column, row].
