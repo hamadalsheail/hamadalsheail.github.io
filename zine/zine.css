@@ -549,3 +549,5 @@ html[dir="rtl"] .zp-icon { transform: scaleX(-1); }
   .zm-plan { grid-template-columns: 1fr; gap: 0.9rem; }
   .zm-fold { grid-template-columns: 1fr; }
 }
+
+.zm-latin { font-family: var(--display); font-size: 0.5em; font-weight: 600; color: var(--ink-soft); vertical-align: middle; }
