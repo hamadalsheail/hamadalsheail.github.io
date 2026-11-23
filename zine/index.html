@@ -4,11 +4,11 @@ permalink: /zine/
 sitemap: false
 ---
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl" data-title-en="Zine Maker | Hamad Alsheail" data-title-ar="صانع الزين | حمد الشعيل">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Zine Maker | Hamad Alsheail</title>
+<title>صانع الزين | حمد الشعيل</title>
 <meta name="robots" content="noindex, nofollow">
 <meta name="description" content="Make an eight-page, one-sheet zine in the browser.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,35 +16,36 @@ sitemap: false
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Noto+Kufi+Arabic:wght@400;600&family=Noto+Naskh+Arabic:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/styles.css?v={{ site.time | date: '%s' }}">
 <link rel="stylesheet" href="/zine/zine.css?v={{ site.time | date: '%s' }}">
-<script>{% include theme-init.js %}</script>
+<script>{% include theme-init.js %}{% include lang-init.js %}</script>
 </head>
 <body class="zine-page">
 
 <header class="topbar">
-  <a class="mark" href="/">Diwan Alshams</a>
+  <a class="mark" href="/"><span data-lang="en">Diwan Alshams</span><span data-lang="ar">ديوان الشمس</span></a>
   <div class="topbar-tools">
+    {% include lang-toggle.html %}
     {% include theme-toggle.html %}
   </div>
 </header>
 
 <main class="zm">
   <section class="zm-intro">
-    <h1>Zine Maker</h1>
-    <p>Eight pages, one sheet, one cut. Add a photo or a line of text to each page, then print and fold.</p>
+    <h1><span data-lang="en">Zine Maker</span><span data-lang="ar">صانع الزين</span></h1>
+    <p><span data-lang="en">Eight pages, one sheet, one cut. Add a photo or a line of text to each page, then print and fold.</span><span data-lang="ar">ثماني صفحات من ورقة واحدة وقَصّة واحدة. أضف صورة أو سطرًا من النص إلى كل صفحة، ثم اطبع واطوِ.</span></p>
   </section>
 
-  <section class="zm-bar" aria-label="Zine settings">
+  <section class="zm-bar" data-i18n-aria="settings" aria-label="Zine settings">
     <div class="zm-settings">
       <div class="zm-field">
-        <span id="zm-size-label">Paper</span>
+        <span id="zm-size-label"><span data-lang="en">Paper</span><span data-lang="ar">الورق</span></span>
         <div class="zm-seg" id="zm-size" role="radiogroup" aria-labelledby="zm-size-label">
           <button type="button" role="radio" data-size="a4">A4<i class="zm-dot" aria-hidden="true"></i></button>
-          <button type="button" role="radio" data-size="letter">Letter<i class="zm-dot" aria-hidden="true"></i></button>
+          <button type="button" role="radio" data-size="letter"><span data-lang="en">Letter</span><span data-lang="ar">ليتر</span><i class="zm-dot" aria-hidden="true"></i></button>
           <button type="button" role="radio" data-size="a3">A3<i class="zm-dot" aria-hidden="true"></i></button>
         </div>
       </div>
       <label class="zm-field">
-        <span>Reads</span>
+        <span><span data-lang="en">Reads</span><span data-lang="ar">القراءة</span></span>
         <select id="zm-dir">
           <option value="ltr">Left to right</option>
           <option value="rtl">Right to left (Arabic)</option>
@@ -52,118 +53,87 @@ sitemap: false
       </label>
       <label class="zm-check">
         <input type="checkbox" id="zm-border">
-        <span>White border</span>
+        <span><span data-lang="en">White border</span><span data-lang="ar">إطار أبيض</span></span>
       </label>
     </div>
     <div class="zm-actions">
-      <button type="button" class="zm-btn" id="zm-bulk">Add photos</button>
-      <button type="button" class="zm-btn" id="zm-preview">Preview</button>
-      <button type="button" class="zm-btn zm-btn-main" id="zm-download">Download zine</button>
+      <button type="button" class="zm-btn" id="zm-bulk"><span data-lang="en">Add photos</span><span data-lang="ar">أضف صورًا</span></button>
+      <button type="button" class="zm-btn" id="zm-preview"><span data-lang="en">Preview</span><span data-lang="ar">معاينة</span></button>
+      <button type="button" class="zm-btn zm-btn-main" id="zm-download"><span data-lang="en">Download zine</span><span data-lang="ar">حمّل الزين</span></button>
     </div>
     <input type="file" id="zm-bulk-input" accept="image/*" multiple hidden>
   </section>
 
-  <ol class="zm-grid" id="zm-grid" aria-label="Zine pages"></ol>
+  <ol class="zm-grid" id="zm-grid" data-i18n-aria="pages" aria-label="Zine pages"></ol>
 
   <section class="zm-advisor" aria-labelledby="zm-adv-title">
-    <h2 id="zm-adv-title">Print advisor</h2>
-    <div id="zm-advisor"><p class="zm-adv-empty">Add a photo to see which paper size prints it sharp.</p></div>
+    <h2 id="zm-adv-title"><span data-lang="en">Print advisor</span><span data-lang="ar">مستشار الطباعة</span></h2>
+    <div id="zm-advisor"></div>
     <ul class="zm-legend">
-      <li><i class="zm-dot is-ok"></i>Sharp: 300 PPI or more</li>
-      <li><i class="zm-dot is-warn"></i>Acceptable: 225–299 PPI, slight softness</li>
-      <li><i class="zm-dot is-bad"></i>Soft: under 225 PPI</li>
+      <li><i class="zm-dot is-ok"></i><span data-lang="en">Sharp: 300 PPI or more</span><span data-lang="ar">واضحة: ٣٠٠ PPI فأكثر</span></li>
+      <li><i class="zm-dot is-warn"></i><span data-lang="en">Acceptable: 225–299 PPI, slight softness</span><span data-lang="ar">مقبولة: ٢٢٥–٢٩٩ PPI، نعومة خفيفة</span></li>
+      <li><i class="zm-dot is-bad"></i><span data-lang="en">Soft: under 225 PPI</span><span data-lang="ar">ضبابية: أقل من ٢٢٥ PPI</span></li>
     </ul>
-    <p class="zm-adv-note">Effective PPI = photo pixels ÷ printed width of the photo on the page. Zooming in crops the photo, so it lowers PPI. Photos are never upscaled.</p>
+    <p class="zm-adv-note"><span data-lang="en">Effective PPI = photo pixels ÷ printed width of the photo on the page. Zooming in crops the photo, so it lowers PPI. Photos are never upscaled.</span><span data-lang="ar">الدقة الفعلية (PPI) = عدد بكسلات الصورة ÷ عرضها المطبوع على الصفحة. التكبير يقصّ الصورة فيخفض دقتها. لا تُكبَّر الصور اصطناعيًا أبدًا.</span></p>
   </section>
 
 
   <section class="zm-guide" id="guide" aria-labelledby="zm-guide-title">
-    <h2 id="zm-guide-title">How to make a zine</h2>
+    <h2 id="zm-guide-title"><span data-lang="en">How to make a zine</span><span data-lang="ar">كيف تصنع زينًا</span></h2>
     <ol class="zm-plan">
-      <li><strong>Plan eight pages.</strong> A front cover, six inside pages and a back cover. One idea per page reads best.</li>
-      <li><strong>Fill the pages.</strong> Add a photo, a line of text, or both. Drag or use the arrows to change the order.</li>
-      <li><strong>Check the dots.</strong> Green prints sharp. Yellow or red: use a bigger photo, zoom out, or pick a smaller paper.</li>
-      <li><strong>Print and fold.</strong> Download, print single-sided at 100%, then follow the steps below.</li>
+      <li><span data-lang="en"><strong>Plan eight pages.</strong> A front cover, six inside pages and a back cover. One idea per page reads best.</span><span data-lang="ar"><strong>خطّط لثماني صفحات.</strong> غلاف أمامي، وست صفحات داخلية، وغلاف خلفي. فكرة واحدة لكل صفحة أوضح للقارئ.</span></li>
+      <li><span data-lang="en"><strong>Fill the pages.</strong> Add a photo, a line of text, or both. Drag or use the arrows to change the order.</span><span data-lang="ar"><strong>املأ الصفحات.</strong> أضف صورة أو سطرًا من النص أو كليهما. اسحب الصفحات أو استخدم الأسهم لتغيير ترتيبها.</span></li>
+      <li><span data-lang="en"><strong>Check the dots.</strong> Green prints sharp. Yellow or red: use a bigger photo, zoom out, or pick a smaller paper.</span><span data-lang="ar"><strong>راقب النقاط.</strong> الأخضر يُطبع بوضوح. الأصفر أو الأحمر: استخدم صورة أكبر، أو قلّل التكبير، أو اختر ورقًا أصغر.</span></li>
+      <li><span data-lang="en"><strong>Print and fold.</strong> Download, print single-sided at 100%, then follow the steps below.</span><span data-lang="ar"><strong>اطبع واطوِ.</strong> حمّل الملف، واطبعه على وجه واحد بمقاس ١٠٠٪، ثم اتبع الخطوات أدناه.</span></li>
     </ol>
 
-    <h3 class="zm-fold-title">How to fold</h3>
+    <h3 class="zm-fold-title"><span data-lang="en">How to fold</span><span data-lang="ar">طريقة الطي</span></h3>
     <svg width="0" height="0" class="zm-defs" aria-hidden="true" focusable="false">
       <defs>
         <marker id="zm-arrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
           <path d="M1 1 L8 5 L1 9" fill="none" stroke="context-stroke" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
         </marker>
+        <filter id="zm-sketch" x="-5%" y="-5%" width="110%" height="110%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="4" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"/>
+        </filter>
+        <pattern id="zm-hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(40)">
+          <line x1="0" y1="0" x2="0" y2="5" class="sk-hatch-line"/>
+        </pattern>
       </defs>
     </svg>
     <ol class="zm-fold">
       <li>
-        <svg viewBox="0 0 200 140" role="img" aria-label="A landscape sheet divided into eight panels">
-          <rect class="ill-paper" x="24" y="22" width="152" height="96"/>
-          <path class="ill-crease" d="M62 22V118M100 22V118M138 22V118M24 70H176"/>
-          <text class="ill-label" x="100" y="136">100%</text>
-        </svg>
-        <p><b>1</b> Print the sheet single-sided, landscape, at 100%.</p>
+        <svg viewBox="0 0 200 140" role="img" aria-label="A landscape sheet divided into eight panels" data-aria-ar="ورقة بالعرض مقسّمة إلى ثماني خانات"><g filter="url(#zm-sketch)"><polygon class="sk-paper" points="24,22 176,22 176,118 24,118"/><path class="sk-ink" d="M23.0 21.5Q99.9 20.6 176.8 21.8M175.9 20.0Q174.9 69.2 175.5 118.5M176.9 118.5Q100.0 117.1 23.1 117.9M23.7 118.2Q24.4 68.9 23.5 19.6"/><path class="sk-ink sk-ghost" d="M23.3 21.8Q100.5 20.6 177.7 21.5M175.9 20.9Q176.5 70.3 176.1 119.8M177.8 118.1Q100.0 117.7 22.1 118.5M23.5 119.0Q23.9 69.0 24.3 19.1"/><path class="sk-crease" d="M62.3 25.6Q62.1 69.9 62.5 114.3"/><path class="sk-crease" d="M99.9 25.9Q100.0 70.2 100.5 114.5"/><path class="sk-crease" d="M138.2 26.1Q138.4 70.2 138.4 114.2"/><path class="sk-crease" d="M27.5 69.6Q99.7 69.9 172.0 69.5"/><text class="sk-label" x="100" y="136" data-lang="en">100%</text><text class="sk-label" x="100" y="136" data-lang="ar">١٠٠٪</text></g></svg>
+        <p><b><span data-lang="en">1</span><span data-lang="ar">١</span></b> <span data-lang="en">Print the sheet single-sided, landscape, at 100%.</span><span data-lang="ar">اطبع الورقة على وجه واحد، بالعرض، وبمقاس ١٠٠٪.</span></p>
       </li>
       <li>
-        <svg viewBox="0 0 200 140" role="img" aria-label="The top half folding down onto the bottom half">
-          <rect class="ill-paper" x="24" y="70" width="152" height="48"/>
-          <polygon class="ill-flap" points="24,70 176,70 164,34 36,34"/>
-          <path class="ill-arrow" d="M184 40 Q198 72 184 104"/>
-        </svg>
-        <p><b>2</b> Fold in half the long way. Crease, then open.</p>
+        <svg viewBox="0 0 200 140" role="img" aria-label="The top half folding down onto the bottom half" data-aria-ar="النصف العلوي يُطوى على النصف السفلي"><g filter="url(#zm-sketch)"><polygon class="sk-paper" points="24,70 176,70 176,118 24,118"/><path class="sk-ink" d="M23.1 70.4Q99.8 70.3 176.5 69.9M176.4 67.5Q175.2 93.7 175.9 120.0M178.0 117.7Q100.5 117.6 22.9 118.0M23.9 118.9Q24.4 94.5 24.1 70.0"/><path class="sk-ink sk-ghost" d="M22.7 69.5Q100.4 70.8 178.2 70.3M175.9 67.4Q177.1 93.1 176.2 118.8M176.7 117.5Q99.7 118.5 22.6 117.6M24.4 119.4Q23.6 94.3 23.6 69.2"/><polygon class="sk-hatch" points="24,70 176,70 164,34 36,34"/><path class="sk-ink" d="M23.2 70.6Q99.9 69.3 176.7 70.0M175.9 71.1Q170.6 51.3 163.2 32.3M165.6 33.4Q100.4 33.1 35.2 34.6M36.4 31.8Q29.6 51.2 24.0 71.0"/><path class="sk-ink sk-ghost" d="M23.2 70.6Q100.3 71.2 177.4 70.4M176.6 71.7Q169.4 52.3 163.1 32.5M165.6 33.9Q100.1 33.2 34.6 34.6M36.1 32.5Q28.8 51.5 23.3 71.0"/><path class="sk-arrow" d="M184 40 Q198 72 184 104"/><path class="sk-arrow sk-ghost" d="M184.8 40.0 Q198.4 72.7 183.0 104.4"/></g></svg>
+        <p><b><span data-lang="en">2</span><span data-lang="ar">٢</span></b> <span data-lang="en">Fold in half the long way. Crease, then open.</span><span data-lang="ar">اطوِ الورقة نصفين بالطول. اضغط على الطية ثم افتحها.</span></p>
       </li>
       <li>
-        <svg viewBox="0 0 200 140" role="img" aria-label="Both short ends folding in to the middle crease">
-          <rect class="ill-paper" x="24" y="22" width="152" height="96"/>
-          <rect class="ill-shade" x="24" y="22" width="38" height="96"/>
-          <rect class="ill-shade" x="138" y="22" width="38" height="96"/>
-          <path class="ill-crease" d="M62 22V118M100 22V118M138 22V118M24 70H176"/>
-          <path class="ill-arrow" d="M38 14 Q66 -2 92 14"/>
-          <path class="ill-arrow" d="M162 14 Q134 -2 108 14"/>
-        </svg>
-        <p><b>3</b> Fold in half the short way, then fold both ends to the middle. Open: eight panels.</p>
+        <svg viewBox="0 0 200 140" role="img" aria-label="Both short ends folding in to the middle crease" data-aria-ar="الطرفان القصيران يُطويان إلى طية المنتصف"><g filter="url(#zm-sketch)"><polygon class="sk-paper" points="24,22 176,22 176,118 24,118"/><polygon class="sk-hatch" points="24,22 62,22 62,118 24,118"/><polygon class="sk-hatch" points="138,22 176,22 176,118 138,118"/><path class="sk-ink" d="M22.0 22.0Q99.8 21.8 177.7 22.3M175.9 19.8Q177.0 70.2 176.5 120.7M177.2 118.4Q100.0 117.2 22.8 118.4M24.1 119.4Q24.1 70.4 23.4 21.4"/><path class="sk-ink sk-ghost" d="M22.4 22.4Q100.6 21.5 178.8 21.7M176.1 20.6Q175.0 69.6 175.9 118.5M177.3 118.5Q99.9 118.5 22.5 118.5M23.4 119.5Q24.2 69.7 23.6 19.9"/><path class="sk-crease" d="M62.3 25.6Q62.0 70.0 61.8 114.5"/><path class="sk-crease" d="M100.1 25.2Q99.9 70.0 99.7 114.8"/><path class="sk-crease" d="M138.5 25.4Q138.3 70.0 138.1 114.5"/><path class="sk-crease" d="M27.5 70.0Q100.3 70.6 173.0 70.2"/><path class="sk-arrow" d="M38 14 Q66 -2 92 14"/><path class="sk-arrow sk-ghost" d="M39.1 13.4 Q66.1 -0.9 92.8 13.1"/><path class="sk-arrow" d="M162 14 Q134 -2 108 14"/><path class="sk-arrow sk-ghost" d="M161.1 13.9 Q133.0 -2.6 107.0 14.4"/></g></svg>
+        <p><b><span data-lang="en">3</span><span data-lang="ar">٣</span></b> <span data-lang="en">Fold in half the short way, then fold both ends to the middle. Open: eight panels.</span><span data-lang="ar">اطوِها نصفين بالعرض، ثم اطوِ الطرفين إلى المنتصف. افتحها: ثماني خانات.</span></p>
       </li>
       <li>
-        <svg viewBox="0 0 200 140" role="img" aria-label="Folded in half, a cut from the folded edge along the middle crease, one panel deep">
-          <rect class="ill-paper" x="62" y="22" width="76" height="96"/>
-          <path class="ill-crease" d="M100 22V118M62 70H138"/>
-          <path class="ill-fold" d="M62 22V118"/>
-          <path class="ill-cut" d="M62 70H100"/>
-          <g class="ill-scissors" transform="translate(110 70)">
-            <circle cx="6" cy="-5" r="3.4"/><circle cx="6" cy="5" r="3.4"/>
-            <path d="M3 -3L-8 4M3 3L-8 -4"/>
-          </g>
-          <text class="ill-label ill-small" x="56" y="132" text-anchor="end">fold</text>
-        </svg>
-        <p><b>4</b> Fold in half the short way. Cut from the fold along the middle, one panel deep only.</p>
+        <svg viewBox="0 0 200 140" role="img" aria-label="Folded in half, a cut from the folded edge along the middle crease, one panel deep" data-aria-ar="الورقة مطوية نصفين، وقصّ من حافة الطية على خط المنتصف بعمق خانة واحدة"><g filter="url(#zm-sketch)"><polygon class="sk-paper" points="62,22 138,22 138,118 62,118"/><path class="sk-ink" d="M59.5 22.3Q100.0 22.8 140.5 21.6M138.5 19.4Q137.5 69.5 138.0 119.5M138.8 117.8Q99.6 117.3 60.3 117.8M61.9 118.0Q61.9 69.3 61.8 20.5"/><path class="sk-ink sk-ghost" d="M61.7 22.6Q100.9 21.0 140.0 21.7M137.6 19.8Q138.6 69.6 138.5 119.4M138.9 118.2Q99.0 117.4 59.2 117.5M62.5 119.5Q63.3 70.2 62.4 20.9"/><path class="sk-crease" d="M99.9 25.3Q100.3 70.2 100.1 115.0"/><path class="sk-crease" d="M65.2 69.5Q99.6 69.1 134.1 69.5"/><path class="sk-fold" d="M62.3 19.1Q62.5 69.7 62.0 120.3"/><path class="sk-cut" d="M60.9 70.3Q80.7 69.9 100.6 69.6"/><path class="sk-cut sk-ghost" d="M61.9 69.9Q81.2 70.0 100.5 70.4"/><g class="sk-scissors" transform="translate(110 70) rotate(-4)"><circle cx="6" cy="-5" r="3.4"/><circle cx="6" cy="5" r="3.4"/><path d="M3 -3L-8 4M3 3L-8 -4"/></g><text class="sk-label sk-small" x="56" y="132" text-anchor="end" data-lang="en">fold</text><text class="sk-label sk-small" x="56" y="132" text-anchor="end" data-lang="ar">الطية</text></g></svg>
+        <p><b><span data-lang="en">4</span><span data-lang="ar">٤</span></b> <span data-lang="en">Fold in half the short way. Cut from the fold along the middle, one panel deep only.</span><span data-lang="ar">اطوِها نصفين بالعرض، وقُصّ من جهة الطية على خط المنتصف بعمق خانة واحدة فقط.</span></p>
       </li>
       <li>
-        <svg viewBox="0 0 200 140" role="img" aria-label="The strip folded long, both ends pushed toward the middle so the cut opens">
-          <path class="ill-paper" d="M20 56H72L100 34L128 56H180V92H128L100 114L72 92H20Z"/>
-          <path class="ill-crease" d="M72 56V92M128 56V92M46 56V92M154 56V92"/>
-          <path class="ill-open" d="M72 74L100 56L128 74L100 92Z"/>
-          <path class="ill-arrow" d="M6 74H34"/>
-          <path class="ill-arrow" d="M194 74H166"/>
-        </svg>
-        <p><b>5</b> Open, fold the long way, and push the ends together. The cut opens into a plus.</p>
+        <svg viewBox="0 0 200 140" role="img" aria-label="The strip folded long, both ends pushed toward the middle so the cut opens" data-aria-ar="الشريط مطوي بالطول، والطرفان يُدفعان نحو المنتصف فينفتح القص"><g filter="url(#zm-sketch)"><polygon class="sk-paper" points="20,56 72,56 100,34 128,56 180,56 180,92 128,92 100,114 72,92 20,92"/><path class="sk-ink" d="M19.1 55.8Q46.7 56.4 74.3 56.2M70.4 56.4Q85.1 44.5 100.4 33.6M99.8 33.9Q114.6 44.6 128.7 56.2M126.5 55.9Q153.8 57.4 181.1 56.6M180.6 54.2Q180.5 73.3 179.8 92.4M181.1 92.0Q153.5 92.8 125.9 91.7M128.4 91.0Q113.8 102.7 99.2 114.5M101.8 115.7Q86.9 102.3 70.4 90.7M73.0 91.5Q45.7 91.7 18.5 92.5M19.6 94.0Q20.5 74.1 20.0 54.3"/><path class="sk-ink sk-ghost" d="M18.3 56.2Q46.1 54.8 73.9 55.7M70.9 56.9Q86.2 45.4 101.0 33.4M97.9 33.2Q113.6 45.1 129.5 56.9M126.5 55.7Q153.3 56.3 180.1 55.7M180.6 55.1Q179.8 74.5 179.9 94.0M182.2 91.5Q154.0 91.0 125.8 91.7M128.3 90.8Q113.1 102.6 98.4 115.2M101.5 115.1Q86.9 102.2 71.1 90.9M73.4 91.4Q45.5 90.8 17.5 92.4M19.7 93.9Q18.8 74.5 19.7 55.1"/><path class="sk-crease" d="M71.6 57.9Q71.5 74.4 72.0 91.0"/><path class="sk-crease" d="M128.0 56.9Q127.8 73.7 127.4 90.5"/><path class="sk-crease" d="M45.8 57.3Q45.8 73.6 46.4 89.9"/><path class="sk-crease" d="M154.5 57.8Q154.7 74.0 154.5 90.2"/><polygon class="sk-hatch" points="72,74 100,56 128,74 100,92"/><path class="sk-ink sk-thin" d="M71.5 74.2Q85.6 63.8 100.8 55.2M99.3 56.2Q113.9 65.2 128.5 74.2M129.0 74.1Q113.9 82.5 99.8 92.5M101.1 92.0Q86.7 82.2 71.6 73.5"/><path class="sk-arrow" d="M4 74H34"/><path class="sk-arrow sk-ghost" d="M4.3 73.5H32.9"/><path class="sk-arrow" d="M196 74H166"/><path class="sk-arrow sk-ghost" d="M197.0 73.1H165.9"/></g></svg>
+        <p><b><span data-lang="en">5</span><span data-lang="ar">٥</span></b> <span data-lang="en">Open, fold the long way, and push the ends together. The cut opens into a plus.</span><span data-lang="ar">افتحها واطوِها بالطول، ثم ادفع الطرفين نحو بعضهما فينفتح القصّ على شكل علامة زائد.</span></p>
       </li>
       <li>
-        <svg viewBox="0 0 200 140" role="img" aria-label="The finished eight-page booklet with the cover on top">
-          <rect class="ill-paper ill-back" x="80" y="28" width="56" height="88"/>
-          <rect class="ill-paper ill-back" x="76" y="25" width="56" height="88"/>
-          <rect class="ill-paper" x="72" y="22" width="56" height="88"/>
-          <path class="ill-fold" d="M72 22V110"/>
-          <text class="ill-label ill-on-paper" x="100" y="66">Cover</text>
-          <path class="ill-arrow" d="M150 96 Q170 70 150 44"/>
-        </svg>
-        <p><b>6</b> Fold the pages around so the cover is on top. Press flat. Done.</p>
+        <svg viewBox="0 0 200 140" role="img" aria-label="The finished eight-page booklet with the cover on top" data-aria-ar="الكتيّب الجاهز بثماني صفحات والغلاف في الأعلى"><g filter="url(#zm-sketch)"><polygon class="sk-paper" points="80,28 136,28 136,116 80,116"/><path class="sk-ink sk-thin" d="M79.1 28.6Q108.0 27.9 136.8 28.2M135.6 26.0Q135.6 71.9 135.6 117.8M137.5 115.9Q107.4 116.8 77.3 115.6M79.7 116.9Q80.5 72.3 80.1 27.8"/><polygon class="sk-paper" points="76,25 132,25 132,113 76,113"/><path class="sk-ink sk-thin" d="M74.7 24.9Q103.9 24.1 133.1 24.5M132.0 22.7Q132.8 68.1 132.4 113.4M132.9 113.5Q104.0 114.6 75.1 113.4M76.5 113.5Q76.0 68.0 76.1 22.5"/><polygon class="sk-paper" points="72,22 128,22 128,110 72,110"/><path class="sk-ink" d="M70.1 22.6Q100.0 21.2 129.8 21.5M128.5 20.7Q128.5 66.5 128.2 112.2M129.9 109.7Q100.9 110.4 71.9 110.2M72.2 111.0Q71.9 65.7 71.5 20.5"/><path class="sk-ink sk-ghost" d="M70.0 22.1Q99.3 21.8 128.7 21.8M128.5 19.6Q127.0 65.5 127.7 111.5M129.3 110.0Q100.2 110.5 71.1 109.9M71.7 111.3Q72.2 65.4 71.8 19.6"/><path class="sk-fold" d="M72.3 19.4Q72.4 66.4 71.6 113.5"/><text class="sk-label" x="100" y="66" data-lang="en">Cover</text><text class="sk-label" x="100" y="66" data-lang="ar">الغلاف</text><path class="sk-arrow" d="M152 96 Q172 70 152 44"/><path class="sk-arrow sk-ghost" d="M152.8 95.4 Q171.3 70.6 151.5 45.1"/></g></svg>
+        <p><b><span data-lang="en">6</span><span data-lang="ar">٦</span></b> <span data-lang="en">Fold the pages around so the cover is on top. Press flat. Done.</span><span data-lang="ar">اطوِ الصفحات حتى يصبح الغلاف في الأعلى، واضغطها جيدًا. انتهيت.</span></p>
       </li>
     </ol>
   </section>
 
   <section class="zm-foot">
-    <a class="zm-link" href="#guide">How to fold</a>
-    <button type="button" class="zm-link" id="zm-reset">Start over</button>
-    <p class="zm-note">Everything stays in this browser. Nothing is uploaded.</p>
+    <a class="zm-link" href="#guide"><span data-lang="en">How to fold</span><span data-lang="ar">طريقة الطي</span></a>
+    <button type="button" class="zm-link" id="zm-reset"><span data-lang="en">Start over</span><span data-lang="ar">ابدأ من جديد</span></button>
+    <p class="zm-note"><span data-lang="en">Everything stays in this browser. Nothing is uploaded.</span><span data-lang="ar">كل شيء يبقى في هذا المتصفح، ولا يُرفع أي ملف.</span></p>
   </section>
 </main>
 
@@ -172,87 +142,88 @@ sitemap: false
     <div class="zp-head">
       <span class="zp-label"></span>
       <span class="zp-move">
-        <button type="button" class="zp-icon zp-prev" aria-label="Move earlier">&#8592;</button>
-        <button type="button" class="zp-icon zp-next" aria-label="Move later">&#8594;</button>
-        <span class="zp-grip" title="Drag to reorder" aria-hidden="true">&#8942;&#8942;</span>
+        <button type="button" class="zp-icon zp-prev" data-i18n-aria="moveEarlier" aria-label="Move earlier">&#8592;</button>
+        <button type="button" class="zp-icon zp-next" data-i18n-aria="moveLater" aria-label="Move later">&#8594;</button>
+        <span class="zp-grip" data-i18n-title="drag" title="Drag to reorder" aria-hidden="true">&#8942;&#8942;</span>
       </span>
     </div>
     <div class="zp-stage">
       <canvas class="zp-canvas" aria-hidden="true"></canvas>
       <span class="zp-ppi" hidden><i class="zm-dot"></i><span></span></span>
-      <button type="button" class="zp-add"><span class="zp-plus" aria-hidden="true">+</span><span>Add photo</span></button>
-      <div class="zp-drop" aria-hidden="true">Drop image</div>
+      <button type="button" class="zp-add"><span class="zp-plus" aria-hidden="true">+</span><span><span data-lang="en">Add photo</span><span data-lang="ar">أضف صورة</span></span></button>
+      <div class="zp-drop" aria-hidden="true"><span data-lang="en">Drop image</span><span data-lang="ar">أفلت الصورة هنا</span></div>
     </div>
     <div class="zp-tools">
-      <div class="zp-fit" role="group" aria-label="Photo fit">
-        <button type="button" data-fit="cover" aria-pressed="true">Fill</button>
-        <button type="button" data-fit="contain" aria-pressed="false">Fit</button>
+      <div class="zp-fit" role="group" data-i18n-aria="fit" aria-label="Photo fit">
+        <button type="button" data-fit="cover" aria-pressed="true"><span data-lang="en">Fill</span><span data-lang="ar">ملء</span></button>
+        <button type="button" data-fit="contain" aria-pressed="false"><span data-lang="en">Fit</span><span data-lang="ar">احتواء</span></button>
       </div>
-      <button type="button" class="zp-text zp-zoom" aria-expanded="false">Zoom</button>
-      <button type="button" class="zp-text zp-replace">Replace</button>
-      <button type="button" class="zp-text zp-remove">Remove</button>
+      <button type="button" class="zp-text zp-zoom" aria-expanded="false"><span data-lang="en">Zoom</span><span data-lang="ar">تكبير</span></button>
+      <button type="button" class="zp-text zp-replace"><span data-lang="en">Replace</span><span data-lang="ar">استبدال</span></button>
+      <button type="button" class="zp-text zp-remove"><span data-lang="en">Remove</span><span data-lang="ar">حذف</span></button>
     </div>
     <div class="zp-adjust" hidden>
-      <input type="range" class="zp-zoom-range" min="100" max="400" step="1" value="100" aria-label="Zoom">
+      <input type="range" class="zp-zoom-range" min="100" max="400" step="1" value="100" data-i18n-aria="zoom" aria-label="Zoom">
       <span class="zp-zoom-val">100%</span>
-      <button type="button" class="zp-text zp-zoom-reset">Reset</button>
-      <button type="button" class="zp-text zp-zoom-done">Done</button>
-      <p class="zp-adjust-tip">Drag the photo to move it. Pinch or scroll to zoom.</p>
+      <button type="button" class="zp-text zp-zoom-reset"><span data-lang="en">Reset</span><span data-lang="ar">إعادة</span></button>
+      <button type="button" class="zp-text zp-zoom-done"><span data-lang="en">Done</span><span data-lang="ar">تم</span></button>
+      <p class="zp-adjust-tip"><span data-lang="en">Drag the photo to move it. Pinch or scroll to zoom.</span><span data-lang="ar">اسحب الصورة لتحريكها. استخدم إصبعين أو عجلة الفأرة للتكبير.</span></p>
     </div>
-    <textarea class="zp-caption" rows="2" dir="auto" placeholder="Text on this page"></textarea>
+    <textarea class="zp-caption" rows="2" dir="auto" data-placeholder-en="Text on this page" data-placeholder-ar="نص هذه الصفحة" placeholder="Text on this page"></textarea>
     <input type="file" class="zp-file" accept="image/*" hidden>
   </li>
 </template>
 
 <dialog class="zm-dialog zm-preview" id="zm-preview-dlg" aria-labelledby="zm-preview-title">
   <div class="zm-dlg-head">
-    <h2 id="zm-preview-title">Preview</h2>
+    <h2 id="zm-preview-title"><span data-lang="en">Preview</span><span data-lang="ar">معاينة</span></h2>
     <div class="zm-tabs" role="tablist">
-      <button type="button" role="tab" data-view="book" aria-selected="true">Booklet</button>
-      <button type="button" role="tab" data-view="sheet" aria-selected="false">Print sheet</button>
+      <button type="button" role="tab" data-view="book" aria-selected="true"><span data-lang="en">Booklet</span><span data-lang="ar">الكتيّب</span></button>
+      <button type="button" role="tab" data-view="sheet" aria-selected="false"><span data-lang="en">Print sheet</span><span data-lang="ar">ورقة الطباعة</span></button>
     </div>
-    <button type="button" class="zm-close" data-close aria-label="Close">&times;</button>
+    <button type="button" class="zm-close" data-close data-i18n-aria="close" aria-label="Close">&times;</button>
   </div>
   <div class="zm-pv-stage"><canvas id="zm-pv-canvas"></canvas></div>
   <div class="zm-pv-nav" id="zm-pv-nav">
-    <button type="button" class="zm-btn" id="zm-pv-prev" aria-label="Previous spread">&#8592;</button>
+    <button type="button" class="zm-btn" id="zm-pv-prev" data-i18n-aria="prevSpread" aria-label="Previous spread">&#8592;</button>
     <span id="zm-pv-count" aria-live="polite"></span>
-    <button type="button" class="zm-btn" id="zm-pv-next" aria-label="Next spread">&#8594;</button>
+    <button type="button" class="zm-btn" id="zm-pv-next" data-i18n-aria="nextSpread" aria-label="Next spread">&#8594;</button>
   </div>
-  <p class="zm-pv-hint" id="zm-pv-hint" hidden>Top row prints upside down. That is correct: it turns the right way up when folded.</p>
+  <p class="zm-pv-hint" id="zm-pv-hint" hidden><span data-lang="en">Top row prints upside down. That is correct: it turns the right way up when folded.</span><span data-lang="ar">الصف العلوي يُطبع مقلوبًا، وهذا صحيح: يعتدل عند الطي.</span></p>
 </dialog>
 
 <dialog class="zm-dialog" id="zm-download-dlg" aria-labelledby="zm-dl-title">
   <div class="zm-dlg-head">
-    <h2 id="zm-dl-title">Download</h2>
-    <button type="button" class="zm-close" data-close aria-label="Close">&times;</button>
+    <h2 id="zm-dl-title"><span data-lang="en">Download</span><span data-lang="ar">تحميل</span></h2>
+    <button type="button" class="zm-close" data-close data-i18n-aria="close" aria-label="Close">&times;</button>
   </div>
   <p class="zm-dl-size" id="zm-dl-size"></p>
   <div class="zm-choices">
     <button type="button" class="zm-choice" data-format="pdf">
       <strong>PDF</strong>
-      <span>Print-ready sheet plus a folding guide page.</span>
+      <span><span data-lang="en">Print-ready sheet plus a folding guide page.</span><span data-lang="ar">ورقة جاهزة للطباعة مع صفحة لطريقة الطي.</span></span>
     </button>
     <button type="button" class="zm-choice" data-format="jpg">
       <strong>JPG</strong>
-      <span>One high-resolution image of the sheet, 300 DPI.</span>
+      <span><span data-lang="en">One high-resolution image of the sheet, 300 DPI.</span><span data-lang="ar">صورة واحدة عالية الدقة للورقة، ٣٠٠ DPI.</span></span>
     </button>
   </div>
-  <p class="zm-dl-tip">Print single-sided, landscape, at 100% / actual size.</p>
-  <p class="zm-busy" id="zm-busy" hidden>Preparing your file…</p>
+  <p class="zm-dl-tip"><span data-lang="en">Print single-sided, landscape, at 100% / actual size.</span><span data-lang="ar">اطبع على وجه واحد، بالعرض، وبمقاس ١٠٠٪ (الحجم الفعلي).</span></p>
+  <p class="zm-busy" id="zm-busy" hidden><span data-lang="en">Preparing your file…</span><span data-lang="ar">جارٍ تجهيز الملف…</span></p>
 </dialog>
 
 <dialog class="zm-dialog zm-small" id="zm-reset-dlg" aria-labelledby="zm-reset-title">
   <div class="zm-dlg-head">
-    <h2 id="zm-reset-title">Start over?</h2>
+    <h2 id="zm-reset-title"><span data-lang="en">Start over?</span><span data-lang="ar">البدء من جديد؟</span></h2>
   </div>
-  <p>This clears every page: photos, text and settings.</p>
+  <p><span data-lang="en">This clears every page: photos, text and settings.</span><span data-lang="ar">سيُمسح كل شيء: الصور والنصوص والإعدادات.</span></p>
   <div class="zm-confirm">
-    <button type="button" class="zm-btn" data-close>Cancel</button>
-    <button type="button" class="zm-btn zm-btn-main" id="zm-reset-yes">Clear zine</button>
+    <button type="button" class="zm-btn" data-close><span data-lang="en">Cancel</span><span data-lang="ar">إلغاء</span></button>
+    <button type="button" class="zm-btn zm-btn-main" id="zm-reset-yes"><span data-lang="en">Clear zine</span><span data-lang="ar">امسح الزين</span></button>
   </div>
 </dialog>
 
+<script src="/lang.js"></script>
 <script src="/theme.js"></script>
 <script src="/zine/zine.js?v={{ site.time | date: '%s' }}"></script>
 </body>

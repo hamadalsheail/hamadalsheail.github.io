@@ -9,8 +9,78 @@
     letter: { label: 'US Letter', w: 11, h: 8.5 },
     a3: { label: 'A3', w: 420 / 25.4, h: 297 / 25.4 },
   };
-  const LABELS = ['Front cover', 'Page 1', 'Page 2', 'Page 3', 'Page 4', 'Page 5', 'Page 6', 'Back cover'];
-  const SHORT = ['Cover', '1', '2', '3', '4', '5', '6', 'Back'];
+  /* ---------- Language (follows the site's EN / ع toggle) ---------- */
+
+  const STR = {
+    en: {
+      pages: 'Zine pages', settings: 'Zine settings', moveEarlier: 'Move earlier', moveLater: 'Move later',
+      drag: 'Drag to reorder', fit: 'Photo fit', zoom: 'Zoom', close: 'Close',
+      prevSpread: 'Previous spread', nextSpread: 'Next spread',
+      ltr: 'Left to right', rtl: 'Right to left (Arabic)',
+      labels: ['Front cover', 'Page 1', 'Page 2', 'Page 3', 'Page 4', 'Page 5', 'Page 6', 'Back cover'],
+      short: ['Cover', '1', '2', '3', '4', '5', '6', 'Back'],
+      spreads: ['Front cover', 'Pages 1–2', 'Pages 3–4', 'Pages 5–6', 'Back cover'],
+      textFor: 'Text for ', addTo: 'Add photo to ',
+      verdict: { ok: 'Sharp', warn: 'Acceptable, slight softness', bad: 'Will look soft' },
+      at: ' at ', ppi: ' PPI',
+      advEmpty: 'Add a photo to see which paper size prints it sharp.',
+      bestAll: 'Best paper, all sharp', largestOk: 'Largest acceptable', now: 'Now: ', none: 'None',
+      thPage: 'Page', thPhoto: 'Photo', thBest: 'Best size', belowAll: 'Below Letter',
+      unit: 'Numbers are effective PPI.',
+      badFile: 'That file could not be read as an image.',
+      onlyFit: (k) => 'Only ' + k + ' photo' + (k === 1 ? '' : 's') + ' fit: every page already has one.',
+      exportFail: 'Export failed. Try a smaller paper size or fewer large photos.',
+      sheet: ' sheet', rtlNote: ', right-to-left',
+      blank: (n) => '. ' + n + ' page' + (n === 1 ? ' is' : 's are') + ' still blank.',
+      foldTitle: 'How to fold', foldKey: 'Dashed: fold.   Red: cut.',
+      steps: [
+        'Print the sheet single-sided, landscape, at 100% (actual size).',
+        'Fold it in half lengthwise, top edge to bottom edge. Crease and open.',
+        'Fold it in half the other way, short edge to short edge. Crease and open.',
+        'Fold each short end in to meet the middle crease. Crease and open. You now have eight panels.',
+        'Fold in half short edge to short edge again. From the folded edge, cut along the middle crease to the next fold: one panel deep, no further.',
+        'Open it, fold lengthwise again, and push the two ends toward each other so the cut opens into a plus shape.',
+        'Wrap the pages around so the cover is on top and the back is at the bottom. Press flat.',
+      ],
+    },
+    ar: {
+      pages: 'صفحات الزين', settings: 'إعدادات الزين', moveEarlier: 'انقلها إلى الصفحة السابقة', moveLater: 'انقلها إلى الصفحة التالية',
+      drag: 'اسحب لإعادة الترتيب', fit: 'ملاءمة الصورة', zoom: 'تكبير', close: 'إغلاق',
+      prevSpread: 'الصفحتان السابقتان', nextSpread: 'الصفحتان التاليتان',
+      ltr: 'من اليسار لليمين', rtl: 'من اليمين لليسار (عربي)',
+      labels: ['الغلاف الأمامي', 'صفحة ١', 'صفحة ٢', 'صفحة ٣', 'صفحة ٤', 'صفحة ٥', 'صفحة ٦', 'الغلاف الخلفي'],
+      short: ['الغلاف', '١', '٢', '٣', '٤', '٥', '٦', 'الخلفي'],
+      spreads: ['الغلاف الأمامي', 'الصفحتان ١–٢', 'الصفحتان ٣–٤', 'الصفحتان ٥–٦', 'الغلاف الخلفي'],
+      textFor: 'نص ', addTo: 'أضف صورة إلى ',
+      verdict: { ok: 'واضحة', warn: 'مقبولة، نعومة خفيفة', bad: 'ستبدو ضبابية' },
+      at: ' على ', ppi: ' PPI',
+      advEmpty: 'أضف صورة لتعرف أي مقاس ورق يطبعها بوضوح.',
+      bestAll: 'أفضل ورق، كل الصور واضحة', largestOk: 'أكبر مقاس مقبول', now: 'الحالي: ', none: 'لا يوجد',
+      thPage: 'الصفحة', thPhoto: 'الصورة', thBest: 'أفضل مقاس', belowAll: 'أصغر من ليتر',
+      unit: 'الأرقام هي الدقة الفعلية (PPI).',
+      badFile: 'تعذّرت قراءة هذا الملف كصورة.',
+      onlyFit: (k) => 'اتسعت ' + num(k) + ' صور فقط: كل الصفحات فيها صور.',
+      exportFail: 'فشل التصدير. جرّب مقاس ورق أصغر أو صورًا أقل حجمًا.',
+      sheet: '', rtlNote: '، من اليمين لليسار',
+      blank: (n) => '. ' + (n === 1 ? 'صفحة واحدة ما زالت فارغة.' : num(n) + ' صفحات ما زالت فارغة.'),
+      foldTitle: 'طريقة الطي', foldKey: 'المتقطع: طي.   الأحمر: قص.',
+      steps: [
+        'اطبع الورقة على وجه واحد، بالعرض، وبمقاس ١٠٠٪ (الحجم الفعلي).',
+        'اطوِها نصفين بالطول، الحافة العليا على السفلى. اضغط على الطية ثم افتحها.',
+        'اطوِها نصفين بالعرض، الحافة القصيرة على الأخرى. اضغط ثم افتحها.',
+        'اطوِ كل طرف قصير إلى طية المنتصف، ثم افتحها. لديك الآن ثماني خانات.',
+        'اطوِها نصفين بالعرض مرة أخرى، وقُصّ من جهة الطية على خط المنتصف حتى الطية التالية: بعمق خانة واحدة فقط.',
+        'افتحها واطوِها بالطول، ثم ادفع الطرفين نحو بعضهما فينفتح القص على شكل علامة زائد.',
+        'لفّ الصفحات حتى يصبح الغلاف في الأعلى والخلفي في الأسفل، ثم اضغطها.',
+      ],
+    },
+  };
+  const root = document.documentElement;
+  const lang = () => (root.lang === 'en' ? 'en' : 'ar');
+  const t = (k) => STR[lang()][k];
+  // Arabic-Indic digits in Arabic.
+  const num = (n) => (lang() === 'ar' ? String(n).replace(/\d/g, (d) => '٠١٢٣٤٥٦٧٨٩'[d]) : String(n));
+  const sizeLabel = (k) => (k === 'letter' ? (lang() === 'ar' ? 'ليتر' : 'US Letter') : SIZES[k].label);
   const AR = /[؀-ۿݐ-ݿࢠ-ࣿﭐ-﷿ﹰ-﻿]/;
   const INK = '#242424';
   const WHITE = '#ffffff';
@@ -205,7 +275,7 @@
   function verdict(ppi) {
     return ppi >= TARGET_PPI ? 'ok' : ppi >= TARGET_PPI * 0.75 ? 'warn' : 'bad';
   }
-  const VERDICT_TEXT = { ok: 'Sharp', warn: 'Acceptable, slight softness', bad: 'Will look soft' };
+  const verdictText = (v) => t('verdict')[v];
   const RANK = { ok: 0, warn: 1, bad: 2 };
   // Worst verdict across all photo pages at a sheet size (null: no photos).
   function sheetVerdict(sizeKey) {
@@ -279,7 +349,7 @@
     ctx.strokeStyle = fg;
     ctx.lineWidth = lw;
     ctx.strokeRect(x, y, W, H);
-    ctx.font = '600 ' + Math.round(ph * 0.16) + 'px "Bricolage Grotesque", Arial, sans-serif';
+    ctx.font = '600 ' + Math.round(ph * 0.16) + 'px "Bricolage Grotesque", "Noto Kufi Arabic", Arial, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     for (let i = 0; i < 8; i++) {
@@ -289,7 +359,7 @@
       ctx.translate(cx, cy);
       if (row === 0) ctx.rotate(Math.PI);
       ctx.fillStyle = i === 0 || i === 7 ? '#A85A00' : INK;
-      ctx.fillText(SHORT[i], 0, 0);
+      ctx.fillText(t('short')[i], 0, 0);
       ctx.restore();
     }
     ctx.restore();
@@ -308,9 +378,6 @@
         caption: $('.zp-caption', li),
       };
       li.dataset.index = i;
-      $('.zp-label', li).textContent = LABELS[i];
-      card.caption.setAttribute('aria-label', 'Text for ' + LABELS[i]);
-      $('.zp-add', li).setAttribute('aria-label', 'Add photo to ' + LABELS[i]);
       wireCard(card, i);
       grid.appendChild(li);
       cards.push(card);
@@ -401,7 +468,7 @@
       const r = await importFile(file);
       if (r) Object.assign(state.panels[i], { img: r.img, blob: r.blob, zoom: 1, fx: 0.5, fy: 0.5 });
     } catch (e) {
-      alertLine('That file could not be read as an image.');
+      alertLine(t('badFile'));
     }
     card.li.classList.remove('is-busy');
     changed(i);
@@ -412,7 +479,7 @@
     for (let i = 0; i < 8 && k < files.length; i++) {
       if (!state.panels[i].img) await setImage(i, files[k++]);
     }
-    if (k < files.length) alertLine('Only ' + k + ' photo' + (k === 1 ? '' : 's') + ' fit: every page already has one.');
+    if (k < files.length) alertLine(t('onlyFit')(k));
   }
 
   // Swap with a neighbour (arrow buttons) or lift and insert (drag).
@@ -514,15 +581,19 @@
   function refreshCard(i) {
     const card = cards[i], p = state.panels[i], li = card.li;
     const z = Math.round((p.zoom || 1) * 100);
+    const label = t('labels')[i];
+    $('.zp-label', li).textContent = label;
+    card.caption.setAttribute('aria-label', t('textFor') + label);
+    $('.zp-add', li).setAttribute('aria-label', t('addTo') + label);
     $('.zp-zoom-range', li).value = z;
-    $('.zp-zoom-val', li).textContent = z + '%';
+    $('.zp-zoom-val', li).textContent = num(z) + (lang() === 'ar' ? '٪' : '%');
     const badge = $('.zp-ppi', li);
     if (p.img) {
       const ppi = ppiFor(p, state.size), v = verdict(ppi);
       badge.hidden = false;
       $('.zm-dot', badge).className = 'zm-dot is-' + v;
-      $('span', badge).textContent = Math.round(ppi) + ' PPI';
-      badge.title = VERDICT_TEXT[v] + ' at ' + SIZES[state.size].label;
+      $('span', badge).textContent = num(Math.round(ppi)) + t('ppi');
+      badge.title = verdictText(v) + t('at') + sizeLabel(state.size);
     } else {
       badge.hidden = true;
       if (adjusting === i) setAdjust(i, false);
@@ -561,11 +632,11 @@
       const v = sheetVerdict(b.dataset.size);
       const dot = $('.zm-dot', b);
       dot.className = 'zm-dot' + (v ? ' is-' + v : '');
-      b.title = v ? SIZES[b.dataset.size].label + ': ' + VERDICT_TEXT[v].toLowerCase() : SIZES[b.dataset.size].label;
+      b.title = v ? sizeLabel(b.dataset.size) + ': ' + verdictText(v) : sizeLabel(b.dataset.size);
     });
     const rows = state.panels.map((p, i) => ({ p, i })).filter((r) => r.p.img);
     if (!rows.length) {
-      advisorEl.innerHTML = '<p class="zm-adv-empty">Add a photo to see which paper size prints it sharp.</p>';
+      advisorEl.innerHTML = '<p class="zm-adv-empty">' + t('advEmpty') + '</p>';
       return;
     }
     let bestSheet = null, okSheet = null;
@@ -577,27 +648,27 @@
     const cur = sheetVerdict(state.size);
     const summary =
       '<div class="zm-adv-sum">' +
-        '<div><span>Best paper, all sharp</span><strong>' + (bestSheet ? SIZES[bestSheet].label : 'None') + '</strong></div>' +
-        '<div><span>Largest acceptable</span><strong>' + (okSheet ? SIZES[okSheet].label : 'None') + '</strong></div>' +
-        '<div><span>Now: ' + SIZES[state.size].label + '</span><strong>' + dotHtml(cur) + VERDICT_TEXT[cur] + '</strong></div>' +
+        '<div><span>' + t('bestAll') + '</span><strong>' + (bestSheet ? sizeLabel(bestSheet) : t('none')) + '</strong></div>' +
+        '<div><span>' + t('largestOk') + '</span><strong>' + (okSheet ? sizeLabel(okSheet) : t('none')) + '</strong></div>' +
+        '<div><span>' + t('now') + sizeLabel(state.size) + '</span><strong>' + dotHtml(cur) + verdictText(cur) + '</strong></div>' +
       '</div>';
-    const head = '<tr><th>Page</th><th>Photo</th>' +
-      ORDER.map((k) => '<th' + (k === state.size ? ' class="is-cur"' : '') + '>' + SIZES[k].label + '</th>').join('') +
-      '<th>Best size</th></tr>';
+    const head = '<tr><th>' + t('thPage') + '</th><th>' + t('thPhoto') + '</th>' +
+      ORDER.map((k) => '<th' + (k === state.size ? ' class="is-cur"' : '') + '>' + sizeLabel(k) + '</th>').join('') +
+      '<th>' + t('thBest') + '</th></tr>';
     const body = rows.map(({ p, i }) => {
       const z = p.zoom || 1;
       const cells = ORDER.map((k) => {
         const ppi = ppiFor(p, k);
-        return '<td' + (k === state.size ? ' class="is-cur"' : '') + '>' + dotHtml(verdict(ppi)) + Math.round(ppi) + '</td>';
+        return '<td' + (k === state.size ? ' class="is-cur"' : '') + '>' + dotHtml(verdict(ppi)) + num(Math.round(ppi)) + '</td>';
       }).join('');
       const best = bestFor(p);
-      return '<tr><td><button type="button" class="zm-adv-page" data-i="' + i + '">' + LABELS[i] + '</button></td>' +
-        '<td class="zm-adv-px">' + p.img.width + '×' + p.img.height + (z > 1.005 ? ' · ' + Math.round(z * 100) + '%' : '') + '</td>' +
-        cells + '<td>' + (best ? SIZES[best].label : '<span class="zm-adv-bad">Below Letter</span>') + '</td></tr>';
+      return '<tr><td><button type="button" class="zm-adv-page" data-i="' + i + '">' + t('labels')[i] + '</button></td>' +
+        '<td class="zm-adv-px"><bdi>' + num(p.img.width) + '×' + num(p.img.height) + '</bdi>' + (z > 1.005 ? ' · ' + num(Math.round(z * 100)) + (lang() === 'ar' ? '٪' : '%') : '') + '</td>' +
+        cells + '<td>' + (best ? sizeLabel(best) : '<span class="zm-adv-bad">' + t('belowAll') + '</span>') + '</td></tr>';
     }).join('');
     advisorEl.innerHTML = summary +
       '<div class="zm-adv-scroll"><table class="zm-adv-table"><thead>' + head + '</thead><tbody>' + body + '</tbody></table></div>' +
-      '<p class="zm-adv-unit">Numbers are effective PPI.</p>';
+      '<p class="zm-adv-unit">' + t('unit') + '</p>';
   }
   advisorEl.addEventListener('click', (e) => {
     const b = e.target.closest('.zm-adv-page');
@@ -691,7 +762,6 @@
       ? [[0, null], [2, 1], [4, 3], [6, 5], [null, 7]]
       : [[null, 0], [1, 2], [3, 4], [5, 6], [7, null]];
   }
-  const SPREAD_NAMES = ['Front cover', 'Pages 1–2', 'Pages 3–4', 'Pages 5–6', 'Back cover'];
 
   function drawPreview() {
     const s = SIZES[state.size];
@@ -730,11 +800,11 @@
       ctx.fillStyle = g;
       ctx.fillRect(pw - W * 0.03, 0, W * 0.06, H);
     }
-    $('#zm-pv-count').textContent = SPREAD_NAMES[pvStep] + '  ·  ' + (pvStep + 1) + ' / 5';
+    $('#zm-pv-count').textContent = t('spreads')[pvStep] + '  ·  ' + num(pvStep + 1) + ' / ' + num(5);
     const rtl = state.dir === 'rtl';
     $('#zm-pv-prev').innerHTML = rtl ? '&#8594;' : '&#8592;';
     $('#zm-pv-next').innerHTML = rtl ? '&#8592;' : '&#8594;';
-    $('#zm-pv-nav').classList.toggle('is-rtl', rtl);
+    $('#zm-pv-nav').classList.toggle('is-rtl', rtl !== (root.dir === 'rtl'));
     $('#zm-pv-prev').disabled = pvStep === 0;
     $('#zm-pv-next').disabled = pvStep === 4;
   }
@@ -761,15 +831,6 @@
   });
 
   /* Fold guide */
-  const STEPS = [
-    'Print the sheet single-sided, landscape, at 100% (actual size).',
-    'Fold it in half lengthwise, top edge to bottom edge. Crease and open.',
-    'Fold it in half the other way, short edge to short edge. Crease and open.',
-    'Fold each short end in to meet the middle crease. Crease and open. You now have eight panels.',
-    'Fold in half short edge to short edge again. From the folded edge, cut along the middle crease to the next fold: one panel deep, no further.',
-    'Open it, fold lengthwise again, and push the two ends toward each other so the cut opens into a plus shape.',
-    'Wrap the pages around so the cover is on top and the back is at the bottom. Press flat.',
-  ];
   /* Start over */
   const resetDlg = $('#zm-reset-dlg');
   $('#zm-reset').addEventListener('click', () => openDlg(resetDlg));
@@ -789,6 +850,7 @@
       document.fonts.load('400 40px "Bricolage Grotesque"'),
       document.fonts.load('600 40px "Bricolage Grotesque"'),
       document.fonts.load('400 40px "Noto Naskh Arabic"', 'ابت'),
+      document.fonts.load('600 40px "Noto Kufi Arabic"', 'ابت'),
     ]).catch(() => {});
   }
 
@@ -822,26 +884,35 @@
     ctx.fillRect(0, 0, W, H);
     const m = W * 0.06;
     ctx.fillStyle = '#A85A00';
-    ctx.font = '700 ' + Math.round(H * 0.06) + 'px "Bricolage Grotesque", Arial, sans-serif';
+    const ar = lang() === 'ar';
+    const sans = ar ? '"Noto Kufi Arabic", "Bricolage Grotesque", Arial, sans-serif' : '"Bricolage Grotesque", Arial, sans-serif';
+    const body = ar ? '"Noto Naskh Arabic", serif' : sans;
+    // Arabic reads right to left: mirror the layout (diagram right, steps left).
+    const X = (x, w) => (ar ? W - x - (w || 0) : x);
+    try { ctx.direction = ar ? 'rtl' : 'ltr'; } catch (e) {}
+    ctx.textAlign = ar ? 'right' : 'left';
+    ctx.font = '700 ' + Math.round(H * 0.06) + 'px ' + sans;
     ctx.textBaseline = 'top';
-    ctx.fillText('How to fold', m, m);
+    ctx.fillText(t('foldTitle'), X(m), m);
     const dw = W * 0.42, dh = dw / (W / H);
     const dy = m + H * 0.11;
-    drawFoldDiagram(ctx, m, dy, dw, dh, INK);
+    drawFoldDiagram(ctx, X(m, dw), dy, dw, dh, INK);
+    ctx.textAlign = ar ? 'right' : 'left';
+    ctx.textBaseline = 'top';
     ctx.fillStyle = INK;
-    ctx.font = '400 ' + Math.round(H * 0.022) + 'px "Bricolage Grotesque", Arial, sans-serif';
-    ctx.fillText('Dashed: fold.   Red: cut.', m, dy + dh + H * 0.025);
-    // Steps on the right.
+    ctx.font = '400 ' + Math.round(H * 0.022) + 'px ' + sans;
+    ctx.fillText(t('foldKey'), X(m), dy + dh + H * 0.025);
+    // Steps beside the diagram.
     const tx = m + dw + W * 0.05, tw = W - tx - m;
     let y = dy;
-    const size = Math.round(H * 0.024), lh = size * 1.45;
-    STEPS.forEach((s, i) => {
-      ctx.font = '600 ' + size + 'px "Bricolage Grotesque", Arial, sans-serif';
+    const size = Math.round(H * (ar ? 0.026 : 0.024)), lh = size * (ar ? 1.7 : 1.45);
+    t('steps').forEach((s, i) => {
+      ctx.font = '600 ' + size + 'px ' + sans;
       ctx.fillStyle = '#A85A00';
-      ctx.fillText(String(i + 1), tx, y);
-      ctx.font = '400 ' + size + 'px "Bricolage Grotesque", Arial, sans-serif';
+      ctx.fillText(num(i + 1), X(tx), y);
+      ctx.font = '400 ' + size + 'px ' + body;
       ctx.fillStyle = INK;
-      wrap(ctx, s, tw - size * 1.6).forEach((line) => { ctx.fillText(line, tx + size * 1.6, y); y += lh; });
+      wrap(ctx, s, tw - size * 1.6).forEach((line) => { ctx.fillText(line, X(tx + size * 1.6), y); y += lh; });
       y += lh * 0.45;
     });
     return c;
@@ -913,8 +984,8 @@
   const dlDlg = $('#zm-download-dlg');
   $('#zm-download').addEventListener('click', () => {
     const empty = state.panels.filter((p) => !p.img && !p.caption.trim()).length;
-    $('#zm-dl-size').textContent = SIZES[state.size].label + ' sheet' + (state.dir === 'rtl' ? ', right-to-left' : '') +
-      (empty ? '. ' + empty + ' page' + (empty === 1 ? ' is' : 's are') + ' still blank.' : '.');
+    $('#zm-dl-size').textContent = (lang() === 'ar' ? 'ورقة ' : '') + sizeLabel(state.size) + t('sheet') +
+      (state.dir === 'rtl' ? t('rtlNote') : '') + (empty ? t('blank')(empty) : '.');
     $('#zm-busy').hidden = true;
     openDlg(dlDlg);
   });
@@ -927,7 +998,7 @@
         await exportZine(b.dataset.format);
         closeDlg(dlDlg);
       } catch (e) {
-        alertLine('Export failed. Try a smaller paper size or fewer large photos.');
+        alertLine(t('exportFail'));
       }
       busy.hidden = true;
       dlDlg.querySelectorAll('[data-format]').forEach((x) => { x.disabled = false; });
@@ -969,7 +1040,7 @@
         r.onsuccess = () => resolve(r.result);
         r.onerror = () => reject(r.error);
       });
-      if (!data) return;
+      if (!data) { if (lang() === 'ar') state.dir = 'rtl'; return; }
       state.size = SIZES[data.size] ? data.size : 'a4';
       state.dir = data.dir === 'rtl' ? 'rtl' : 'ltr';
       state.border = !!data.border;
@@ -988,11 +1059,29 @@
     } catch (e) { /* start fresh */ }
   }
 
+  /* ---------- Apply language ---------- */
+
+  function applyLang() {
+    document.querySelectorAll('[data-i18n-aria]').forEach((el) => el.setAttribute('aria-label', t(el.dataset.i18nAria)));
+    document.querySelectorAll('[data-i18n-title]').forEach((el) => el.setAttribute('title', t(el.dataset.i18nTitle)));
+    document.querySelectorAll('[data-aria-ar]').forEach((el) => {
+      if (!el.dataset.ariaEn) el.dataset.ariaEn = el.getAttribute('aria-label');
+      el.setAttribute('aria-label', lang() === 'ar' ? el.dataset.ariaAr : el.dataset.ariaEn);
+    });
+    dirSel.options[0].textContent = t('ltr');
+    dirSel.options[1].textContent = t('rtl');
+    // Cards are cloned from the template, so refresh their placeholders too.
+    cards.forEach((c) => { c.caption.placeholder = c.caption.getAttribute('data-placeholder-' + lang()); });
+    refreshAll();
+    if (pvDlg.open) drawPreview();
+  }
+  document.addEventListener('langchange', () => fontsReady().then(applyLang));
+
   /* ---------- Start ---------- */
 
   buildCards();
   syncSettings();
-  refreshAll();
+  applyLang();
   load().then(() => { syncSettings(); refreshAll(); });
   fontsReady().then(refreshAll);
 

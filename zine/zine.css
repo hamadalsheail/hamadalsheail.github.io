@@ -505,19 +505,37 @@
 .zm-fold p { margin: 0.6rem 0 0; font-size: 0.88rem; line-height: 1.5; }
 .zm-fold p b { color: var(--accent-text); margin-inline-end: 0.35rem; }
 
-.ill-paper { fill: #fff; stroke: #242424; stroke-width: 1.4; stroke-linejoin: round; }
-.ill-back { fill: #F3EFEC; }
-.ill-flap { fill: #F3EFEC; stroke: #242424; stroke-width: 1.4; stroke-linejoin: round; }
-.ill-shade { fill: rgba(255, 165, 31, 0.16); }
-.ill-crease { fill: none; stroke: #8a8178; stroke-width: 1; stroke-dasharray: 3 3; }
-.ill-fold { fill: none; stroke: var(--ink); stroke-width: 3; stroke-linecap: round; }
-.ill-arrow { fill: none; stroke: var(--accent-text); stroke-width: 2; stroke-linecap: round; marker-end: url(#zm-arrow); }
-.ill-cut { fill: none; stroke: #C0392B; stroke-width: 2.4; stroke-linecap: round; }
-.ill-scissors circle, .ill-scissors path { fill: none; stroke: #C0392B; stroke-width: 1.6; stroke-linecap: round; }
-.ill-open { fill: rgba(255, 165, 31, 0.18); stroke: var(--accent-text); stroke-width: 1.4; stroke-dasharray: 3 2; }
-.ill-label { fill: var(--accent-text); font: 600 11px "Bricolage Grotesque", Arial, sans-serif; text-anchor: middle; dominant-baseline: middle; }
-.ill-on-paper { fill: #A85A00; }
-.ill-small { font-size: 9px; fill: var(--ink-soft); }
+/* Sketch-style folding drawings: wobbly ink lines, hatching, no hard fills. */
+.sk-paper { fill: var(--paper); }
+.sk-ink { fill: none; stroke: var(--ink); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.sk-thin { stroke-width: 1.1; opacity: 0.8; }
+.sk-ghost { stroke-width: 0.8; opacity: 0.45; marker-end: none !important; }
+.sk-crease { fill: none; stroke: var(--ink-soft); stroke-width: 1; stroke-dasharray: 4 4; stroke-linecap: round; }
+.sk-fold { fill: none; stroke: var(--ink); stroke-width: 2.6; stroke-linecap: round; }
+.sk-hatch { fill: url(#zm-hatch); }
+.sk-hatch-line { stroke: var(--accent-text); stroke-width: 1; opacity: 0.55; }
+.sk-arrow { fill: none; stroke: var(--accent-text); stroke-width: 1.8; stroke-linecap: round; marker-end: url(#zm-arrow); }
+.sk-cut { fill: none; stroke: #C0392B; stroke-width: 2.2; stroke-linecap: round; }
+.sk-scissors circle, .sk-scissors path { fill: none; stroke: #C0392B; stroke-width: 1.5; stroke-linecap: round; }
+.sk-label { fill: var(--accent-text); font: 600 12px "Bricolage Grotesque", "Noto Kufi Arabic", Arial, sans-serif; text-anchor: middle; dominant-baseline: middle; }
+.sk-small { font-size: 10px; fill: var(--ink-soft); }
+.zm-fold li { background: transparent; }
+
+/* ---------- Arabic ---------- */
+html[lang="ar"] .zm :is(h1, h2, h3, button, .zm-btn, .zm-field, .zm-check, .zp-label, .zm-seg, .zm-tabs, .zm-adv-sum, .zm-adv-table, .zm-legend),
+html[lang="ar"] .zm-dialog :is(h2, button, .zm-btn) { font-family: var(--arabic); }
+html[lang="ar"] .zm h1 { letter-spacing: 0; line-height: 1.3; }
+html[lang="ar"] :is(.zm-intro p, .zm-plan li, .zm-fold p, .zm-adv-note, .zm-adv-unit, .zm-adv-empty, .zm-note, .zp-adjust-tip, .zm-dialog p, .zm-choice span) {
+  font-family: var(--arabic-text);
+  font-size: 1.02em;
+  line-height: 1.8;
+}
+html[lang="ar"] .zm-plan li::before { content: counter(plan, arabic-indic); font-family: var(--arabic); }
+html[lang="ar"] .zm-plan strong { font-family: var(--arabic); font-weight: 600; }
+html[lang="ar"] .zp-label { font-size: 0.82rem; }
+html[dir="rtl"] .zp-icon { transform: scaleX(-1); }
+.zp-ppi { left: auto; inset-inline-start: 0.45rem; }
+.zm-note { margin: 0; margin-inline-start: auto; }
 
 @media (max-width: 900px) {
   .zm-plan { grid-template-columns: repeat(2, minmax(0, 1fr)); }
