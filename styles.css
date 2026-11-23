@@ -1160,3 +1160,49 @@ html[dir="rtl"] .project-page .project-back::before { content: "\2192\00a0"; }
 .gallery-preview:hover img { opacity: 0.9; }
 a.show-more { width: fit-content; text-decoration: none; }
 @media (max-width: 620px) { .gallery-preview { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ---------- Share button (_includes/share.html, share.js) ---------- */
+
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  font: inherit;
+  font-size: 0.9rem;
+  line-height: 1;
+  color: var(--ink-soft);
+  background: none;
+  border: 1px solid var(--rule);
+  padding: 0.35rem 0.7rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+}
+.share-btn:hover,
+.share-btn:focus-visible { color: var(--ink); background: var(--paper-deep); }
+.share-icon { flex: none; width: 1em; height: 1em; }
+.share-btn .share-done { display: none; }
+.share-btn.is-copied { color: var(--accent-text); border-color: currentColor; }
+.share-btn.is-copied .share-label { display: none; }
+.share-btn.is-copied .share-done { display: inline; }
+
+/* Rows that carry a share button */
+.title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+}
+.gallery .title-row { margin-bottom: 0.6rem; }
+.gallery .title-row .section-title { margin-bottom: 0; }
+.project-page .project-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: clamp(1.25rem, 3vw, 2rem);
+}
+.project-page .project-top .project-back { margin-bottom: 0; }
+.post-meta .share-btn,
+.post-meta .text-size { align-self: center; }

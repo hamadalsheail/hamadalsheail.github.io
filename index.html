@@ -1,6 +1,7 @@
 ---
 # Landing: choose Photography or Writing. Built by Jekyll so the Writing half
 # can list the latest posts.
+share_title: "حمد الشعيل | ديوان الشمس"
 ---
 {%- assign posts = site.posts | where_exp: "p", "p.draft != true" -%}
 <!DOCTYPE html>
@@ -11,6 +12,7 @@
 <title>حمد الشعيل | ديوان الشمس</title>
 <meta name="description" content="Portfolio of Hamad Alsheail, an artist based in Riyadh working between words and photographs. Diwan Alshams.">
 <link rel="canonical" href="{{ site.url }}/">
+{% include share-meta.html %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
