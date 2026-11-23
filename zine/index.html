@@ -35,14 +35,14 @@ sitemap: false
 
   <section class="zm-bar" aria-label="Zine settings">
     <div class="zm-settings">
-      <label class="zm-field">
-        <span>Paper</span>
-        <select id="zm-size">
-          <option value="a4">A4</option>
-          <option value="letter">US Letter</option>
-          <option value="a3">A3</option>
-        </select>
-      </label>
+      <div class="zm-field">
+        <span id="zm-size-label">Paper</span>
+        <div class="zm-seg" id="zm-size" role="radiogroup" aria-labelledby="zm-size-label">
+          <button type="button" role="radio" data-size="a4">A4<i class="zm-dot" aria-hidden="true"></i></button>
+          <button type="button" role="radio" data-size="letter">Letter<i class="zm-dot" aria-hidden="true"></i></button>
+          <button type="button" role="radio" data-size="a3">A3<i class="zm-dot" aria-hidden="true"></i></button>
+        </div>
+      </div>
       <label class="zm-field">
         <span>Reads</span>
         <select id="zm-dir">
@@ -65,8 +65,103 @@ sitemap: false
 
   <ol class="zm-grid" id="zm-grid" aria-label="Zine pages"></ol>
 
+  <section class="zm-advisor" aria-labelledby="zm-adv-title">
+    <h2 id="zm-adv-title">Print advisor</h2>
+    <div id="zm-advisor"><p class="zm-adv-empty">Add a photo to see which paper size prints it sharp.</p></div>
+    <ul class="zm-legend">
+      <li><i class="zm-dot is-ok"></i>Sharp: 300 PPI or more</li>
+      <li><i class="zm-dot is-warn"></i>Acceptable: 225–299 PPI, slight softness</li>
+      <li><i class="zm-dot is-bad"></i>Soft: under 225 PPI</li>
+    </ul>
+    <p class="zm-adv-note">Effective PPI = photo pixels ÷ printed width of the photo on the page. Zooming in crops the photo, so it lowers PPI. Photos are never upscaled.</p>
+  </section>
+
+
+  <section class="zm-guide" id="guide" aria-labelledby="zm-guide-title">
+    <h2 id="zm-guide-title">How to make a zine</h2>
+    <ol class="zm-plan">
+      <li><strong>Plan eight pages.</strong> A front cover, six inside pages and a back cover. One idea per page reads best.</li>
+      <li><strong>Fill the pages.</strong> Add a photo, a line of text, or both. Drag or use the arrows to change the order.</li>
+      <li><strong>Check the dots.</strong> Green prints sharp. Yellow or red: use a bigger photo, zoom out, or pick a smaller paper.</li>
+      <li><strong>Print and fold.</strong> Download, print single-sided at 100%, then follow the steps below.</li>
+    </ol>
+
+    <h3 class="zm-fold-title">How to fold</h3>
+    <svg width="0" height="0" class="zm-defs" aria-hidden="true" focusable="false">
+      <defs>
+        <marker id="zm-arrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M1 1 L8 5 L1 9" fill="none" stroke="context-stroke" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+    </svg>
+    <ol class="zm-fold">
+      <li>
+        <svg viewBox="0 0 200 140" role="img" aria-label="A landscape sheet divided into eight panels">
+          <rect class="ill-paper" x="24" y="22" width="152" height="96"/>
+          <path class="ill-crease" d="M62 22V118M100 22V118M138 22V118M24 70H176"/>
+          <text class="ill-label" x="100" y="136">100%</text>
+        </svg>
+        <p><b>1</b> Print the sheet single-sided, landscape, at 100%.</p>
+      </li>
+      <li>
+        <svg viewBox="0 0 200 140" role="img" aria-label="The top half folding down onto the bottom half">
+          <rect class="ill-paper" x="24" y="70" width="152" height="48"/>
+          <polygon class="ill-flap" points="24,70 176,70 164,34 36,34"/>
+          <path class="ill-arrow" d="M184 40 Q198 72 184 104"/>
+        </svg>
+        <p><b>2</b> Fold in half the long way. Crease, then open.</p>
+      </li>
+      <li>
+        <svg viewBox="0 0 200 140" role="img" aria-label="Both short ends folding in to the middle crease">
+          <rect class="ill-paper" x="24" y="22" width="152" height="96"/>
+          <rect class="ill-shade" x="24" y="22" width="38" height="96"/>
+          <rect class="ill-shade" x="138" y="22" width="38" height="96"/>
+          <path class="ill-crease" d="M62 22V118M100 22V118M138 22V118M24 70H176"/>
+          <path class="ill-arrow" d="M38 14 Q66 -2 92 14"/>
+          <path class="ill-arrow" d="M162 14 Q134 -2 108 14"/>
+        </svg>
+        <p><b>3</b> Fold in half the short way, then fold both ends to the middle. Open: eight panels.</p>
+      </li>
+      <li>
+        <svg viewBox="0 0 200 140" role="img" aria-label="Folded in half, a cut from the folded edge along the middle crease, one panel deep">
+          <rect class="ill-paper" x="62" y="22" width="76" height="96"/>
+          <path class="ill-crease" d="M100 22V118M62 70H138"/>
+          <path class="ill-fold" d="M62 22V118"/>
+          <path class="ill-cut" d="M62 70H100"/>
+          <g class="ill-scissors" transform="translate(110 70)">
+            <circle cx="6" cy="-5" r="3.4"/><circle cx="6" cy="5" r="3.4"/>
+            <path d="M3 -3L-8 4M3 3L-8 -4"/>
+          </g>
+          <text class="ill-label ill-small" x="56" y="132" text-anchor="end">fold</text>
+        </svg>
+        <p><b>4</b> Fold in half the short way. Cut from the fold along the middle, one panel deep only.</p>
+      </li>
+      <li>
+        <svg viewBox="0 0 200 140" role="img" aria-label="The strip folded long, both ends pushed toward the middle so the cut opens">
+          <path class="ill-paper" d="M20 56H72L100 34L128 56H180V92H128L100 114L72 92H20Z"/>
+          <path class="ill-crease" d="M72 56V92M128 56V92M46 56V92M154 56V92"/>
+          <path class="ill-open" d="M72 74L100 56L128 74L100 92Z"/>
+          <path class="ill-arrow" d="M6 74H34"/>
+          <path class="ill-arrow" d="M194 74H166"/>
+        </svg>
+        <p><b>5</b> Open, fold the long way, and push the ends together. The cut opens into a plus.</p>
+      </li>
+      <li>
+        <svg viewBox="0 0 200 140" role="img" aria-label="The finished eight-page booklet with the cover on top">
+          <rect class="ill-paper ill-back" x="80" y="28" width="56" height="88"/>
+          <rect class="ill-paper ill-back" x="76" y="25" width="56" height="88"/>
+          <rect class="ill-paper" x="72" y="22" width="56" height="88"/>
+          <path class="ill-fold" d="M72 22V110"/>
+          <text class="ill-label ill-on-paper" x="100" y="66">Cover</text>
+          <path class="ill-arrow" d="M150 96 Q170 70 150 44"/>
+        </svg>
+        <p><b>6</b> Fold the pages around so the cover is on top. Press flat. Done.</p>
+      </li>
+    </ol>
+  </section>
+
   <section class="zm-foot">
-    <button type="button" class="zm-link" id="zm-fold">How to fold</button>
+    <a class="zm-link" href="#guide">How to fold</a>
     <button type="button" class="zm-link" id="zm-reset">Start over</button>
     <p class="zm-note">Everything stays in this browser. Nothing is uploaded.</p>
   </section>
@@ -84,6 +179,7 @@ sitemap: false
     </div>
     <div class="zp-stage">
       <canvas class="zp-canvas" aria-hidden="true"></canvas>
+      <span class="zp-ppi" hidden><i class="zm-dot"></i><span></span></span>
       <button type="button" class="zp-add"><span class="zp-plus" aria-hidden="true">+</span><span>Add photo</span></button>
       <div class="zp-drop" aria-hidden="true">Drop image</div>
     </div>
@@ -92,8 +188,16 @@ sitemap: false
         <button type="button" data-fit="cover" aria-pressed="true">Fill</button>
         <button type="button" data-fit="contain" aria-pressed="false">Fit</button>
       </div>
+      <button type="button" class="zp-text zp-zoom" aria-expanded="false">Zoom</button>
       <button type="button" class="zp-text zp-replace">Replace</button>
       <button type="button" class="zp-text zp-remove">Remove</button>
+    </div>
+    <div class="zp-adjust" hidden>
+      <input type="range" class="zp-zoom-range" min="100" max="400" step="1" value="100" aria-label="Zoom">
+      <span class="zp-zoom-val">100%</span>
+      <button type="button" class="zp-text zp-zoom-reset">Reset</button>
+      <button type="button" class="zp-text zp-zoom-done">Done</button>
+      <p class="zp-adjust-tip">Drag the photo to move it. Pinch or scroll to zoom.</p>
     </div>
     <textarea class="zp-caption" rows="2" dir="auto" placeholder="Text on this page"></textarea>
     <input type="file" class="zp-file" accept="image/*" hidden>
@@ -136,15 +240,6 @@ sitemap: false
   </div>
   <p class="zm-dl-tip">Print single-sided, landscape, at 100% / actual size.</p>
   <p class="zm-busy" id="zm-busy" hidden>Preparing your file…</p>
-</dialog>
-
-<dialog class="zm-dialog" id="zm-fold-dlg" aria-labelledby="zm-fold-title">
-  <div class="zm-dlg-head">
-    <h2 id="zm-fold-title">How to fold</h2>
-    <button type="button" class="zm-close" data-close aria-label="Close">&times;</button>
-  </div>
-  <canvas class="zm-fold-canvas" id="zm-fold-canvas" aria-label="Sheet layout: dashed lines are folds, the solid line in the middle is the cut"></canvas>
-  <ol class="zm-steps" id="zm-steps"></ol>
 </dialog>
 
 <dialog class="zm-dialog zm-small" id="zm-reset-dlg" aria-labelledby="zm-reset-title">

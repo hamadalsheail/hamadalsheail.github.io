@@ -15,13 +15,18 @@
   const INK = '#242424';
   const WHITE = '#ffffff';
   const MAX_PIXELS = 16.7e6; // iOS canvas limit
-  const MAX_IMG = 2600;      // long side kept for uploaded photos
+  const MAX_IMG = 5000;      // long side kept for uploaded photos
+  // Print advisor: zine pages are held in the hand, so 300 PPI is the
+  // target at every sheet size; 75% of it still prints acceptably.
+  const TARGET_PPI = 300;
+  const ORDER = ['a4', 'letter', 'a3'];
+  const ZOOM_MAX = 4;
 
   // Where each page sits on the sheet (left-to-right zine): [column, row].
   // Row 0 prints upside down. Right-to-left zines mirror the columns.
   const SLOTS = [[3, 1], [3, 0], [2, 0], [1, 0], [0, 0], [0, 1], [1, 1], [2, 1]];
 
-  const blank = () => ({ img: null, blob: null, fit: 'cover', caption: '' });
+  const blank = () => ({ img: null, blob: null, fit: 'cover', caption: '', zoom: 1, fx: 0.5, fy: 0.5 });
   let state = { size: 'a4', dir: 'ltr', border: false, panels: Array.from({ length: 8 }, blank) };
 
   const $ = (s, el) => (el || document).querySelector(s);
@@ -131,17 +136,37 @@
     ctx.restore();
   }
 
-  function drawImage(ctx, img, fit, x, y, w, h) {
-    const iw = img.width, ih = img.height;
-    const s = fit === 'contain' ? Math.min(w / iw, h / ih) : Math.max(w / iw, h / ih);
+  // Where a photo lands inside its frame. zoom >= 1; fx/fy (0..1) pick
+  // which part stays in view when the photo is larger than the frame.
+  function imageRect(p, x, y, w, h) {
+    const iw = p.img.width, ih = p.img.height;
+    const base = p.fit === 'contain' ? Math.min(w / iw, h / ih) : Math.max(w / iw, h / ih);
+    const s = base * (p.zoom || 1);
     const dw = iw * s, dh = ih * s;
-    ctx.save();
-    ctx.beginPath();
-    ctx.rect(x, y, w, h);
-    ctx.clip();
-    ctx.imageSmoothingQuality = 'high';
-    ctx.drawImage(img, x + (w - dw) / 2, y + (h - dh) / 2, dw, dh);
-    ctx.restore();
+    const fx = p.fx == null ? 0.5 : p.fx, fy = p.fy == null ? 0.5 : p.fy;
+    return { x: x + (w - dw) * fx, y: y + (h - dh) * fy, w: dw, h: dh, frame: { x, y, w, h } };
+  }
+
+  // Photo frame and text block for one page, shared by drawing and the advisor.
+  function panelLayout(ctx, p, x, y, w, h) {
+    const inset = state.border ? w * 0.07 : 0;
+    const ax = x + inset, ay = y + inset, aw = w - inset * 2, ah = h - inset * 2;
+    const text = (p.caption || '').trim();
+    const pad = w * 0.07;
+    const out = { ax, ay, aw, ah, t: null, textTop: 0, photo: null };
+    if (p.img) {
+      let band = 0;
+      if (text) {
+        out.t = layoutText(ctx, text, aw - pad * 2, ah * 0.4, w * 0.058);
+        band = out.t.h + pad * (state.border ? 1 : 1.6);
+        out.textTop = ay + ah - band + (band - out.t.h) / 2;
+      }
+      out.photo = imageRect(p, ax, ay, aw, ah - band);
+    } else if (text) {
+      out.t = layoutText(ctx, text, aw - pad * 2, ah - pad * 2, w * 0.085);
+      out.textTop = ay + (ah - out.t.h) / 2;
+    }
+    return out;
   }
 
   function renderPanel(ctx, p, x, y, w, h) {
@@ -151,26 +176,54 @@
     ctx.clip();
     ctx.fillStyle = WHITE;
     ctx.fillRect(x, y, w, h);
-
-    const inset = state.border ? w * 0.07 : 0;
-    const ax = x + inset, ay = y + inset, aw = w - inset * 2, ah = h - inset * 2;
-    const text = (p.caption || '').trim();
-    const pad = w * 0.07;
-
-    if (p.img) {
-      let band = 0, t = null;
-      if (text) {
-        t = layoutText(ctx, text, aw - pad * 2, ah * 0.4, w * 0.058);
-        band = t.h + pad * (state.border ? 1 : 1.6);
-      }
-      drawImage(ctx, p.img, p.fit, ax, ay, aw, ah - band);
-      if (t) drawText(ctx, t, ax + aw / 2, ay + ah - band + (band - t.h) / 2);
-    } else if (text) {
-      const t = layoutText(ctx, text, aw - pad * 2, ah - pad * 2, w * 0.085);
-      drawText(ctx, t, ax + aw / 2, ay + (ah - t.h) / 2);
+    const L = panelLayout(ctx, p, x, y, w, h);
+    if (L.photo) {
+      const r = L.photo, f = r.frame;
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(f.x, f.y, f.w, f.h);
+      ctx.clip();
+      ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(p.img, r.x, r.y, r.w, r.h);
+      ctx.restore();
     }
+    if (L.t) drawText(ctx, L.t, L.ax + L.aw / 2, L.textTop);
     ctx.restore();
   }
+
+  /* ---------- Print advisor ---------- */
+
+  const measureCtx = document.createElement('canvas').getContext('2d');
+  // Effective PPI of a page's photo when the zine is printed on `sizeKey`.
+  function ppiFor(p, sizeKey) {
+    if (!p.img) return null;
+    const s = SIZES[sizeKey];
+    const pw = (s.w / 4) * 72, ph = (s.h / 2) * 72; // page in points
+    const L = panelLayout(measureCtx, p, 0, 0, pw, ph);
+    return p.img.width / (L.photo.w / 72);
+  }
+  function verdict(ppi) {
+    return ppi >= TARGET_PPI ? 'ok' : ppi >= TARGET_PPI * 0.75 ? 'warn' : 'bad';
+  }
+  const VERDICT_TEXT = { ok: 'Sharp', warn: 'Acceptable, slight softness', bad: 'Will look soft' };
+  const RANK = { ok: 0, warn: 1, bad: 2 };
+  // Worst verdict across all photo pages at a sheet size (null: no photos).
+  function sheetVerdict(sizeKey) {
+    let worst = null;
+    state.panels.forEach((p) => {
+      if (!p.img) return;
+      const v = verdict(ppiFor(p, sizeKey));
+      if (!worst || RANK[v] > RANK[worst]) worst = v;
+    });
+    return worst;
+  }
+  // Largest sheet where this photo is still sharp.
+  function bestFor(p) {
+    let best = null;
+    BY_AREA.forEach((k) => { if (verdict(ppiFor(p, k)) === 'ok') best = k; });
+    return best;
+  }
+  const BY_AREA = ORDER.slice().sort((a, b) => SIZES[a].w * SIZES[a].h - SIZES[b].w * SIZES[b].h);
 
   function slotOf(i) {
     const s = SLOTS[i];
@@ -270,8 +323,8 @@
     $('.zp-add', li).addEventListener('click', pick);
     $('.zp-replace', li).addEventListener('click', pick);
     $('.zp-remove', li).addEventListener('click', () => {
-      state.panels[i].img = null;
-      state.panels[i].blob = null;
+      Object.assign(state.panels[i], { img: null, blob: null, zoom: 1, fx: 0.5, fy: 0.5 });
+      setAdjust(i, false);
       changed(i);
     });
     card.file.addEventListener('change', async () => {
@@ -279,6 +332,7 @@
       card.file.value = '';
       await setImage(i, f);
     });
+    wireZoom(card, i);
     li.querySelectorAll('.zp-fit button').forEach((b) => {
       b.addEventListener('click', () => { state.panels[i].fit = b.dataset.fit; changed(i); });
     });
@@ -345,7 +399,7 @@
     card.li.classList.add('is-busy');
     try {
       const r = await importFile(file);
-      if (r) { state.panels[i].img = r.img; state.panels[i].blob = r.blob; }
+      if (r) Object.assign(state.panels[i], { img: r.img, blob: r.blob, zoom: 1, fx: 0.5, fy: 0.5 });
     } catch (e) {
       alertLine('That file could not be read as an image.');
     }
@@ -377,8 +431,102 @@
     if (swap && !btn.disabled) btn.focus();
   }
 
+  /* ---------- Zoom and pan (per page) ---------- */
+
+  let adjusting = -1;
+  function setAdjust(i, on) {
+    if (on && adjusting >= 0 && adjusting !== i) setAdjust(adjusting, false);
+    const li = cards[i].li;
+    li.classList.toggle('is-adjusting', on);
+    $('.zp-adjust', li).hidden = !on;
+    $('.zp-zoom', li).setAttribute('aria-expanded', String(on));
+    if (on) adjusting = i; else if (adjusting === i) adjusting = -1;
+  }
+  function setZoom(i, z) {
+    const p = state.panels[i];
+    p.zoom = Math.min(ZOOM_MAX, Math.max(1, z));
+    changed(i);
+  }
+  // Frame of the photo on the card canvas, in CSS pixels.
+  function cardPhoto(i) {
+    const c = cards[i].canvas, r = c.getBoundingClientRect();
+    const L = panelLayout(measureCtx, state.panels[i], 0, 0, r.width, r.height);
+    return L.photo;
+  }
+  function wireZoom(card, i) {
+    const li = card.li, stage = $('.zp-stage', li), range = $('.zp-zoom-range', li);
+    $('.zp-zoom', li).addEventListener('click', () => setAdjust(i, adjusting !== i));
+    $('.zp-zoom-done', li).addEventListener('click', () => setAdjust(i, false));
+    $('.zp-zoom-reset', li).addEventListener('click', () => {
+      Object.assign(state.panels[i], { zoom: 1, fx: 0.5, fy: 0.5 });
+      changed(i);
+    });
+    range.addEventListener('input', () => setZoom(i, range.value / 100));
+
+    const pts = new Map();
+    let start = null;
+    stage.addEventListener('pointerdown', (e) => {
+      if (adjusting !== i || !state.panels[i].img) return;
+      e.preventDefault();
+      stage.setPointerCapture(e.pointerId);
+      pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      const p = state.panels[i];
+      start = { pts: new Map(pts), fx: p.fx, fy: p.fy, zoom: p.zoom, rect: cardPhoto(i) };
+    });
+    stage.addEventListener('pointermove', (e) => {
+      if (!start || !pts.has(e.pointerId)) return;
+      pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      const p = state.panels[i];
+      if (pts.size >= 2 && start.pts.size >= 2) {
+        const [a, b] = [...pts.values()], [a0, b0] = [...start.pts.values()];
+        const d = Math.hypot(a.x - b.x, a.y - b.y), d0 = Math.hypot(a0.x - b0.x, a0.y - b0.y) || 1;
+        setZoom(i, start.zoom * (d / d0));
+        return;
+      }
+      const s0 = start.pts.get(e.pointerId);
+      if (!s0) return;
+      const r = start.rect, f = r.frame;
+      const ox = r.w - f.w, oy = r.h - f.h; // how far the photo can travel
+      if (Math.abs(ox) > 0.5) p.fx = Math.min(1, Math.max(0, start.fx - (e.clientX - s0.x) / ox));
+      if (Math.abs(oy) > 0.5) p.fy = Math.min(1, Math.max(0, start.fy - (e.clientY - s0.y) / oy));
+      changed(i);
+    });
+    const end = (e) => {
+      pts.delete(e.pointerId);
+      if (!pts.size) { start = null; return; }
+      const p = state.panels[i];
+      start = { pts: new Map(pts), fx: p.fx, fy: p.fy, zoom: p.zoom, rect: cardPhoto(i) };
+    };
+    stage.addEventListener('pointerup', end);
+    stage.addEventListener('pointercancel', end);
+    stage.addEventListener('wheel', (e) => {
+      if (adjusting !== i || !state.panels[i].img) return;
+      e.preventDefault();
+      setZoom(i, state.panels[i].zoom * Math.exp(-e.deltaY * 0.0015));
+    }, { passive: false });
+    stage.addEventListener('dblclick', () => {
+      if (adjusting !== i) return;
+      Object.assign(state.panels[i], { zoom: 1, fx: 0.5, fy: 0.5 });
+      changed(i);
+    });
+  }
+
   function refreshCard(i) {
     const card = cards[i], p = state.panels[i], li = card.li;
+    const z = Math.round((p.zoom || 1) * 100);
+    $('.zp-zoom-range', li).value = z;
+    $('.zp-zoom-val', li).textContent = z + '%';
+    const badge = $('.zp-ppi', li);
+    if (p.img) {
+      const ppi = ppiFor(p, state.size), v = verdict(ppi);
+      badge.hidden = false;
+      $('.zm-dot', badge).className = 'zm-dot is-' + v;
+      $('span', badge).textContent = Math.round(ppi) + ' PPI';
+      badge.title = VERDICT_TEXT[v] + ' at ' + SIZES[state.size].label;
+    } else {
+      badge.hidden = true;
+      if (adjusting === i) setAdjust(i, false);
+    }
     li.classList.toggle('has-img', !!p.img);
     li.classList.toggle('has-text', !!p.caption.trim());
     li.querySelectorAll('.zp-fit button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.fit === p.fit)));
@@ -402,7 +550,63 @@
     const s = SIZES[state.size];
     grid.style.setProperty('--panel-ratio', (s.w / 4) + ' / ' + (s.h / 2));
     for (let i = 0; i < 8; i++) refreshCard(i);
+    refreshAdvisor();
   }
+
+  const advisorEl = $('#zm-advisor');
+  const dotHtml = (v) => '<i class="zm-dot is-' + v + '"></i>';
+  function refreshAdvisor() {
+    // Paper buttons: worst photo at each size.
+    sizeBtns.forEach((b) => {
+      const v = sheetVerdict(b.dataset.size);
+      const dot = $('.zm-dot', b);
+      dot.className = 'zm-dot' + (v ? ' is-' + v : '');
+      b.title = v ? SIZES[b.dataset.size].label + ': ' + VERDICT_TEXT[v].toLowerCase() : SIZES[b.dataset.size].label;
+    });
+    const rows = state.panels.map((p, i) => ({ p, i })).filter((r) => r.p.img);
+    if (!rows.length) {
+      advisorEl.innerHTML = '<p class="zm-adv-empty">Add a photo to see which paper size prints it sharp.</p>';
+      return;
+    }
+    let bestSheet = null, okSheet = null;
+    BY_AREA.forEach((k) => {
+      const v = sheetVerdict(k);
+      if (v === 'ok') bestSheet = k;
+      if (v !== 'bad') okSheet = k;
+    });
+    const cur = sheetVerdict(state.size);
+    const summary =
+      '<div class="zm-adv-sum">' +
+        '<div><span>Best paper, all sharp</span><strong>' + (bestSheet ? SIZES[bestSheet].label : 'None') + '</strong></div>' +
+        '<div><span>Largest acceptable</span><strong>' + (okSheet ? SIZES[okSheet].label : 'None') + '</strong></div>' +
+        '<div><span>Now: ' + SIZES[state.size].label + '</span><strong>' + dotHtml(cur) + VERDICT_TEXT[cur] + '</strong></div>' +
+      '</div>';
+    const head = '<tr><th>Page</th><th>Photo</th>' +
+      ORDER.map((k) => '<th' + (k === state.size ? ' class="is-cur"' : '') + '>' + SIZES[k].label + '</th>').join('') +
+      '<th>Best size</th></tr>';
+    const body = rows.map(({ p, i }) => {
+      const z = p.zoom || 1;
+      const cells = ORDER.map((k) => {
+        const ppi = ppiFor(p, k);
+        return '<td' + (k === state.size ? ' class="is-cur"' : '') + '>' + dotHtml(verdict(ppi)) + Math.round(ppi) + '</td>';
+      }).join('');
+      const best = bestFor(p);
+      return '<tr><td><button type="button" class="zm-adv-page" data-i="' + i + '">' + LABELS[i] + '</button></td>' +
+        '<td class="zm-adv-px">' + p.img.width + '×' + p.img.height + (z > 1.005 ? ' · ' + Math.round(z * 100) + '%' : '') + '</td>' +
+        cells + '<td>' + (best ? SIZES[best].label : '<span class="zm-adv-bad">Below Letter</span>') + '</td></tr>';
+    }).join('');
+    advisorEl.innerHTML = summary +
+      '<div class="zm-adv-scroll"><table class="zm-adv-table"><thead>' + head + '</thead><tbody>' + body + '</tbody></table></div>' +
+      '<p class="zm-adv-unit">Numbers are effective PPI.</p>';
+  }
+  advisorEl.addEventListener('click', (e) => {
+    const b = e.target.closest('.zm-adv-page');
+    if (!b) return;
+    const li = cards[+b.dataset.i].li;
+    li.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    li.classList.add('is-flash');
+    setTimeout(() => li.classList.remove('is-flash'), 1200);
+  });
 
   let pending = new Set(), raf = 0;
   function changed(i) {
@@ -411,19 +615,26 @@
       raf = 0;
       pending.forEach(refreshCard);
       pending.clear();
+      refreshAdvisor();
     });
     save();
   }
 
   /* ---------- Settings ---------- */
 
-  const sizeSel = $('#zm-size'), dirSel = $('#zm-dir'), borderBox = $('#zm-border');
+  const sizeBtns = [...document.querySelectorAll('#zm-size [data-size]')];
+  const dirSel = $('#zm-dir'), borderBox = $('#zm-border');
   function syncSettings() {
-    sizeSel.value = state.size;
+    sizeBtns.forEach((b) => b.setAttribute('aria-checked', String(b.dataset.size === state.size)));
     dirSel.value = state.dir;
     borderBox.checked = state.border;
   }
-  sizeSel.addEventListener('change', () => { state.size = sizeSel.value; refreshAll(); save(); });
+  sizeBtns.forEach((b) => b.addEventListener('click', () => {
+    state.size = b.dataset.size;
+    syncSettings();
+    refreshAll();
+    save();
+  }));
   dirSel.addEventListener('change', () => { state.dir = dirSel.value; save(); });
   borderBox.addEventListener('change', () => { state.border = borderBox.checked; refreshAll(); save(); });
 
@@ -559,24 +770,6 @@
     'Open it, fold lengthwise again, and push the two ends toward each other so the cut opens into a plus shape.',
     'Wrap the pages around so the cover is on top and the back is at the bottom. Press flat.',
   ];
-  $('#zm-steps').innerHTML = STEPS.map((s) => '<li>' + s + '</li>').join('');
-  const foldDlg = $('#zm-fold-dlg'), foldCanvas = $('#zm-fold-canvas');
-  function drawFoldDialog() {
-    const s = SIZES[state.size];
-    const r = foldCanvas.getBoundingClientRect();
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const w = Math.round(r.width * dpr), h = Math.round((r.width / (s.w / s.h)) * dpr);
-    foldCanvas.width = w;
-    foldCanvas.height = h;
-    foldCanvas.style.height = h / dpr + 'px';
-    drawFoldDiagram(foldCanvas.getContext('2d'), 0, 0, w, h, INK);
-  }
-  $('#zm-fold').addEventListener('click', async () => {
-    await fontsReady();
-    openDlg(foldDlg);
-    drawFoldDialog();
-  });
-
   /* Start over */
   const resetDlg = $('#zm-reset-dlg');
   $('#zm-reset').addEventListener('click', () => openDlg(resetDlg));
@@ -762,7 +955,7 @@
         const d = await db();
         const data = {
           size: state.size, dir: state.dir, border: state.border,
-          panels: state.panels.map((p) => ({ blob: p.blob, fit: p.fit, caption: p.caption })),
+          panels: state.panels.map((p) => ({ blob: p.blob, fit: p.fit, caption: p.caption, zoom: p.zoom, fx: p.fx, fy: p.fy })),
         };
         d.transaction('zines', 'readwrite').objectStore('zines').put(data, 'current');
       } catch (e) { /* private mode etc.: work still fine, just not kept */ }
@@ -784,6 +977,10 @@
         const out = blank();
         out.fit = p.fit === 'contain' ? 'contain' : 'cover';
         out.caption = typeof p.caption === 'string' ? p.caption : '';
+        const num = (v, lo, hi, d) => (typeof v === 'number' && isFinite(v) ? Math.min(hi, Math.max(lo, v)) : d);
+        out.zoom = num(p.zoom, 1, ZOOM_MAX, 1);
+        out.fx = num(p.fx, 0, 1, 0.5);
+        out.fy = num(p.fy, 0, 1, 0.5);
         if (p.blob) { try { out.img = await decode(p.blob); out.blob = p.blob; } catch (e) {} }
         return out;
       }));
@@ -805,7 +1002,6 @@
     resizeRaf = requestAnimationFrame(() => {
       refreshAll();
       if (pvDlg.open) drawPreview();
-      if (foldDlg.open) drawFoldDialog();
     });
   });
 })();
