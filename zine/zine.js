@@ -32,7 +32,7 @@
       exportFail: 'Export failed. Try a smaller paper size or fewer large photos.',
       sheet: ' sheet', rtlNote: ', right-to-left',
       blank: (n) => '. ' + n + ' page' + (n === 1 ? ' is' : 's are') + ' still blank.',
-      foldTitle: 'How to fold', foldKey: 'Dashed: fold.   Red: cut.',
+      foldTitle: 'How to fold', foldKey: 'Thin line: fold.   Red dashes: cut.',
       steps: [
         'Print the sheet single-sided, landscape, at 100% (actual size).',
         'Fold it in half lengthwise, top edge to bottom edge. Crease and open.',
@@ -63,7 +63,7 @@
       exportFail: 'تعثّر التصدير. جرّب ورقًا أصغر أو صورًا أخفّ.',
       sheet: '', rtlNote: '، من اليمين إلى اليسار',
       blank: (n) => '. ' + (n === 1 ? 'صفحةٌ واحدة ما زالت بيضاء.' : num(n) + ' صفحات ما زالت بيضاء.'),
-      foldTitle: 'طريقة الطي', foldKey: 'المتقطّع: طيّ.   الأحمر: قصّ.',
+      foldTitle: 'طريقة الطي', foldKey: 'الخط الرفيع: طيّ.   الأحمر المتقطّع: قصّ.',
       steps: [
         'اطبع الورقة على وجهٍ واحد، بالعرض، وبحجمها الفعلي ١٠٠٪.',
         'اطوِها نصفين بالطول، حافتها العليا على السفلى، واضغط الطيّة ثم افتحها.',
@@ -323,20 +323,20 @@
 
   function drawGuides(ctx, x, y, W, H, lw) {
     ctx.save();
-    ctx.strokeStyle = 'rgba(36,36,36,0.45)';
-    ctx.lineWidth = lw;
-    ctx.setLineDash([lw * 5, lw * 4]);
+    ctx.strokeStyle = 'rgba(36,36,36,0.4)';
+    ctx.lineWidth = lw * 0.8;
     ctx.beginPath();
     for (let c = 1; c < 4; c++) { ctx.moveTo(x + (W * c) / 4, y); ctx.lineTo(x + (W * c) / 4, y + H); }
     ctx.moveTo(x, y + H / 2); ctx.lineTo(x + W / 4, y + H / 2);
     ctx.moveTo(x + (W * 3) / 4, y + H / 2); ctx.lineTo(x + W, y + H / 2);
     ctx.stroke();
-    ctx.setLineDash([]);
     ctx.strokeStyle = '#C0392B';
     ctx.lineWidth = lw * 2;
+    ctx.setLineDash([lw * 4, lw * 3]);
     ctx.beginPath();
     ctx.moveTo(x + W / 4, y + H / 2); ctx.lineTo(x + (W * 3) / 4, y + H / 2);
     ctx.stroke();
+    ctx.setLineDash([]);
     ctx.restore();
   }
 
