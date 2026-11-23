@@ -13,9 +13,10 @@
   --hover-deep: #DDD6D1;
   --light: #EDE8E5;                    /* fixed light text over photos / lightbox */
   color-scheme: light;
-  --display: "Bricolage Grotesque", "Noto Kufi Arabic", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --arabic: "Noto Kufi Arabic", "Geeza Pro", serif;       /* Arabic titles, labels */
-  --arabic-text: "Noto Naskh Arabic", "Geeza Pro", serif; /* Arabic reading text */
+  /* Identity font: Amiri for Arabic and Latin (2026-11-23). */
+  --display: "Amiri", "Geeza Pro", Georgia, serif;
+  --arabic: "Amiri", "Geeza Pro", serif;      /* Arabic titles, labels */
+  --arabic-text: "Amiri", "Geeza Pro", serif; /* Arabic reading text */
   --gutter: clamp(1.25rem, 4vw, 4.5rem);
   --measure: 34rem;
   --post-col: 44rem;   /* post page column: title, cover, body */
@@ -103,7 +104,7 @@ a { color: inherit; }
   display: flex;
   flex-wrap: wrap;
   gap: 1.15rem;
-  font-size: 0.83rem;
+  font-size: 0.93rem;
   letter-spacing: 0.02em;
 }
 
@@ -165,7 +166,7 @@ a { color: inherit; }
   cursor: pointer;
   align-self: center;
 }
-.lang-toggle [lang="ar"] { font-family: var(--arabic); font-size: 0.85rem; line-height: 1; }
+.lang-toggle [lang="ar"] { font-family: var(--arabic); font-size: 0.95rem; line-height: 1; }
 .lang-toggle:hover, .lang-toggle:focus-visible { color: var(--ink); }
 
 /* ---------- Language ----------
@@ -177,14 +178,14 @@ html[lang="en"] [data-lang="ar"] { display: none !important; }
 /* Arabic never takes tracking or uppercase. */
 html[lang="ar"] body * { letter-spacing: 0; text-transform: none; }
 
-/* Arabic reading text in Naskh; Latin falls back to Bricolage. */
+/* Arabic reading text. */
 html[lang="ar"] :is(.about-copy p:not(.lede), .about-copy blockquote, .series-head p, .showcase-copy p, .project-copy p, .gallery-intro) {
-  font-family: "Bricolage Grotesque", var(--arabic-text);
+  font-family: var(--arabic-text);
   font-size: 1.08em;
   line-height: 1.85;
 }
 
-/* Kufi runs wider than Bricolage: keep the landing titles on one line. */
+/* Arabic titles run wider: keep the landing titles on one line. */
 html[lang="ar"] .landing-title { font-size: clamp(1.6rem, 2.7vw, 2.75rem); line-height: 1.3; }
 
 /* A− / A+ keep their Latin order in RTL. */
@@ -494,7 +495,7 @@ section { scroll-margin-top: 4.5rem; }
   min-width: 0;
 }
 
-.landing-sub { font-size: 0.9rem; opacity: 0.85; }
+.landing-sub { font-size: 1.01rem; opacity: 0.85; }
 
 .landing-latest {
   list-style: none;
@@ -508,7 +509,7 @@ section { scroll-margin-top: 4.5rem; }
 }
 
 .landing-post {
-  font-size: 0.95rem;
+  font-size: 1.06rem;
   line-height: 1.5;
   white-space: nowrap;
   overflow: hidden;
@@ -569,7 +570,7 @@ section { scroll-margin-top: 4.5rem; }
   flex-wrap: wrap;
   padding: 1rem var(--gutter);
   border-top: 1px solid var(--ink);
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   color: var(--ink-soft);
 }
 .landing-foot-copy { margin: 0; }
@@ -649,7 +650,7 @@ html[lang="ar"] .landing-foot { font-family: var(--arabic); }
 .post-search input:focus { outline: none; border-bottom-color: var(--accent-text); border-bottom-width: 2px; }
 
 .post-search-status {
-  font-size: 0.83rem;
+  font-size: 0.93rem;
   color: var(--ink-soft);
   white-space: nowrap;
 }
@@ -678,7 +679,7 @@ html[lang="ar"] .landing-foot { font-family: var(--arabic); }
   display: flex;
   align-items: baseline;
   gap: 0.6rem;
-  font-size: 0.83rem;
+  font-size: 0.93rem;
   color: var(--ink-soft);
   padding-top: 0.35rem;
 }
@@ -716,7 +717,7 @@ html[lang="ar"] .landing-foot { font-family: var(--arabic); }
 }
 
 .lang-tag {
-  font-size: 0.7rem;
+  font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   border: 1px solid var(--rule);
@@ -744,7 +745,7 @@ html[lang="ar"] .landing-foot { font-family: var(--arabic); }
   align-items: baseline;
   gap: 0.5rem;
   margin: 0 0 1rem;
-  font-size: 0.83rem;
+  font-size: 0.93rem;
   color: var(--ink-soft);
 }
 
@@ -784,7 +785,7 @@ html[lang="ar"] .landing-foot { font-family: var(--arabic); }
 }
 .text-size button {
   font: inherit;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   line-height: 1;
   color: var(--ink-soft);
   background: none;
@@ -809,9 +810,9 @@ html[lang="ar"] .landing-foot { font-family: var(--arabic); }
 .post-body img { margin: 2em 0; }
 .post-body p > img { cursor: zoom-in; }
 .post-body figure { margin: 2em 0; }
-.post-body figcaption { font-size: 0.85rem; color: var(--ink-soft); margin-top: 0.5rem; }
+.post-body figcaption { font-size: 0.95rem; color: var(--ink-soft); margin-top: 0.5rem; }
 
-/* Arabic posts: Kufi for titles, Naskh for reading. Never track or uppercase Arabic. */
+/* Arabic posts: Amiri for titles and reading. Never track or uppercase Arabic. */
 .post[lang="ar"] .post-title,
 .post[lang="ar"] .post-body h2,
 .post[lang="ar"] .post-body h3,
@@ -858,7 +859,7 @@ html[lang="ar"] .landing-foot { font-family: var(--arabic); }
   gap: 0.5rem;
   margin: 2.5rem 0 0;
   padding: 0;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   color: var(--ink-soft);
 }
 
@@ -947,7 +948,7 @@ footer {
   flex-wrap: wrap;
   padding: 1.5rem var(--gutter) 2.5rem;
   border-top: 1px solid var(--rule);
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   color: var(--ink-soft);
 }
 
@@ -983,7 +984,7 @@ footer {
   margin-top: 1rem;
   text-align: center;
   color: rgba(237, 232, 229, 0.72);
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   line-height: 1.5;
   max-width: 44rem;
   margin-inline: auto;
@@ -1043,7 +1044,7 @@ footer {
   .lb-prev, .lb-next { font-size: 2.4rem; }
   .landing-head .landing-alt { display: none; }
   .landing-half { --details: 11rem; padding-block: 1.25rem; }
-  .landing-post { font-size: 0.95rem; line-height: 1.45; }
+  .landing-post { font-size: 1.06rem; line-height: 1.45; }
   .landing-foot { flex-direction: column; align-items: flex-start; padding-block: 1.25rem 1.5rem; }
   .landing-foot-social { margin-inline-start: 0; }
   .landing-foot-social::before { display: none; }
@@ -1136,12 +1137,12 @@ html[lang="ar"] .show-more { font-family: var(--arabic); }
 .project-card-blank { background: linear-gradient(160deg, var(--accent) 0%, #7a3d00 100%); }
 .project-card-title { font-weight: 700; font-size: clamp(1rem, 1.4vw, 1.15rem); line-height: 1.3; }
 .project-card:hover .project-card-title, .project-card:focus-visible .project-card-title { color: var(--accent-text); }
-.project-card-kind { font-size: 0.83rem; color: var(--ink-soft); }
+.project-card-kind { font-size: 0.93rem; color: var(--ink-soft); }
 html[lang="ar"] .project-card-title { font-family: var(--arabic); font-weight: 600; }
 @media (max-width: 900px) { .project-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
 /* Single project page */
-.project-page .project-back { display: inline-block; margin-bottom: clamp(1.25rem, 3vw, 2rem); font-size: 0.83rem; color: var(--ink-soft); text-decoration: none; }
+.project-page .project-back { display: inline-block; margin-bottom: clamp(1.25rem, 3vw, 2rem); font-size: 0.93rem; color: var(--ink-soft); text-decoration: none; }
 .project-page .project-back::before { content: "\2190\00a0"; }
 html[dir="rtl"] .project-page .project-back::before { content: "\2192\00a0"; }
 .project-page .project-back:hover { color: var(--ink); }

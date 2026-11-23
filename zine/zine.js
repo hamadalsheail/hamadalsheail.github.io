@@ -132,8 +132,8 @@
 
   function fontFor(rtl, size) {
     return rtl
-      ? '400 ' + size + 'px "Noto Naskh Arabic", "Geeza Pro", serif'
-      : '400 ' + size + 'px "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif';
+      ? '400 ' + size + 'px "Amiri", "Geeza Pro", serif'
+      : '400 ' + size + 'px "Amiri", Georgia, serif';
   }
 
   function wrap(ctx, text, maxW) {
@@ -329,7 +329,7 @@
     ctx.strokeStyle = fg;
     ctx.lineWidth = lw;
     ctx.strokeRect(x, y, W, H);
-    ctx.font = '600 ' + Math.round(ph * 0.16) + 'px "Bricolage Grotesque", "Noto Kufi Arabic", Arial, sans-serif';
+    ctx.font = '700 ' + Math.round(ph * 0.16) + 'px "Amiri", Georgia, serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     for (let i = 0; i < 8; i++) {
@@ -827,10 +827,10 @@
   function fontsReady() {
     if (!document.fonts || !document.fonts.load) return Promise.resolve();
     return Promise.all([
-      document.fonts.load('400 40px "Bricolage Grotesque"'),
-      document.fonts.load('600 40px "Bricolage Grotesque"'),
-      document.fonts.load('400 40px "Noto Naskh Arabic"', 'ابت'),
-      document.fonts.load('600 40px "Noto Kufi Arabic"', 'ابت'),
+      document.fonts.load('400 40px "Amiri"'),
+      document.fonts.load('700 40px "Amiri"'),
+      document.fonts.load('400 40px "Amiri"', 'ابت'),
+      document.fonts.load('700 40px "Amiri"', 'ابت'),
     ]).catch(() => {});
   }
 
@@ -868,7 +868,7 @@
     '.sk-arrow{fill:none;stroke:#A85A00;stroke-width:1.8;stroke-linecap:round;marker-end:url(#zm-arrow)}' +
     '.sk-cut{fill:none;stroke:#C0392B;stroke-width:2.2;stroke-dasharray:5 4;stroke-linecap:round}' +
     '.sk-scissors circle,.sk-scissors path{fill:none;stroke:#C0392B;stroke-width:1.5;stroke-linecap:round}' +
-    '.sk-label{fill:#A85A00;font:600 12px ' + (ar ? '"Noto Kufi Arabic",' : '"Bricolage Grotesque",') + 'Arial,sans-serif;text-anchor:middle;dominant-baseline:middle}' +
+    '.sk-label{fill:#A85A00;font:700 12px "Amiri",Georgia,serif;text-anchor:middle;dominant-baseline:middle}' +
     '.sk-small{font-size:10px;fill:#6b6259}.sk-note{font-size:10.5px}' +
     '.sk-cut-label{fill:#C0392B;font-size:8.5px;paint-order:stroke;stroke:#fff;stroke-width:3px;stroke-linejoin:round}' +
     '[data-lang]{display:none}[data-lang="' + (ar ? 'ar' : 'en') + '"]{display:inline}' +
@@ -898,7 +898,7 @@
     ctx.fillRect(0, 0, W, H);
     const m = W * 0.05;
     const ar = lang() === 'ar';
-    const sans = ar ? '"Noto Kufi Arabic", "Bricolage Grotesque", Arial, sans-serif' : '"Bricolage Grotesque", Arial, sans-serif';
+    const sans = '"Amiri", Georgia, serif';
     // Arabic reads right to left: mirror the layout (diagram right, steps flowing leftwards).
     const X = (x, w) => (ar ? W - x - (w || 0) : x);
     try { ctx.direction = ar ? 'rtl' : 'ltr'; } catch (e) {}

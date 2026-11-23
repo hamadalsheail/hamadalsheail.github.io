@@ -40,7 +40,7 @@
   border-bottom: 1px solid var(--rule);
 }
 .zm-settings, .zm-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1.1rem; }
-.zm-field { display: flex; align-items: center; gap: 0.45rem; font-size: 0.83rem; }
+.zm-field { display: flex; align-items: center; gap: 0.45rem; font-size: 0.93rem; }
 .zm-field > span, .zm-check > span { color: var(--ink-soft); letter-spacing: 0.02em; }
 .zm-field select {
   font: inherit;
@@ -50,12 +50,12 @@
   border-radius: 6px;
   padding: 0.35rem 0.5rem;
 }
-.zm-check { display: flex; align-items: center; gap: 0.4rem; font-size: 0.83rem; cursor: pointer; }
+.zm-check { display: flex; align-items: center; gap: 0.4rem; font-size: 0.93rem; cursor: pointer; }
 .zm-check input { accent-color: var(--accent-text); width: 1rem; height: 1rem; margin: 0; }
 
 .zm-btn {
   font: inherit;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   font-weight: 600;
   color: var(--ink);
   background: transparent;
@@ -87,12 +87,12 @@
 .zp.is-target .zp-stage { outline: 2px solid var(--accent); outline-offset: 3px; }
 
 .zp-head { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; min-height: 1.75rem; }
-.zp-label { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-soft); }
+.zp-label { font-size: 0.9rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-soft); }
 .zp:first-child .zp-label, .zp:last-child .zp-label { color: var(--accent-text); }
 .zp-move { display: flex; align-items: center; gap: 0.15rem; }
 .zp-icon {
   font: inherit;
-  font-size: 0.9rem;
+  font-size: 1.01rem;
   width: 1.75rem;
   height: 1.75rem;
   padding: 0;
@@ -110,7 +110,7 @@
   width: 1.5rem;
   height: 1.75rem;
   color: var(--ink-soft);
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   letter-spacing: -0.35em;
   cursor: grab;
   touch-action: none;
@@ -139,7 +139,7 @@
   border: 0;
   background: none;
   font: inherit;
-  font-size: 0.82rem;
+  font-size: 0.92rem;
   color: #6b6259;
   cursor: pointer;
 }
@@ -167,7 +167,7 @@
   background: rgba(255, 165, 31, 0.85);
   color: #242424;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 1.01rem;
 }
 .zp.is-drop .zp-drop { display: grid; }
 .zp.is-busy .zp-stage::after {
@@ -178,7 +178,7 @@
   place-items: center;
   background: rgba(255, 255, 255, 0.8);
   color: #242424;
-  font-size: 0.82rem;
+  font-size: 0.92rem;
 }
 
 .zp-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 0.15rem 0.1rem; min-height: 1.9rem; visibility: hidden; }
@@ -186,7 +186,7 @@
 .zp-fit { display: inline-flex; flex: none; border: 1px solid var(--rule); border-radius: 999px; overflow: hidden; margin-inline-end: auto; }
 .zp-fit button, .zp-text {
   font: inherit;
-  font-size: 0.75rem;
+  font-size: 0.84rem;
   color: var(--ink-soft);
   background: none;
   border: 0;
@@ -198,7 +198,7 @@
 
 .zp-caption {
   font: inherit;
-  font-size: 0.88rem;
+  font-size: 0.99rem;
   line-height: 1.5;
   color: var(--ink);
   background: transparent;
@@ -235,7 +235,7 @@
   align-items: center;
   gap: 0.35rem;
   font: inherit;
-  font-size: 0.82rem;
+  font-size: 0.92rem;
   color: var(--ink-soft);
   background: none;
   border: 0;
@@ -258,7 +258,7 @@
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.92);
   color: #242424;
-  font-size: 0.7rem;
+  font-size: 0.78rem;
   font-weight: 600;
   line-height: 1.4;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
@@ -274,8 +274,8 @@
 .zp-adjust[hidden] { display: none; }
 .zp-zoom-range { flex: 1 1 3rem; min-width: 3rem; accent-color: var(--accent-text); }
 .zp-adjust .zp-text { padding-inline: 0.3rem; }
-.zp-zoom-val { font-size: 0.75rem; font-variant-numeric: tabular-nums; color: var(--ink-soft); min-width: 2.3rem; }
-.zp-adjust-tip { flex-basis: 100%; margin: 0; font-size: 0.72rem; color: var(--ink-soft); }
+.zp-zoom-val { font-size: 0.84rem; font-variant-numeric: tabular-nums; color: var(--ink-soft); min-width: 2.3rem; }
+.zp-adjust-tip { flex-basis: 100%; margin: 0; font-size: 0.81rem; color: var(--ink-soft); }
 .zp.is-flash .zp-stage { outline: 2px solid var(--accent); outline-offset: 3px; }
 
 /* ---------- Print advisor ---------- */
@@ -291,19 +291,19 @@
 .zm-adv-lead { margin: 0 0 1rem; color: var(--ink-soft); max-width: 44rem; }
 .zm-adv-sum { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; margin-bottom: 1rem; }
 .zm-adv-sum > div { background: var(--paper-deep); border: 1px solid var(--rule); border-radius: 10px; padding: 0.7rem 0.9rem; }
-.zm-adv-sum span { display: block; font-size: 0.72rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-soft); }
+.zm-adv-sum span { display: block; font-size: 0.81rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-soft); }
 .zm-adv-sum strong { display: flex; align-items: center; gap: 0.45rem; font-size: 1.15rem; margin-top: 0.15rem; }
 .zm-adv-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-.zm-adv-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; white-space: nowrap; }
+.zm-adv-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; white-space: nowrap; }
 .zm-adv-table th, .zm-adv-table td { text-align: start; padding: 0.5rem 0.6rem; border-bottom: 1px solid var(--rule); }
-.zm-adv-table th { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-soft); }
+.zm-adv-table th { font-size: 0.81rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-soft); }
 .zm-adv-table .is-cur { background: var(--paper-deep); }
 .zm-adv-table td .zm-dot { margin-inline-end: 0.4rem; }
 .zm-adv-px { color: var(--ink-soft); font-variant-numeric: tabular-nums; }
 .zm-adv-page { font: inherit; font-weight: 600; color: var(--ink); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 3px; }
 .zm-adv-bad { color: #C0392B; }
-.zm-adv-unit, .zm-adv-note { margin: 0.6rem 0 0; font-size: 0.8rem; color: var(--ink-soft); max-width: 44rem; }
-.zm-legend { display: flex; flex-wrap: wrap; gap: 0.4rem 1.25rem; list-style: none; margin: 1rem 0 0; padding: 0; font-size: 0.82rem; }
+.zm-adv-unit, .zm-adv-note { margin: 0.6rem 0 0; font-size: 0.9rem; color: var(--ink-soft); max-width: 44rem; }
+.zm-legend { display: flex; flex-wrap: wrap; gap: 0.4rem 1.25rem; list-style: none; margin: 1rem 0 0; padding: 0; font-size: 0.92rem; }
 .zm-legend li { display: flex; align-items: center; gap: 0.4rem; }
 
 /* ---------- Footer links ---------- */
@@ -319,7 +319,7 @@
 }
 .zm-link {
   font: inherit;
-  font-size: 0.88rem;
+  font-size: 0.99rem;
   font-weight: 600;
   color: var(--ink);
   background: none;
@@ -331,7 +331,7 @@
   text-underline-offset: 4px;
 }
 .zm-link:hover, .zm-link:focus-visible { text-decoration-color: var(--accent-text); }
-.zm-note { margin: 0 0 0 auto; font-size: 0.8rem; color: var(--ink-soft); }
+.zm-note { margin: 0 0 0 auto; font-size: 0.9rem; color: var(--ink-soft); }
 
 /* ---------- Dialogs ---------- */
 
@@ -366,7 +366,7 @@
 
 .zm-preview { width: min(68rem, calc(100vw - 2rem)); }
 .zm-tabs { display: inline-flex; border: 1px solid var(--rule); border-radius: 999px; overflow: hidden; }
-.zm-tabs button { font: inherit; font-size: 0.8rem; color: var(--ink-soft); background: none; border: 0; padding: 0.35rem 0.85rem; cursor: pointer; }
+.zm-tabs button { font: inherit; font-size: 0.9rem; color: var(--ink-soft); background: none; border: 0; padding: 0.35rem 0.85rem; cursor: pointer; }
 .zm-tabs button[aria-selected="true"] { background: var(--ink); color: var(--paper); }
 .zm-pv-stage {
   display: grid;
@@ -377,13 +377,13 @@
   border-radius: 8px;
 }
 .zm-pv-stage canvas { display: block; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18); }
-.zm-pv-nav { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1rem; font-size: 0.85rem; color: var(--ink-soft); }
+.zm-pv-nav { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1rem; font-size: 0.95rem; color: var(--ink-soft); }
 .zm-pv-nav.is-rtl { flex-direction: row-reverse; }
 .zm-pv-nav[hidden] { display: none; }
 #zm-pv-count { min-width: 10rem; text-align: center; white-space: pre; }
-.zm-pv-hint { margin: 0.9rem 0 0; font-size: 0.85rem; color: var(--ink-soft); text-align: center; }
+.zm-pv-hint { margin: 0.9rem 0 0; font-size: 0.95rem; color: var(--ink-soft); text-align: center; }
 
-.zm-dl-size { margin: 0 0 1rem; color: var(--ink-soft); font-size: 0.9rem; }
+.zm-dl-size { margin: 0 0 1rem; color: var(--ink-soft); font-size: 1.01rem; }
 .zm-choices { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
 .zm-choice {
   display: flex;
@@ -400,14 +400,14 @@
   transition: border-color 0.15s;
 }
 .zm-choice strong { font-size: 1.1rem; }
-.zm-choice span { font-size: 0.82rem; color: var(--ink-soft); line-height: 1.45; }
+.zm-choice span { font-size: 0.92rem; color: var(--ink-soft); line-height: 1.45; }
 .zm-choice:hover, .zm-choice:focus-visible { border-color: var(--accent-text); }
 .zm-choice:disabled { opacity: 0.5; cursor: progress; }
-.zm-dl-tip { margin: 1rem 0 0; font-size: 0.82rem; color: var(--ink-soft); }
+.zm-dl-tip { margin: 1rem 0 0; font-size: 0.92rem; color: var(--ink-soft); }
 .zm-busy { margin: 0.6rem 0 0; font-weight: 600; color: var(--accent-text); }
 
 .zm-fold-canvas { display: block; width: 100%; border-radius: 4px; }
-.zm-steps { margin: 1.1rem 0 0; padding-inline-start: 1.3rem; font-size: 0.92rem; }
+.zm-steps { margin: 1.1rem 0 0; padding-inline-start: 1.3rem; font-size: 1.03rem; }
 .zm-steps li { margin-bottom: 0.45rem; }
 .zm-steps li::marker { color: var(--accent-text); font-weight: 700; }
 
@@ -424,7 +424,7 @@
   border-radius: 999px;
   background: var(--ink);
   color: var(--paper);
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   transform: translate(-50%, 1rem);
   opacity: 0;
   pointer-events: none;
@@ -452,8 +452,8 @@
   .zm-adv-sum strong { font-size: 1rem; margin: 0; }
   .zm-seg button { padding: 0.35rem 0.6rem; }
   .zm-grid { gap: 1.5rem 0.85rem; }
-  .zp-label { font-size: 0.68rem; letter-spacing: 0.03em; white-space: nowrap; }
-  .zp-icon { width: 1.5rem; height: 1.5rem; font-size: 0.8rem; }
+  .zp-label { font-size: 0.76rem; letter-spacing: 0.03em; white-space: nowrap; }
+  .zp-icon { width: 1.5rem; height: 1.5rem; font-size: 0.9rem; }
   .zp-grip { display: none; }
   .zp-tools { flex-wrap: wrap; row-gap: 0.15rem; }
   .zp-fit { margin-inline-end: 0; flex: 1 0 100%; }
@@ -473,14 +473,14 @@
   list-style: none;
   counter-reset: plan;
 }
-.zm-plan li { counter-increment: plan; font-size: 0.9rem; color: var(--ink-soft); line-height: 1.55; }
+.zm-plan li { counter-increment: plan; font-size: 1.01rem; color: var(--ink-soft); line-height: 1.55; }
 .zm-plan li::before {
   content: counter(plan, decimal-leading-zero);
   display: block;
   margin-bottom: 0.35rem;
   color: var(--accent-text);
   font-weight: 700;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   letter-spacing: 0.06em;
 }
 .zm-plan strong { display: block; color: var(--ink); font-size: 1rem; }
@@ -518,7 +518,7 @@
 .sk-arrow { fill: none; stroke: var(--accent-text); stroke-width: 1.8; stroke-linecap: round; marker-end: url(#zm-arrow); }
 .sk-cut { fill: none; stroke: #C0392B; stroke-width: 2.2; stroke-dasharray: 5 4; stroke-linecap: round; }
 .sk-scissors circle, .sk-scissors path { fill: none; stroke: #C0392B; stroke-width: 1.5; stroke-linecap: round; }
-.sk-label { fill: var(--accent-text); font: 600 12px "Bricolage Grotesque", "Noto Kufi Arabic", Arial, sans-serif; text-anchor: middle; dominant-baseline: middle; }
+.sk-label { fill: var(--accent-text); font: 700 12px "Amiri", Georgia, serif; text-anchor: middle; dominant-baseline: middle; }
 .sk-small { font-size: 10px; fill: var(--ink-soft); }
 .zm-fold li { background: transparent; }
 .sk-closed { stroke: var(--accent-text); stroke-width: 3.6; }
@@ -537,7 +537,7 @@ html[lang="ar"] :is(.zm-intro p, .zm-plan li, .zm-fold p, .zm-adv-note, .zm-adv-
 }
 html[lang="ar"] .zm-plan li::before { content: counter(plan, arabic-indic); font-family: var(--arabic); }
 html[lang="ar"] .zm-plan strong { font-family: var(--arabic); font-weight: 600; }
-html[lang="ar"] .zp-label { font-size: 0.82rem; }
+html[lang="ar"] .zp-label { font-size: 0.92rem; }
 html[dir="rtl"] .zp-icon { transform: scaleX(-1); }
 .zp-ppi { left: auto; inset-inline-start: 0.45rem; }
 .zm-note { margin: 0; margin-inline-start: auto; }
