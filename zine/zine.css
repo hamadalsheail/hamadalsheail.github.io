@@ -553,3 +553,17 @@ html[dir="rtl"] .zp-icon { transform: scaleX(-1); }
 .zm-latin { font-family: var(--display); font-size: 0.5em; font-weight: 600; color: var(--ink-soft); vertical-align: middle; }
 html[dir="rtl"] .zm-mirror-rtl .sk-label { transform: scaleX(-1); transform-box: fill-box; transform-origin: center; }
 .sk-cut-label { fill: #C0392B; font-size: 8.5px; paint-order: stroke; stroke: var(--paper); stroke-width: 3px; stroke-linejoin: round; }
+
+/* Collapsible sections: print quality and the folding guide. */
+.zm-collapse > summary { display: flex; align-items: center; justify-content: space-between; gap: 1rem; cursor: pointer; list-style: none; border-radius: 6px; }
+.zm-collapse > summary::-webkit-details-marker { display: none; }
+.zm-collapse > summary h2 { margin: 0; }
+.zm-collapse > summary::after {
+  content: ""; flex: none; width: 0.6rem; height: 0.6rem; margin-inline-end: 0.3rem;
+  border-right: 2px solid var(--accent-text); border-bottom: 2px solid var(--accent-text);
+  transform: rotate(45deg); transition: transform 0.2s ease;
+}
+.zm-collapse[open] > summary::after { transform: rotate(-135deg); }
+.zm-collapse > summary:focus-visible { outline: 2px solid var(--accent-text); outline-offset: 4px; }
+.zm-collapse[open] > summary { margin-bottom: 1rem; }
+@media (prefers-reduced-motion: reduce) { .zm-collapse > summary::after { transition: none; } }

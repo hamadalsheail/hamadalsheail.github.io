@@ -32,15 +32,6 @@
       sheet: ' sheet', rtlNote: ', right-to-left',
       blank: (n) => '. ' + n + ' page' + (n === 1 ? ' is' : 's are') + ' still blank.',
       foldTitle: 'How to fold', foldKey: 'Thin line: fold.   Red dashes: cut.',
-      steps: [
-        'Print the sheet single-sided, landscape, at 100% (actual size).',
-        'Fold it in half lengthwise, top edge to bottom edge. Crease and open.',
-        'Fold it in half the other way, short edge to short edge. Crease and open.',
-        'Fold each short end in to meet the middle crease. Crease and open. You now have eight panels.',
-        'Fold in half short edge to short edge again. From the folded edge, cut along the middle crease to the next fold: one panel deep, no further.',
-        'Open it, fold lengthwise again, and push the two ends toward each other so the cut opens into a plus shape.',
-        'Wrap the pages around so the cover is on top and the back is at the bottom. Press flat.',
-      ],
     },
     ar: {
       pages: 'صفحات الكتيّب', settings: 'إعدادات الكتيّب', moveEarlier: 'انقلها إلى الصفحة السابقة', moveLater: 'انقلها إلى الصفحة التالية',
@@ -62,15 +53,6 @@
       sheet: '', rtlNote: '، من اليمين إلى اليسار',
       blank: (n) => '. ' + (n === 1 ? 'صفحةٌ واحدة ما زالت بيضاء.' : num(n) + ' صفحات ما زالت بيضاء.'),
       foldTitle: 'طريقة الطي', foldKey: 'الخط الرفيع: طيّ.   الأحمر المتقطّع: قصّ.',
-      steps: [
-        'اطبع الورقة على وجهٍ واحد، بالعرض، وبحجمها الفعلي ١٠٠٪.',
-        'اطوِها نصفين بالطول، حافتها العليا على السفلى، واضغط الطيّة ثم افتحها.',
-        'اطوِها نصفين بالعرض، طرفًا على طرف، واضغطها ثم افتحها.',
-        'اثنِ كل طرفٍ إلى طيّة المنتصف ثم افتحها؛ ستجد ثماني خانات.',
-        'اطوِها نصفين بالعرض مرةً أخرى، ومن الجهة المطوية قُصّ على خط المنتصف حتى الطيّة التالية؛ خانةً واحدة لا أكثر.',
-        'افتحها واطوِها بالطول، ثم ادفع طرفيها نحو بعضهما؛ فينفرج القصّ على هيئة علامة زائد.',
-        'لُفّ الصفحات حتى يعلو الغلاف ويستقرّ الخلفي في الأسفل، ثم اضغطها. وهكذا وُلد كتيّبك.',
-      ],
     },
   };
   const root = document.documentElement;
@@ -874,47 +856,84 @@
     return b;
   }
 
-  function guidePage(W, H) {
+  // Folding drawings for the PDF: the page's own sketch SVGs, restyled for print.
+  const SK_CSS = (ar) =>
+    '.sk-paper{fill:#fff}' +
+    '.sk-ink{fill:none;stroke:#242424;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}' +
+    '.sk-thin{stroke-width:1.1;opacity:.8}.sk-ghost{stroke-width:.8;opacity:.45;marker-end:none!important}' +
+    '.sk-crease{fill:none;stroke:#6b6259;stroke-width:.8;stroke-linecap:round;opacity:.75}' +
+    '.sk-fold{fill:none;stroke:#242424;stroke-width:2.6;stroke-linecap:round}' +
+    '.sk-closed{stroke:#A85A00;stroke-width:3.6}.sk-hatch{fill:url(#zm-hatch)}' +
+    '.sk-hatch-line{stroke:#A85A00;stroke-width:1;opacity:.55}' +
+    '.sk-arrow{fill:none;stroke:#A85A00;stroke-width:1.8;stroke-linecap:round;marker-end:url(#zm-arrow)}' +
+    '.sk-cut{fill:none;stroke:#C0392B;stroke-width:2.2;stroke-dasharray:5 4;stroke-linecap:round}' +
+    '.sk-scissors circle,.sk-scissors path{fill:none;stroke:#C0392B;stroke-width:1.5;stroke-linecap:round}' +
+    '.sk-label{fill:#A85A00;font:600 12px ' + (ar ? '"Noto Kufi Arabic",' : '"Bricolage Grotesque",') + 'Arial,sans-serif;text-anchor:middle;dominant-baseline:middle}' +
+    '.sk-small{font-size:10px;fill:#6b6259}.sk-note{font-size:10.5px}' +
+    '.sk-cut-label{fill:#C0392B;font-size:8.5px;paint-order:stroke;stroke:#fff;stroke-width:3px;stroke-linejoin:round}' +
+    '[data-lang]{display:none}[data-lang="' + (ar ? 'ar' : 'en') + '"]{display:inline}' +
+    '.m .sk-label{transform:scaleX(-1);transform-box:fill-box;transform-origin:center}' +
+    (ar ? 'text{direction:rtl;unicode-bidi:plaintext}' : '');
+
+  function foldStepImages(ar) {
+    const defs = $('.zm-defs defs');
+    const svgs = Array.from(document.querySelectorAll('.zm-fold li svg'));
+    return Promise.all(svgs.map((svg) => new Promise((res) => {
+      const mirror = ar && svg.classList.contains('zm-mirror-rtl');
+      const body = mirror ? '<g class="m" transform="translate(200 0) scale(-1 1)">' + svg.innerHTML + '</g>' : svg.innerHTML;
+      const str = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="-8 -4 216 148" width="864" height="592"><style>' +
+        SK_CSS(ar) + '</style>' + (defs ? defs.outerHTML : '') + body + '</svg>';
+      const img = new Image();
+      img.onload = () => res(img);
+      img.onerror = () => res(null);
+      img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(str);
+    })));
+  }
+
+  async function guidePage(W, H) {
     const c = document.createElement('canvas');
     c.width = W; c.height = H;
     const ctx = c.getContext('2d');
     ctx.fillStyle = WHITE;
     ctx.fillRect(0, 0, W, H);
-    const m = W * 0.06;
-    ctx.fillStyle = '#A85A00';
+    const m = W * 0.05;
     const ar = lang() === 'ar';
     const sans = ar ? '"Noto Kufi Arabic", "Bricolage Grotesque", Arial, sans-serif' : '"Bricolage Grotesque", Arial, sans-serif';
-    const body = ar ? '"Noto Naskh Arabic", serif' : sans;
-    // Arabic reads right to left: mirror the layout (diagram right, steps left).
+    // Arabic reads right to left: mirror the layout (diagram right, steps flowing leftwards).
     const X = (x, w) => (ar ? W - x - (w || 0) : x);
     try { ctx.direction = ar ? 'rtl' : 'ltr'; } catch (e) {}
     ctx.textAlign = ar ? 'right' : 'left';
-    ctx.font = '700 ' + Math.round(H * 0.06) + 'px ' + sans;
     ctx.textBaseline = 'top';
+    ctx.fillStyle = '#A85A00';
+    ctx.font = '700 ' + Math.round(H * 0.06) + 'px ' + sans;
     ctx.fillText(t('foldTitle'), X(m), m);
-    const dw = W * 0.42, dh = dw / (W / H);
-    const dy = m + H * 0.11;
-    drawFoldDiagram(ctx, X(m, dw), dy, dw, dh, INK);
+    // Sheet diagram and its key, at the far side of the title.
+    const dw = W * 0.2, dh = dw / (W / H);
+    drawFoldDiagram(ctx, X(W - m - dw, dw), m, dw, dh, INK);
     ctx.textAlign = ar ? 'right' : 'left';
     ctx.textBaseline = 'top';
     ctx.fillStyle = INK;
-    ctx.font = '400 ' + Math.round(H * 0.022) + 'px ' + sans;
-    ctx.fillText(t('foldKey'), X(m), dy + dh + H * 0.025);
-    // Steps beside the diagram.
-    const tx = m + dw + W * 0.05, tw = W - tx - m;
-    let y = dy;
-    const size = Math.round(H * (ar ? 0.026 : 0.024)), lh = size * (ar ? 1.7 : 1.45);
-    t('steps').forEach((s, i) => {
-      ctx.font = '600 ' + size + 'px ' + sans;
-      ctx.fillStyle = '#A85A00';
-      ctx.fillText(num(i + 1), X(tx), y);
-      ctx.font = '400 ' + size + 'px ' + body;
-      ctx.fillStyle = INK;
-      wrap(ctx, s, tw - size * 1.6).forEach((line) => { ctx.fillText(line, X(tx + size * 1.6), y); y += lh; });
-      y += lh * 0.45;
+    ctx.font = '400 ' + Math.round(H * 0.018) + 'px ' + sans;
+    ctx.fillText(t('foldKey'), X(W - m - dw), m + dh + H * 0.015);
+    // Six sketch steps, 3 x 2, in reading order.
+    const imgs = await foldStepImages(ar);
+    const top = m + dh + H * 0.07;
+    const gw = W - 2 * m, cw = gw / 3, numH = H * 0.05;
+    const rowH = Math.min((H - top - m * 0.6) / 2, cw * 0.95 * 148 / 216 + numH);
+    const ih = rowH - numH, iw = ih * 216 / 148;
+    ctx.textAlign = 'center';
+    ctx.font = '600 ' + Math.round(H * 0.028) + 'px ' + sans;
+    ctx.fillStyle = '#A85A00';
+    imgs.forEach((img, i) => {
+      const col = i % 3, row = Math.floor(i / 3);
+      const cx = X(m + col * cw, cw) + cw / 2;
+      const y = top + row * rowH;
+      if (img) ctx.drawImage(img, cx - iw / 2, y, iw, ih);
+      ctx.fillText(num(i + 1), cx, y + ih + numH * 0.1);
     });
     return c;
   }
+
 
   // Minimal PDF: one full-page JPEG per page.
   function buildPdf(pages) {
@@ -970,7 +989,7 @@
       return;
     }
     const pw = s.w * 72, ph = s.h * 72;
-    const g = guidePage(Math.round(s.w * 150), Math.round(s.h * 150));
+    const g = await guidePage(Math.round(s.w * 150), Math.round(s.h * 150));
     const guide = await jpegBytes(g, 150);
     const pdf = buildPdf([
       { bytes: sheet, px: Math.round(s.w * dpi), py: Math.round(s.h * dpi), pw, ph },
@@ -978,6 +997,12 @@
     ]);
     saveFile(pdf, base + '.pdf');
   }
+
+  // Links to the folding guide open it before scrolling.
+  const guideEl = $('#guide');
+  const openGuide = () => { if (guideEl) guideEl.open = true; };
+  document.querySelectorAll('a[href="#guide"]').forEach((a) => a.addEventListener('click', openGuide));
+  if (location.hash === '#guide') openGuide();
 
   const dlDlg = $('#zm-download-dlg');
   $('#zm-download').addEventListener('click', () => {
