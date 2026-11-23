@@ -1,0 +1,164 @@
+---
+layout: null
+permalink: /zine/
+sitemap: false
+---
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zine Maker | Hamad Alsheail</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Make an eight-page, one-sheet zine in the browser.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Noto+Kufi+Arabic:wght@400;600&family=Noto+Naskh+Arabic:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css?v={{ site.time | date: '%s' }}">
+<link rel="stylesheet" href="/zine/zine.css?v={{ site.time | date: '%s' }}">
+<script>{% include theme-init.js %}</script>
+</head>
+<body class="zine-page">
+
+<header class="topbar">
+  <a class="mark" href="/">Diwan Alshams</a>
+  <div class="topbar-tools">
+    {% include theme-toggle.html %}
+  </div>
+</header>
+
+<main class="zm">
+  <section class="zm-intro">
+    <h1>Zine Maker</h1>
+    <p>Eight pages, one sheet, one cut. Add a photo or a line of text to each page, then print and fold.</p>
+  </section>
+
+  <section class="zm-bar" aria-label="Zine settings">
+    <div class="zm-settings">
+      <label class="zm-field">
+        <span>Paper</span>
+        <select id="zm-size">
+          <option value="a4">A4</option>
+          <option value="letter">US Letter</option>
+          <option value="a3">A3</option>
+        </select>
+      </label>
+      <label class="zm-field">
+        <span>Reads</span>
+        <select id="zm-dir">
+          <option value="ltr">Left to right</option>
+          <option value="rtl">Right to left (Arabic)</option>
+        </select>
+      </label>
+      <label class="zm-check">
+        <input type="checkbox" id="zm-border">
+        <span>White border</span>
+      </label>
+    </div>
+    <div class="zm-actions">
+      <button type="button" class="zm-btn" id="zm-bulk">Add photos</button>
+      <button type="button" class="zm-btn" id="zm-preview">Preview</button>
+      <button type="button" class="zm-btn zm-btn-main" id="zm-download">Download zine</button>
+    </div>
+    <input type="file" id="zm-bulk-input" accept="image/*" multiple hidden>
+  </section>
+
+  <ol class="zm-grid" id="zm-grid" aria-label="Zine pages"></ol>
+
+  <section class="zm-foot">
+    <button type="button" class="zm-link" id="zm-fold">How to fold</button>
+    <button type="button" class="zm-link" id="zm-reset">Start over</button>
+    <p class="zm-note">Everything stays in this browser. Nothing is uploaded.</p>
+  </section>
+</main>
+
+<template id="zm-card">
+  <li class="zp">
+    <div class="zp-head">
+      <span class="zp-label"></span>
+      <span class="zp-move">
+        <button type="button" class="zp-icon zp-prev" aria-label="Move earlier">&#8592;</button>
+        <button type="button" class="zp-icon zp-next" aria-label="Move later">&#8594;</button>
+        <span class="zp-grip" title="Drag to reorder" aria-hidden="true">&#8942;&#8942;</span>
+      </span>
+    </div>
+    <div class="zp-stage">
+      <canvas class="zp-canvas" aria-hidden="true"></canvas>
+      <button type="button" class="zp-add"><span class="zp-plus" aria-hidden="true">+</span><span>Add photo</span></button>
+      <div class="zp-drop" aria-hidden="true">Drop image</div>
+    </div>
+    <div class="zp-tools">
+      <div class="zp-fit" role="group" aria-label="Photo fit">
+        <button type="button" data-fit="cover" aria-pressed="true">Fill</button>
+        <button type="button" data-fit="contain" aria-pressed="false">Fit</button>
+      </div>
+      <button type="button" class="zp-text zp-replace">Replace</button>
+      <button type="button" class="zp-text zp-remove">Remove</button>
+    </div>
+    <textarea class="zp-caption" rows="2" dir="auto" placeholder="Text on this page"></textarea>
+    <input type="file" class="zp-file" accept="image/*" hidden>
+  </li>
+</template>
+
+<dialog class="zm-dialog zm-preview" id="zm-preview-dlg" aria-labelledby="zm-preview-title">
+  <div class="zm-dlg-head">
+    <h2 id="zm-preview-title">Preview</h2>
+    <div class="zm-tabs" role="tablist">
+      <button type="button" role="tab" data-view="book" aria-selected="true">Booklet</button>
+      <button type="button" role="tab" data-view="sheet" aria-selected="false">Print sheet</button>
+    </div>
+    <button type="button" class="zm-close" data-close aria-label="Close">&times;</button>
+  </div>
+  <div class="zm-pv-stage"><canvas id="zm-pv-canvas"></canvas></div>
+  <div class="zm-pv-nav" id="zm-pv-nav">
+    <button type="button" class="zm-btn" id="zm-pv-prev" aria-label="Previous spread">&#8592;</button>
+    <span id="zm-pv-count" aria-live="polite"></span>
+    <button type="button" class="zm-btn" id="zm-pv-next" aria-label="Next spread">&#8594;</button>
+  </div>
+  <p class="zm-pv-hint" id="zm-pv-hint" hidden>Top row prints upside down. That is correct: it turns the right way up when folded.</p>
+</dialog>
+
+<dialog class="zm-dialog" id="zm-download-dlg" aria-labelledby="zm-dl-title">
+  <div class="zm-dlg-head">
+    <h2 id="zm-dl-title">Download</h2>
+    <button type="button" class="zm-close" data-close aria-label="Close">&times;</button>
+  </div>
+  <p class="zm-dl-size" id="zm-dl-size"></p>
+  <div class="zm-choices">
+    <button type="button" class="zm-choice" data-format="pdf">
+      <strong>PDF</strong>
+      <span>Print-ready sheet plus a folding guide page.</span>
+    </button>
+    <button type="button" class="zm-choice" data-format="jpg">
+      <strong>JPG</strong>
+      <span>One high-resolution image of the sheet, 300 DPI.</span>
+    </button>
+  </div>
+  <p class="zm-dl-tip">Print single-sided, landscape, at 100% / actual size.</p>
+  <p class="zm-busy" id="zm-busy" hidden>Preparing your file…</p>
+</dialog>
+
+<dialog class="zm-dialog" id="zm-fold-dlg" aria-labelledby="zm-fold-title">
+  <div class="zm-dlg-head">
+    <h2 id="zm-fold-title">How to fold</h2>
+    <button type="button" class="zm-close" data-close aria-label="Close">&times;</button>
+  </div>
+  <canvas class="zm-fold-canvas" id="zm-fold-canvas" aria-label="Sheet layout: dashed lines are folds, the solid line in the middle is the cut"></canvas>
+  <ol class="zm-steps" id="zm-steps"></ol>
+</dialog>
+
+<dialog class="zm-dialog zm-small" id="zm-reset-dlg" aria-labelledby="zm-reset-title">
+  <div class="zm-dlg-head">
+    <h2 id="zm-reset-title">Start over?</h2>
+  </div>
+  <p>This clears every page: photos, text and settings.</p>
+  <div class="zm-confirm">
+    <button type="button" class="zm-btn" data-close>Cancel</button>
+    <button type="button" class="zm-btn zm-btn-main" id="zm-reset-yes">Clear zine</button>
+  </div>
+</dialog>
+
+<script src="/theme.js"></script>
+<script src="/zine/zine.js?v={{ site.time | date: '%s' }}"></script>
+</body>
+</html>
