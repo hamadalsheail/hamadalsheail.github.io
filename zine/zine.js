@@ -872,6 +872,7 @@
     '.sk-small{font-size:10px;fill:#6b6259}.sk-note{font-size:10.5px}' +
     '.sk-cut-label{fill:#C0392B;font-size:8.5px;paint-order:stroke;stroke:#fff;stroke-width:3px;stroke-linejoin:round}' +
     '[data-lang]{display:none}[data-lang="' + (ar ? 'ar' : 'en') + '"]{display:inline}' +
+    '.m .sk-label{transform:scaleX(-1);transform-box:fill-box;transform-origin:center}' +
     (ar ? 'text{direction:rtl;unicode-bidi:plaintext}' : '');
 
   function foldStepImages(ar) {

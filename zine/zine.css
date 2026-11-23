@@ -551,7 +551,7 @@ html[dir="rtl"] .zp-icon { transform: scaleX(-1); }
 }
 
 .zm-latin { font-family: var(--display); font-size: 0.5em; font-weight: 600; color: var(--ink-soft); vertical-align: middle; }
-/* Labels inside .zm-mirror-rtl carry their own un-mirror transform attribute (Safari ignores transform-box on SVG text). */
+html[dir="rtl"] .zm-mirror-rtl .sk-label { transform: scaleX(-1); transform-box: fill-box; transform-origin: center; }
 .sk-cut-label { fill: #C0392B; font-size: 8.5px; paint-order: stroke; stroke: var(--paper); stroke-width: 3px; stroke-linejoin: round; }
 
 /* Collapsible sections: print quality and the folding guide. */
