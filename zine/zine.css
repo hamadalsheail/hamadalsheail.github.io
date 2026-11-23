@@ -520,6 +520,10 @@
 .sk-label { fill: var(--accent-text); font: 600 12px "Bricolage Grotesque", "Noto Kufi Arabic", Arial, sans-serif; text-anchor: middle; dominant-baseline: middle; }
 .sk-small { font-size: 10px; fill: var(--ink-soft); }
 .zm-fold li { background: transparent; }
+.sk-closed { stroke: var(--accent-text); stroke-width: 3.6; }
+.sk-closed-mark { fill: none; stroke: var(--accent-text); stroke-width: 1; stroke-dasharray: 1 3; stroke-linecap: round; }
+.sk-note { font-size: 10.5px; }
+html[dir="rtl"] .zm-mirror-rtl { transform: scaleX(-1); }
 
 /* ---------- Arabic ---------- */
 html[lang="ar"] .zm :is(h1, h2, h3, button, .zm-btn, .zm-field, .zm-check, .zp-label, .zm-seg, .zm-tabs, .zm-adv-sum, .zm-adv-table, .zm-legend),
