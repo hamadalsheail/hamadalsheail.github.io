@@ -288,7 +288,7 @@
   letter-spacing: -0.02em;
   line-height: 1.1;
 }
-.zm-adv-empty { margin: 0; color: var(--ink-soft); }
+.zm-adv-lead { margin: 0 0 1rem; color: var(--ink-soft); max-width: 44rem; }
 .zm-adv-sum { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; margin-bottom: 1rem; }
 .zm-adv-sum > div { background: var(--paper-deep); border: 1px solid var(--rule); border-radius: 10px; padding: 0.7rem 0.9rem; }
 .zm-adv-sum span { display: block; font-size: 0.72rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-soft); }
@@ -529,7 +529,7 @@ html[dir="rtl"] .zm-mirror-rtl { transform: scaleX(-1); }
 html[lang="ar"] .zm :is(h1, h2, h3, button, .zm-btn, .zm-field, .zm-check, .zp-label, .zm-seg, .zm-tabs, .zm-adv-sum, .zm-adv-table, .zm-legend),
 html[lang="ar"] .zm-dialog :is(h2, button, .zm-btn) { font-family: var(--arabic); }
 html[lang="ar"] .zm h1 { letter-spacing: 0; line-height: 1.3; }
-html[lang="ar"] :is(.zm-intro p, .zm-plan li, .zm-fold p, .zm-adv-note, .zm-adv-unit, .zm-adv-empty, .zm-note, .zp-adjust-tip, .zm-dialog p, .zm-choice span) {
+html[lang="ar"] :is(.zm-intro p, .zm-plan li, .zm-fold p, .zm-adv-note, .zm-adv-unit, .zm-adv-lead, .zm-note, .zp-adjust-tip, .zm-dialog p, .zm-choice span) {
   font-family: var(--arabic-text);
   font-size: 1.02em;
   line-height: 1.8;

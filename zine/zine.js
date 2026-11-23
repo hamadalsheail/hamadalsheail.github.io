@@ -23,7 +23,6 @@
       textFor: 'Text for ', addTo: 'Add photo to ',
       verdict: { ok: 'Sharp', warn: 'Acceptable, slight softness', bad: 'Will look soft' },
       at: ' at ', ppi: ' PPI',
-      advEmpty: 'Add a photo to see which paper size prints it sharp.',
       bestAll: 'Best paper, all sharp', largestOk: 'Largest acceptable', now: 'Now: ', none: 'None',
       thPage: 'Page', thPhoto: 'Photo', thBest: 'Best size', belowAll: 'Below Letter',
       unit: 'Numbers are effective PPI.',
@@ -54,7 +53,6 @@
       textFor: 'نص ', addTo: 'أضف صورة إلى ',
       verdict: { ok: 'صافية', warn: 'مقبولة، بلينٍ خفيف', bad: 'ستبدو باهتة' },
       at: ' على ', ppi: ' PPI',
-      advEmpty: 'أضف صورة، وسأخبرك أيّ ورقٍ يحفظ لها صفاءها.',
       bestAll: 'أفضل ورقٍ تصفو فيه الصور كلها', largestOk: 'أكبر مقاسٍ مقبول', now: 'الآن: ', none: 'لا شيء',
       thPage: 'الصفحة', thPhoto: 'الصورة', thBest: 'أفضل مقاس', belowAll: 'دون مقاس ليتر',
       unit: 'الأرقام دقةٌ فعلية بوحدة PPI.',
@@ -636,7 +634,7 @@
     });
     const rows = state.panels.map((p, i) => ({ p, i })).filter((r) => r.p.img);
     if (!rows.length) {
-      advisorEl.innerHTML = '<p class="zm-adv-empty">' + t('advEmpty') + '</p>';
+      advisorEl.innerHTML = '';
       return;
     }
     let bestSheet = null, okSheet = null;
