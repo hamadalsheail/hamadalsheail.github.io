@@ -82,7 +82,7 @@ sitemap: false
     <summary><h2 id="zm-guide-title"><span data-lang="en">How to make a zine</span><span data-lang="ar">كيف تصنع كتيّبك المصوّر</span></h2></summary>
     <ol class="zm-plan">
       <li><span data-lang="en"><strong>Plan eight pages.</strong> A front cover, six inside pages and a back cover. One idea per page reads best.</span><span data-lang="ar"><strong>ثماني صفحات.</strong> غلافٌ يستقبل القارئ، وستُّ صفحاتٍ في الداخل، وغلافٌ أخير يودّعه. وتكفي كلَّ صفحةٍ فكرةٌ واحدة.</span></li>
-      <li><span data-lang="en"><strong>Fill the pages.</strong> Add a photo, a line of text, or both. Drag or use the arrows to change the order.</span><span data-lang="ar"><strong>املأها.</strong> صورةٌ أو سطرٌ أو كلاهما، واسحب الصفحات أو حرّكها بالأسهم حتى يستقيم ترتيبها.</span></li>
+      <li><span data-lang="en"><strong>Fill the pages.</strong> Add a photo, text, or both. The layout icons under each page turn it into a text page or split it into text and photo halves. Drag or use the arrows to change the order.</span><span data-lang="ar"><strong>املأها.</strong> صورةٌ أو نصٌّ أو كلاهما؛ ومن أيقونات التخطيط تحت كل صفحة تجعلها نصًّا خالصًا أو تقسمها بين نصٍّ وصورة، واسحب الصفحات أو حرّكها بالأسهم حتى يستقيم ترتيبها.</span></li>
       <li><span data-lang="en"><strong>Check the dots.</strong> Green prints sharp. Yellow or red: use a bigger photo, zoom out, or pick a smaller paper.</span><span data-lang="ar"><strong>انظر إلى النقاط.</strong> الأخضر يُطبع صافيًا، أمّا الأصفر والأحمر فبدّل الصورة بأكبر منها، أو خفّف التكبير، أو اختر ورقًا أصغر.</span></li>
       <li><span data-lang="en"><strong>Print and fold.</strong> Download, print single-sided at 100%, then follow the steps below.</span><span data-lang="ar"><strong>اطبع واطوِ.</strong> حمّل الملف واطبعه على وجهٍ واحد بحجمه الكامل ١٠٠٪، ثم اتبع الخطوات أدناه.</span></li>
     </ol>
@@ -151,7 +151,27 @@ sitemap: false
       <canvas class="zp-canvas" aria-hidden="true"></canvas>
       <span class="zp-ppi" hidden><i class="zm-dot"></i><span></span></span>
       <button type="button" class="zp-add"><span class="zp-plus" aria-hidden="true">+</span><span><span data-lang="en">Add photo</span><span data-lang="ar">أضف صورة</span></span></button>
+      <div class="zp-write" aria-hidden="true"></div>
       <div class="zp-drop" aria-hidden="true"><span data-lang="en">Drop image</span><span data-lang="ar">أفلِتها هنا</span></div>
+    </div>
+    <div class="zp-opts">
+      <div class="zp-seg zp-layout" role="radiogroup" data-i18n-aria="layout" aria-label="Page layout">
+        <button type="button" role="radio" data-layout="photo" data-i18n-aria="layPhoto" data-i18n-title="layPhoto" aria-label="Photo"><svg viewBox="0 0 14 20" aria-hidden="true"><rect class="pg" x="1" y="1" width="12" height="18" rx="1"/><rect class="ph" x="3" y="3" width="8" height="14"/></svg></button>
+        <button type="button" role="radio" data-layout="text" data-i18n-aria="layText" data-i18n-title="layText" aria-label="Text only"><svg viewBox="0 0 14 20" aria-hidden="true"><rect class="pg" x="1" y="1" width="12" height="18" rx="1"/><path class="ln" d="M4 6.5h6M3.5 9.5h7M4 12.5h6M5 15.5h4"/></svg></button>
+        <button type="button" role="radio" data-layout="text-top" data-i18n-aria="layTop" data-i18n-title="layTop" aria-label="Text above photo"><svg viewBox="0 0 14 20" aria-hidden="true"><rect class="pg" x="1" y="1" width="12" height="18" rx="1"/><path class="ln" d="M4 5h6M4.5 7.5h5"/><rect class="ph" x="3" y="10.5" width="8" height="6.5"/></svg></button>
+        <button type="button" role="radio" data-layout="text-bottom" data-i18n-aria="layBottom" data-i18n-title="layBottom" aria-label="Text below photo"><svg viewBox="0 0 14 20" aria-hidden="true"><rect class="pg" x="1" y="1" width="12" height="18" rx="1"/><rect class="ph" x="3" y="3" width="8" height="6.5"/><path class="ln" d="M4 13h6M4.5 15.5h5"/></svg></button>
+      </div>
+      <div class="zp-tstyle">
+        <div class="zp-seg zp-tsize" role="radiogroup" data-i18n-aria="textSize" aria-label="Text size">
+          <button type="button" role="radio" data-tsize="s" data-i18n-aria="sizeS" data-i18n-title="sizeS" aria-label="Small"><span style="font-size:0.72em">A</span></button>
+          <button type="button" role="radio" data-tsize="m" data-i18n-aria="sizeM" data-i18n-title="sizeM" aria-label="Medium"><span style="font-size:0.9em">A</span></button>
+          <button type="button" role="radio" data-tsize="l" data-i18n-aria="sizeL" data-i18n-title="sizeL" aria-label="Large"><span style="font-size:1.12em">A</span></button>
+        </div>
+        <div class="zp-seg zp-talign" role="radiogroup" data-i18n-aria="align" aria-label="Text alignment">
+          <button type="button" role="radio" data-talign="center" data-i18n-aria="alignCenter" data-i18n-title="alignCenter" aria-label="Centred"><svg viewBox="0 0 16 14" aria-hidden="true"><path class="ln" d="M2 3h12M4 7h8M3 11h10"/></svg></button>
+          <button type="button" role="radio" data-talign="start" data-i18n-aria="alignStart" data-i18n-title="alignStart" aria-label="Aligned to the line start"><svg class="zp-start-ico" viewBox="0 0 16 14" aria-hidden="true"><path class="ln" d="M2 3h12M2 7h8M2 11h10"/></svg></button>
+        </div>
+      </div>
     </div>
     <div class="zp-tools">
       <div class="zp-fit" role="group" data-i18n-aria="fit" aria-label="Photo fit">
@@ -169,7 +189,8 @@ sitemap: false
       <button type="button" class="zp-text zp-zoom-done"><span data-lang="en">Done</span><span data-lang="ar">تم</span></button>
       <p class="zp-adjust-tip"><span data-lang="en">Drag the photo to move it. Pinch or scroll to zoom.</span><span data-lang="ar">اسحب الصورة لتحرّكها، وقرّبها بإصبعين أو بعجلة الفأرة.</span></p>
     </div>
-    <textarea class="zp-caption" rows="2" dir="auto" data-placeholder-en="Text on this page" data-placeholder-ar="اكتب سطرًا لهذه الصفحة" placeholder="Text on this page"></textarea>
+    <textarea class="zp-caption" rows="2" dir="auto" data-placeholder-en="Text on this page" data-placeholder-ar="اكتب سطرًا لهذه الصفحة" data-placeholder-text-en="Write this page’s text" data-placeholder-text-ar="اكتب نص هذه الصفحة" placeholder="Text on this page"></textarea>
+    <p class="zp-textwarn" hidden><span data-lang="en">Text prints very small. Shorten it, pick a larger size, or use A3.</span><span data-lang="ar">سيُطبع النص صغيرًا جدًا؛ اختصره، أو كبّر الخط، أو اختر A3.</span></p>
     <input type="file" class="zp-file" accept="image/*" hidden>
   </li>
 </template>
