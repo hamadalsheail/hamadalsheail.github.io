@@ -31,6 +31,9 @@
       sheet: ' sheet', rtlNote: ', right-to-left',
       blank: (n) => '. ' + n + ' page' + (n === 1 ? ' is' : 's are') + ' still blank.',
       foldTitle: 'How to fold', foldKey: 'Thin line: fold.   Red dashes: cut.',
+      layout: 'Page layout', layPhoto: 'Photo', layText: 'Text only', layTop: 'Text above photo', layBottom: 'Text below photo',
+      textSize: 'Text size', sizeS: 'Small text', sizeM: 'Medium text', sizeL: 'Large text',
+      align: 'Text alignment', alignCenter: 'Centred', alignStart: 'Aligned to the line start', writeHere: 'Write here',
     },
     ar: {
       pages: 'صفحات الكتيّب', settings: 'إعدادات الكتيّب', moveEarlier: 'انقلها إلى الصفحة السابقة', moveLater: 'انقلها إلى الصفحة التالية',
@@ -52,6 +55,9 @@
       sheet: '', rtlNote: '، من اليمين إلى اليسار',
       blank: (n) => '. ' + (n === 1 ? 'صفحةٌ واحدة ما زالت بيضاء.' : num(n) + ' صفحات ما زالت بيضاء.'),
       foldTitle: 'طريقة الطي', foldKey: 'الخط الرفيع: طيّ.   الأحمر المتقطّع: قصّ.',
+      layout: 'تخطيط الصفحة', layPhoto: 'صورة', layText: 'نص فقط', layTop: 'نص فوق الصورة', layBottom: 'نص تحت الصورة',
+      textSize: 'حجم الخط', sizeS: 'خط صغير', sizeM: 'خط متوسط', sizeL: 'خط كبير',
+      align: 'محاذاة النص', alignCenter: 'في الوسط', alignStart: 'من بداية السطر', writeHere: 'اكتب هنا',
     },
   };
   const root = document.documentElement;
@@ -75,7 +81,15 @@
   // Row 0 prints upside down. Right-to-left zines mirror the columns.
   const SLOTS = [[3, 1], [3, 0], [2, 0], [1, 0], [0, 0], [0, 1], [1, 1], [2, 1]];
 
-  const blank = () => ({ img: null, blob: null, fit: 'cover', caption: '', zoom: 1, fx: 0.5, fy: 0.5 });
+  const blank = () => ({ img: null, blob: null, fit: 'cover', caption: '', zoom: 1, fx: 0.5, fy: 0.5, layout: 'photo', tsize: 'm', talign: 'center' });
+  // Page layouts: a photo (with an optional caption band), a text page, or
+  // half text and half photo. Text pages keep any photo hidden, not deleted.
+  const LAYOUTS = ['photo', 'text', 'text-top', 'text-bottom'];
+  const TEXT_SIZE = { s: 0.05, m: 0.068, l: 0.09 }; // starting size, share of page width
+  const MIN_PT = 7; // below this, printed text is hard to read
+  const isTextPage = (p) => p.layout !== 'photo';
+  // The photo actually printed on a page.
+  const shownImg = (p) => (p.layout === 'text' ? null : p.img);
   let state = { size: 'a4', dir: 'ltr', border: false, panels: Array.from({ length: 8 }, blank) };
 
   const $ = (s, el) => (el || document).querySelector(s);
@@ -165,20 +179,21 @@
   // Fit text into a box, shrinking the size until it does.
   function layoutText(ctx, text, maxW, maxH, size) {
     const rtl = AR.test(text);
-    for (let n = 0; n < 12; n++) {
+    for (let n = 0; n < 24; n++) {
       ctx.font = fontFor(rtl, size);
       const lines = wrap(ctx, text, maxW);
       const lh = size * (rtl ? 1.75 : 1.4);
-      if (lines.length * lh <= maxH || n === 11) return { lines, lh, size, rtl, h: lines.length * lh };
+      if (lines.length * lh <= maxH || n === 23) return { lines, lh, size, rtl, h: lines.length * lh };
       size *= 0.88;
     }
   }
 
-  function drawText(ctx, t, cx, top) {
+  // `align`: 'center', 'left' or 'right'; x is the anchor for that alignment.
+  function drawText(ctx, t, cx, top, align) {
     ctx.save();
     ctx.font = fontFor(t.rtl, t.size);
     ctx.fillStyle = INK;
-    ctx.textAlign = 'center';
+    ctx.textAlign = align || 'center';
     ctx.textBaseline = 'middle';
     try { ctx.direction = t.rtl ? 'rtl' : 'ltr'; } catch (e) {}
     t.lines.forEach((line, i) => ctx.fillText(line, cx, top + t.lh * (i + 0.5)));
@@ -202,7 +217,28 @@
     const ax = x + inset, ay = y + inset, aw = w - inset * 2, ah = h - inset * 2;
     const text = (p.caption || '').trim();
     const pad = w * 0.07;
-    const out = { ax, ay, aw, ah, t: null, textTop: 0, photo: null };
+    const out = { ax, ay, aw, ah, t: null, textTop: 0, photo: null, box: null, photoBox: null };
+    if (isTextPage(p)) {
+      const half = ah / 2;
+      if (p.layout === 'text') {
+        out.box = { x: ax, y: ay, w: aw, h: ah };
+      } else {
+        const top = p.layout === 'text-top';
+        out.box = { x: ax, y: top ? ay : ay + half, w: aw, h: half };
+        out.photoBox = { x: ax, y: top ? ay + half : ay, w: aw, h: half };
+        if (p.img) out.photo = imageRect(p, ax, out.photoBox.y, aw, half);
+      }
+      if (text) {
+        const b = out.box;
+        out.t = layoutText(ctx, text, b.w - pad * 2, b.h - pad * 2, w * (TEXT_SIZE[p.tsize] || TEXT_SIZE.m));
+        out.textTop = b.y + (b.h - out.t.h) / 2;
+        if (p.talign === 'start') {
+          out.align = out.t.rtl ? 'right' : 'left';
+          out.textX = out.t.rtl ? b.x + b.w - pad : b.x + pad;
+        }
+      }
+      return out;
+    }
     if (p.img) {
       let band = 0;
       if (text) {
@@ -218,7 +254,8 @@
     return out;
   }
 
-  function renderPanel(ctx, p, x, y, w, h) {
+  // `hint` (on-screen cards only) marks an empty text area.
+  function renderPanel(ctx, p, x, y, w, h, hint) {
     ctx.save();
     ctx.beginPath();
     ctx.rect(x, y, w, h);
@@ -236,7 +273,25 @@
       ctx.drawImage(p.img, r.x, r.y, r.w, r.h);
       ctx.restore();
     }
-    if (L.t) drawText(ctx, L.t, L.ax + L.aw / 2, L.textTop);
+    if (L.t) drawText(ctx, L.t, L.textX == null ? L.ax + L.aw / 2 : L.textX, L.textTop, L.align);
+    else if (hint && L.box) drawHint(ctx, L.box, w);
+    ctx.restore();
+  }
+
+  function drawHint(ctx, b, w) {
+    const m = w * 0.06;
+    ctx.save();
+    ctx.strokeStyle = '#c9c0b8';
+    ctx.lineWidth = Math.max(1, w / 220);
+    ctx.setLineDash([w / 50, w / 70]);
+    ctx.strokeRect(b.x + m, b.y + m, b.w - m * 2, b.h - m * 2);
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#a39a90';
+    ctx.font = fontFor(lang() === 'ar', w * 0.075);
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    try { ctx.direction = lang() === 'ar' ? 'rtl' : 'ltr'; } catch (e) {}
+    ctx.fillText(t('writeHere'), b.x + b.w / 2, b.y + b.h / 2);
     ctx.restore();
   }
 
@@ -245,11 +300,14 @@
   const measureCtx = document.createElement('canvas').getContext('2d');
   // Effective PPI of a page's photo when the zine is printed on `sizeKey`.
   function ppiFor(p, sizeKey) {
-    if (!p.img) return null;
-    const s = SIZES[sizeKey];
-    const pw = (s.w / 4) * 72, ph = (s.h / 2) * 72; // page in points
-    const L = panelLayout(measureCtx, p, 0, 0, pw, ph);
+    if (!shownImg(p)) return null;
+    const L = pointLayout(p, sizeKey);
     return p.img.width / (L.photo.w / 72);
+  }
+  // A page laid out in printer's points for a sheet size.
+  function pointLayout(p, sizeKey) {
+    const s = SIZES[sizeKey];
+    return panelLayout(measureCtx, p, 0, 0, (s.w / 4) * 72, (s.h / 2) * 72);
   }
   function verdict(ppi) {
     return ppi >= TARGET_PPI ? 'ok' : ppi >= TARGET_PPI * 0.75 ? 'warn' : 'bad';
@@ -260,7 +318,7 @@
   function sheetVerdict(sizeKey) {
     let worst = null;
     state.panels.forEach((p) => {
-      if (!p.img) return;
+      if (!shownImg(p)) return;
       const v = verdict(ppiFor(p, sizeKey));
       if (!worst || RANK[v] > RANK[worst]) worst = v;
     });
@@ -382,6 +440,25 @@
     li.querySelectorAll('.zp-fit button').forEach((b) => {
       b.addEventListener('click', () => { state.panels[i].fit = b.dataset.fit; changed(i); });
     });
+    li.querySelectorAll('[data-layout]').forEach((b) => b.addEventListener('click', () => {
+      const p = state.panels[i];
+      p.layout = b.dataset.layout;
+      if (p.layout === 'text') setAdjust(i, false);
+      changed(i);
+    }));
+    li.querySelectorAll('[data-tsize]').forEach((b) => b.addEventListener('click', () => {
+      state.panels[i].tsize = b.dataset.tsize;
+      changed(i);
+    }));
+    li.querySelectorAll('[data-talign]').forEach((b) => b.addEventListener('click', () => {
+      state.panels[i].talign = b.dataset.talign;
+      changed(i);
+    }));
+    // Tapping the text area of the page jumps to the text box.
+    $('.zp-write', li).addEventListener('click', () => {
+      if (adjusting === i) return;
+      card.caption.focus();
+    });
     card.caption.addEventListener('input', () => {
       state.panels[i].caption = card.caption.value;
       changed(i);
@@ -456,7 +533,8 @@
   async function fillEmpty(files) {
     let k = 0;
     for (let i = 0; i < 8 && k < files.length; i++) {
-      if (!state.panels[i].img) await setImage(i, files[k++]);
+      const p = state.panels[i];
+      if (!p.img && p.layout !== 'text') await setImage(i, files[k++]);
     }
     if (k < files.length) alertLine(t('onlyFit')(k));
   }
@@ -512,7 +590,7 @@
     const pts = new Map();
     let start = null;
     stage.addEventListener('pointerdown', (e) => {
-      if (adjusting !== i || !state.panels[i].img) return;
+      if (adjusting !== i || !shownImg(state.panels[i])) return;
       e.preventDefault();
       stage.setPointerCapture(e.pointerId);
       pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
@@ -546,7 +624,7 @@
     stage.addEventListener('pointerup', end);
     stage.addEventListener('pointercancel', end);
     stage.addEventListener('wheel', (e) => {
-      if (adjusting !== i || !state.panels[i].img) return;
+      if (adjusting !== i || !shownImg(state.panels[i])) return;
       e.preventDefault();
       setZoom(i, state.panels[i].zoom * Math.exp(-e.deltaY * 0.0015));
     }, { passive: false });
@@ -567,7 +645,8 @@
     $('.zp-zoom-range', li).value = z;
     $('.zp-zoom-val', li).textContent = num(z) + (lang() === 'ar' ? '٪' : '%');
     const badge = $('.zp-ppi', li);
-    if (p.img) {
+    const img = shownImg(p);
+    if (img) {
       const ppi = ppiFor(p, state.size), v = verdict(ppi);
       badge.hidden = false;
       $('.zm-dot', badge).className = 'zm-dot is-' + v;
@@ -577,8 +656,22 @@
       badge.hidden = true;
       if (adjusting === i) setAdjust(i, false);
     }
-    li.classList.toggle('has-img', !!p.img);
+    li.classList.toggle('has-img', !!img);
     li.classList.toggle('has-text', !!p.caption.trim());
+    li.dataset.layout = p.layout;
+    li.querySelectorAll('[data-layout]').forEach((b) => b.setAttribute('aria-checked', String(b.dataset.layout === p.layout)));
+    li.querySelectorAll('[data-tsize]').forEach((b) => b.setAttribute('aria-checked', String(b.dataset.tsize === p.tsize)));
+    li.querySelectorAll('[data-talign]').forEach((b) => b.setAttribute('aria-checked', String(b.dataset.talign === p.talign)));
+    const tp = isTextPage(p);
+    card.caption.placeholder = card.caption.getAttribute('data-placeholder-' + (tp ? 'text-' : '') + lang());
+    card.caption.rows = tp ? 5 : 2;
+    // Warn when the text had to shrink below a readable print size.
+    let small = false;
+    if (tp && p.caption.trim()) {
+      const L = pointLayout(p, state.size);
+      small = !!L.t && L.t.size < MIN_PT;
+    }
+    $('.zp-textwarn', li).hidden = !small;
     li.querySelectorAll('.zp-fit button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.fit === p.fit)));
     if (card.caption.value !== p.caption) card.caption.value = p.caption;
     $('.zp-prev', li).disabled = i === 0;
@@ -593,7 +686,7 @@
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const w = Math.round(r.width * dpr), h = Math.round(r.height * dpr);
     if (c.width !== w || c.height !== h) { c.width = w; c.height = h; }
-    renderPanel(c.getContext('2d'), state.panels[i], 0, 0, w, h);
+    renderPanel(c.getContext('2d'), state.panels[i], 0, 0, w, h, true);
   }
 
   function refreshAll() {
@@ -613,7 +706,7 @@
       dot.className = 'zm-dot' + (v ? ' is-' + v : '');
       b.title = v ? sizeLabel(b.dataset.size) + ': ' + verdictText(v) : sizeLabel(b.dataset.size);
     });
-    const rows = state.panels.map((p, i) => ({ p, i })).filter((r) => r.p.img);
+    const rows = state.panels.map((p, i) => ({ p, i })).filter((r) => shownImg(r.p));
     if (!rows.length) {
       advisorEl.innerHTML = '';
       return;
@@ -1005,7 +1098,7 @@
 
   const dlDlg = $('#zm-download-dlg');
   $('#zm-download').addEventListener('click', () => {
-    const empty = state.panels.filter((p) => !p.img && !p.caption.trim()).length;
+    const empty = state.panels.filter((p) => !shownImg(p) && !p.caption.trim()).length;
     $('#zm-dl-size').textContent = (lang() === 'ar' ? 'ورقة ' : '') + sizeLabel(state.size) + t('sheet') +
       (state.dir === 'rtl' ? t('rtlNote') : '') + (empty ? t('blank')(empty) : '.');
     $('#zm-busy').hidden = true;
@@ -1048,7 +1141,10 @@
         const d = await db();
         const data = {
           size: state.size, dir: state.dir, border: state.border,
-          panels: state.panels.map((p) => ({ blob: p.blob, fit: p.fit, caption: p.caption, zoom: p.zoom, fx: p.fx, fy: p.fy })),
+          panels: state.panels.map((p) => ({
+            blob: p.blob, fit: p.fit, caption: p.caption, zoom: p.zoom, fx: p.fx, fy: p.fy,
+            layout: p.layout, tsize: p.tsize, talign: p.talign,
+          })),
         };
         d.transaction('zines', 'readwrite').objectStore('zines').put(data, 'current');
       } catch (e) { /* private mode etc.: work still fine, just not kept */ }
@@ -1070,6 +1166,9 @@
         const out = blank();
         out.fit = p.fit === 'contain' ? 'contain' : 'cover';
         out.caption = typeof p.caption === 'string' ? p.caption : '';
+        if (LAYOUTS.includes(p.layout)) out.layout = p.layout;
+        if (TEXT_SIZE[p.tsize]) out.tsize = p.tsize;
+        if (p.talign === 'start') out.talign = 'start';
         const num = (v, lo, hi, d) => (typeof v === 'number' && isFinite(v) ? Math.min(hi, Math.max(lo, v)) : d);
         out.zoom = num(p.zoom, 1, ZOOM_MAX, 1);
         out.fx = num(p.fx, 0, 1, 0.5);
@@ -1092,8 +1191,6 @@
     });
     dirSel.options[0].textContent = t('ltr');
     dirSel.options[1].textContent = t('rtl');
-    // Cards are cloned from the template, so refresh their placeholders too.
-    cards.forEach((c) => { c.caption.placeholder = c.caption.getAttribute('data-placeholder-' + lang()); });
     refreshAll();
     if (pvDlg.open) drawPreview();
   }
